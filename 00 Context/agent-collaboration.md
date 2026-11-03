@@ -60,6 +60,8 @@ Every agent, including Codex, Claude Code, and Claude Design, must end every tas
 
 After meaningful work, also report what was completed, which files changed, what was tested and the results, and what remains unfinished or blocked. Update the concise `project-status.md` snapshot after important milestones or changes in project state, including before a planned handoff. Record significant approved decisions in the log and update the relevant authoritative specification in the same task.
 
+Task closure: updating `project-status.md` is part of every approved task, not a separate task, and needs no separate approval. Before presenting the final result or asking for a commit or push, verify the actual state (files, Git, and remote when relevant), then update the snapshot and remove resolved items. Record only state that stays true once the pending changes are committed and pushed: do not list the commit or push of the current changes as pending in the status, and report them in the final message instead. Commits, pushes, deploys, and new tasks still require Jackie's explicit approval.
+
 After Handoff Acceptance when applicable, complete necessary actions within the authorized task without repeated approval requests. Starting a separate next task or making an unapproved significant decision requires Jackie's approval.
 
 ## 5. Collaboration safeguards
