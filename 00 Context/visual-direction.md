@@ -56,14 +56,21 @@ These measurements are unresolved, not permission to invent final layout rules. 
 Approved by the portfolio owner on November 3, 2026 as the basis for a static composition study, not as a final design or implementation approval.
 
 - Use an editorial homepage with restrained character-customization cues. The avatar introduces the multidisciplinary trajectory; selected work provides evidence of design quality.
-- Header: approved JM monogram in Deep Eggplant on the left, without an adjacent name; Work, About, and Contact links on the right. The name appears prominently in the hero. Use orange for interaction and selection without competing with the identity.
+- Header: only the approved JM monogram in Deep Eggplant, small and discreet, linking back to the start of the home page. No navigation links in the header and no adjacent name; the header does not need to be fixed. Section navigation moves to the fixed navigation bar described in `interaction-spec.md`. The name appears prominently in the hero. Use orange for interaction, selection, and the active-section indicator without competing with the identity. Approved November 3, 2026; supersedes the earlier Work, About, and Contact header links.
 - Desktop hero: start from a 12-column grid, with five columns for text, one for separation, and six for the full-body avatar. Preserve breathing room and the approved soft ground shadow. Exact widths and spacing remain open.
 - Typography hierarchy: the existing expressive face serves the headline and major section headings; the existing reading face serves role names, descriptions, and captions. Verify the actual font assignments before rendering an identity-faithful study. Keep the professional specialty understandable without following the animation.
 - Skills: a small set of cumulative indicators, without numerical competency bars.
-- Selected Work: begin the study with four large image-led cards. Each has a persistent project name, discipline, and concise contribution caption. Four is a starting composition count, not an approved project selection. Preserve each project's own image colors rather than tinting assets to match the interface.
-- Evaluate card scale, image framing, and rhythm statically before developing the intended scroll-driven horizontal sequence.
+- Selected Work (approved November 3, 2026): four large, image-led cards for TerraYou, Quiz Bingo, Snoof, and Damyller. Order is not yet defined.
+  - Each card preserves its project's identity, colors, and personality. Custom backgrounds belong to each card's visual composition, not to the Portfolio OS interface palette.
+  - Proportions, spacing, and hierarchy follow one consistent card system across the four projects.
+  - The project name is integrated into the visual composition and also has an accessible text equivalent.
+  - Outside the image: the disciplines and a short description of my contribution.
+  - New mockups and compositions may be created from the original project assets; existing Framer mockups are a reference, not a requirement. Do not invent features, results, or contributions.
+  - Snoof is identified as an educational project. Damyller is collaborative work; my contribution and the photography credits are documented in its Framer case. Do not invent credits or rebuild a credits list.
+  - No final image, mockup, or card composition is approved yet.
+- Evaluate card scale, backgrounds, image framing, and rhythm in a static study before the scroll-driven gallery described in `interaction-spec.md`.
 - About: a short personal introduction with a route to the eventual dedicated About page. Contact: a clear closing section without repeating the resume or introducing another elaborate visual sequence.
-- Mobile: text followed by the avatar, vertically stacked projects, and readily accessible navigation. Exact motion choreography remains open.
+- Mobile: text followed by the avatar, vertically stacked projects with entrance animations, and the compact fixed navigation described in `interaction-spec.md`. Exact motion choreography remains open.
 - Next deliverable: a static composition image before code. Final copy, project selection and order, likeness assets, exact fonts, dimensions, and motion timing remain unresolved. No HTML/CSS, Framer changes, or animation implementation are authorized by this composition approval alone.
 
 ## Avatar Art Direction
@@ -95,7 +102,8 @@ The sequence and timing of tattoo additions will be defined later. Do not invent
 - Skills accumulate rather than replacing earlier capabilities. Explore minimal labels or unlocked states without arbitrary competency percentages.
 - Career stages must follow verified experience. Graphic Designer, Art Director, Brand Designer, Digital Designer, Design Team Lead, and Entrepreneur are candidates, not a finalized sequence.
 - Represent Product Design, AI-assisted workflows, and creative coding as current exploration where appropriate. Do not label these as established specialties without supporting experience.
-- After the evolution sequence, large image-led project cards move from right to left in response to continued vertical scrolling. Visitors should not need a separate horizontal scrolling gesture. Return to normal vertical flow after the project sequence.
+- On desktop, large image-led project cards move from right to left in response to continued vertical scrolling, as a horizontal gallery with part of the next project visible. Visitors should not need a separate horizontal scrolling gesture. Return to normal vertical flow after the project sequence. On mobile, projects stack vertically. See `interaction-spec.md`.
+- Priority (approved November 3, 2026): study the Selected Work gallery and the fixed navigation before developing the avatar evolution. The avatar evolution remains a planned future phase, not a discarded idea.
 - Keep titles clear and supporting card information brief. Provide direct navigation to work so viewing every avatar stage is not required.
 - Preserve usable touch and keyboard access. For reduced motion, present readable stages and projects in a normal vertical flow without forced rotation or horizontal movement.
 - Mobile must retain readable text, a recognizable full-body avatar, and easy access to projects. Exact mobile choreography is not yet approved.
@@ -130,4 +138,4 @@ Location placement: The owner requested removing “Berlin, Germany” from the 
 
 Representative avatar composition test: The owner supplied a second GPT-created image with a smiling, glasses-wearing full-body avatar holding a drink and laptop, accompanied by a cat and floating design and AI objects, and authorized testing it in the existing hero. The resulting static preview is `.impeccable/mocks/header-hero-c-v8.png`. It replaces the mannequin, places the supporting objects around the avatar, and tests the skill indicators in a row below the scene. This is a review proposal, not approval of a final avatar, likeness, tattoo references, object selection, indicator placement, or site implementation. The original supplied image remains the identity reference for this test; generated compositing may introduce differences. Typography and logo rendering remain approximate.
 
-The owner subsequently requested leaving v8 as it is for now. Retain it as the current provisional composition reference with the unresolved details above; do not interpret this as final design or implementation approval. See `character-bible.md` for asset status and `project-status.md` for continuity.
+The Work, About, and Contact links shown in v8's header are superseded by the monogram-only header approved on November 3, 2026; v8 itself stays unchanged. The owner subsequently requested leaving v8 as it is for now. Retain it as the current provisional composition reference with the unresolved details above; do not interpret this as final design or implementation approval. See `character-bible.md` for asset status and `project-status.md` for continuity.
