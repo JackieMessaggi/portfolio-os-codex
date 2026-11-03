@@ -3,7 +3,7 @@
 ## Structure
 - Multi-page: A home page with a separate page for each project. Use a storytelling structure that fits each project's discipline; do not force every project into a traditional UX case study.
 - About page: Yes. A dedicated page for my background and multidisciplinary experience.
-- Navigation: Start with a header featuring Jackie Messaggi on the left, linking to the home page, and Work, About, and Contact links on the right. This is an initial decision that can be revisited.
+- Navigation: Use the approved JM monogram in Deep Eggplant on the left, linking to the home page, without an adjacent name. Place Work, About, and Contact links on the right. Jackie Messaggi appears prominently in the hero. Follow `00 Context/visual-direction.md` for the approved composition and unresolved sizing; this decision does not authorize site implementation.
 
 ## Case Study Display
 - Index: Start with image-based project cards. This is an initial decision that can be revisited.

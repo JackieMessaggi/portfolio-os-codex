@@ -99,7 +99,7 @@ The sequence and timing of tattoo additions will be defined later. Do not invent
 - Keep titles clear and supporting card information brief. Provide direct navigation to work so viewing every avatar stage is not required.
 - Preserve usable touch and keyboard access. For reduced motion, present readable stages and projects in a normal vertical flow without forced rotation or horizontal movement.
 - Mobile must retain readable text, a recognizable full-body avatar, and easy access to projects. Exact mobile choreography is not yet approved.
-- Rotation, outfit transitions, and the horizontal sequence require a feasibility check before committing to an implementation. No real-time 3D renderer or asset pipeline has been selected. Existing HTML/CSS/JavaScript and no-dependency constraints remain active.
+- Rotation, outfit transitions, and the horizontal sequence require a feasibility check before committing to an implementation. No real-time 3D renderer or asset pipeline has been selected. Follow the HTML/CSS/JavaScript constraints in `AGENTS.md`: Three.js is an approved optional dependency when it offers a clear advantage over native CSS and JavaScript, loaded through ES modules from a CDN or local files. Keep 3D modular and consider performance, accessibility, and mobile compatibility. Additional libraries require approval. This permission does not select Three.js as the renderer or authorize animation implementation.
 
 ## Do NOT generate
 
@@ -127,3 +127,7 @@ The owner found the header monogram oversized. Revision `.impeccable/mocks/heade
 After further feedback on monogram size, `.impeccable/mocks/header-hero-c-v6.png` tests approximately 70 px width. This supersedes v5 as the latest preview; approval is pending.
 
 Location placement: The owner requested removing “Berlin, Germany” from the hero and reserving it for About. The revised preview is `.impeccable/mocks/header-hero-c-v7.png`. This is a content-placement decision; no site implementation is authorized by it.
+
+Representative avatar composition test: The owner supplied a second GPT-created image with a smiling, glasses-wearing full-body avatar holding a drink and laptop, accompanied by a cat and floating design and AI objects, and authorized testing it in the existing hero. The resulting static preview is `.impeccable/mocks/header-hero-c-v8.png`. It replaces the mannequin, places the supporting objects around the avatar, and tests the skill indicators in a row below the scene. This is a review proposal, not approval of a final avatar, likeness, tattoo references, object selection, indicator placement, or site implementation. The original supplied image remains the identity reference for this test; generated compositing may introduce differences. Typography and logo rendering remain approximate.
+
+The owner subsequently requested leaving v8 as it is for now. Retain it as the current provisional composition reference with the unresolved details above; do not interpret this as final design or implementation approval. See `character-bible.md` for asset status and `project-status.md` for continuity.

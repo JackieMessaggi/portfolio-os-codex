@@ -7,6 +7,8 @@ At the start of every session, read 00 Context/site-brief.md, 00 Context/visual-
 Treat these files as the source of truth for the portfolio's positioning, content, visual direction, and communication style.
 
 Before making significant changes, inspect the relevant existing files. Do not assume missing information or silently change approved decisions.
+
+Follow `00 Context/agent-collaboration.md` for collaboration across Codex, Claude Code, and Claude Design. At session start, also read `00 Context/project-status.md`; consult `decision-log.md`, `character-bible.md`, and `interaction-spec.md` in `00 Context/` when relevant. Update the shared status after meaningful state changes and before a planned handoff.
 ---
 
 ## Who I am
@@ -19,7 +21,7 @@ Currently: Looking for a senior hands-on design role while expanding my skills i
 
 My background spans graphic design, brand identity, art direction, editorial design, UI design, digital products, design systems, and design leadership.
 
-My career is multidisciplinary and non-linear. I started in visual communication and art direction, graphic designer, moved into digital interfaces and product experiences, and most recently worked as a Design Team Lead while remaining hands-on.
+My career is multidisciplinary and non-linear. I started in graphic design, visual communication, and art direction, moved into digital interfaces and product experiences, and most recently worked as a Design Team Lead while remaining hands-on.
 
 I am not positioning myself as a Senior Product Designer. My strongest areas are visual design, UI craft, brand systems, design systems, typography, creative direction, and translating complex requirements into clear visual solutions.
 
@@ -43,7 +45,7 @@ Pure people-management positions with little hands-on design work.
 Roles requiring professional fluency in German.
 Opportunities that depend on presenting me as an end-to-end Senior Product Designer.
 
-## Portifolio principles
+## Portfolio principles
 
 The portfolio must reflect my actual experience, not an idealized career path.
 Show the range of my work without making the portfolio feel unfocused.
@@ -60,14 +62,27 @@ Keep the writing specific, natural, confident, and free of generic design jargon
 
 ## Platform
 
-HTML, CSS, JavaScript only. No frameworks. No build tools. No npm.
-One HTML file per page. One shared CSS file. No bundlers. No dependencies.
+HTML, CSS, and JavaScript.
+
+- No frameworks or build tools.
+- No npm or bundlers.
+- One HTML file per page and one shared CSS file.
+- Prefer native HTML, CSS, and JavaScript whenever possible.
+- Three.js is an approved optional dependency for 3D elements, character animation, and interactive visual experiences.
+- Load Three.js through ES modules using a CDN or locally hosted files.
+- Use Three.js only when it provides a clear advantage over native CSS and JavaScript.
+- Keep 3D components modular and separate from the site's core functionality.
+- Consider performance, accessibility, and mobile compatibility.
+- Do not introduce additional libraries without approval.
+
 Treat the existing Framer portfolio as a reference for content and assets, not as the automatically approved final design.
+
 Do not modify the existing Framer project without explicit approval.
 
 ## Tone
 
-Professional, conversational, confident, warm, and direct, with a subtle playful touch.Voice: first person
+Professional, conversational, confident, warm, and direct, with a subtle playful touch.
+Voice: first person.
 The writing should feel natural, personal, and approachable, reflecting an experienced designer with a creative personality and a sense of humor.
 Allow occasional wit, personality, and unexpected phrasing, but keep it subtle and intentional. Never force jokes or sound overly quirky.
 Avoid corporate jargon, exaggerated claims, generic AI-generated language, and unnecessary formality.
@@ -83,7 +98,7 @@ Do NOT generate anything not specified in 00 Context/visual-direction.md.
 
 02 Site/ holds the live site files.
 00 Context/ holds the portfolio brief, personal context, positioning, and visual rules that Codex reads every session.
-01 Projects/ holds one folder per project: raw source material and the generated case study.
+01 Projects/ holds one folder per project: raw source material and the generated case study. This folder is private: it is ignored by Git, and no agent may add, version, or publish its content. Final case studies may be published in 02 Site/ only after my explicit approval. See `00 Context/agent-collaboration.md`.
 - `.agents/voice.md`: how Codex talks in this project, in every message, command and skill (see Voice below)
 
 ## Voice
@@ -94,6 +109,20 @@ Read `.agents/voice.md` at the start of every session.
 
 All Codex communication must follow this guide.
 Published portfolio content must follow the tone defined in `00 Context/site-brief.md`.
+
+## Public Repository Safety Check
+
+This repository is public by decision. Before every commit and every push, Codex and Claude Code must run this check:
+
+- Inspect the actual files and diff, including new, modified, and deleted files, not only `.gitignore`.
+- Check for credentials, tokens, secrets, and unnecessary personal data.
+- Confirm that no content from `01 Projects/` is included without my explicit approval.
+- Check for confidential material from clients, research participants, or third parties.
+- Check for temporary files, caches, and changes outside the approved scope.
+- Check that images, mocks, and documents are approved for public release.
+- Before a push, check again whether the set of commits to send has changed since the last review.
+
+Never show secret values in the report. If anything is doubtful or risky, stop and ask for my decision. Present a concise summary of the check before asking for approval to commit or push. Approval of a commit does not authorize a push, and approval of a push does not authorize a deploy.
 
 ## Workflow Guidance & Next Steps
 
@@ -108,6 +137,8 @@ At the end of each completed task:
    before proceeding.
 
 Do not stop after reporting task completion. Proactively guide me through the workflow, but do not execute the next task without my approval.
+
+Within an authorized task, complete the necessary reads, edits, and checks without asking for approval at each step. Ask before expanding the scope or making a significant design, content, architecture, or publishing decision that has not already been approved. Approval of the current task does not authorize starting a separate next task.
 
 Keep responses concise, practical, and in PT-BR.
 Avoid generic recommendations and unnecessary repetition.

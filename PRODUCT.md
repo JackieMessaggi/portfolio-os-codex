@@ -32,7 +32,7 @@ The portfolio should attract senior UI, visual, brand, and visual-system roles, 
 
 ## Capabilities and Constraints
 
-- Use plain HTML, CSS, and JavaScript, one HTML file per page, and one shared stylesheet. No frameworks, bundlers, build tools, npm-based site tooling, or runtime dependencies. The separately installed Impeccable assistant tooling does not change the site's stack.
+- Use plain HTML, CSS, and JavaScript, one HTML file per page, and one shared stylesheet. No frameworks, bundlers, build tools, or npm-based site tooling. Follow `AGENTS.md` for dependencies: Three.js is approved as an optional dependency for 3D elements, character animation, and interactive visual experiences when it offers a clear advantage over native CSS and JavaScript. Load it through ES modules from a CDN or local files, keep 3D modular, and consider performance, accessibility, and mobile compatibility. Additional libraries require approval. The separately installed Impeccable assistant tooling does not change the site's stack.
 - Keep site files in `02 Site/`. The current implementation is an initial homepage with Hero, Selected Work, About, and Contact placeholders. It is not a completed portfolio.
 - The approved eventual structure includes individual project pages and a dedicated About page. Do not treat their existence in the brief as evidence that they have been implemented.
 - Keep work directly accessible. A visitor should not need to complete a character-evolution sequence to reach projects or contact.
@@ -40,11 +40,11 @@ The portfolio should attract senior UI, visual, brand, and visual-system roles, 
 - Interactive avatar rotation, transformations, and scroll-driven project movement remain future work requiring feasibility review. No renderer or asset pipeline has been selected.
 - Preserve original project documents. Do not integrate draft case studies, implement later exercise stages, or publish without the owner's authorization.
 - Use the existing Framer portfolio as a content and asset reference. Do not modify it without explicit approval.
-- Hosting and deployment target remain undecided. Do not infer that a local preview is deployed.
+- The repository is public by decision. GitHub Pages hosts the current preview; publishing runs only manually after the owner's explicit approval, and commits or pushes must not deploy. Follow `00 Context/agent-collaboration.md`. Do not infer that local changes are deployed.
 
 ## Brand Commitments
 
-Retain Jackie Messaggi's current logo and typography. Exact font role assignments, licensed sources, and final layout dimensions remain unresolved in the visual-direction document. The temporary system font in the structural prototype is not an approved identity replacement.
+Retain Jackie Messaggi's current logo and typography. The approved header uses the JM monogram in Deep Eggplant without an adjacent name. Dakota Rough 400 is approved for the headline and major section headings; DM Sans 400/500/600/700 serves reading text and supporting hierarchy. Big Shoulders is excluded. Follow `00 Context/visual-direction.md` for these decisions and the unresolved font packaging, license documentation, final type sizes, and layout dimensions. The temporary system font in the structural prototype is not an approved identity replacement.
 
 Write in first person with an experienced, confident, warm, direct, and approachable voice. A light friendly touch is welcome; avoid forced humor, corporate jargon, generic storytelling, and exaggerated claims. Do not use em dashes or en dashes as punctuation in authored copy.
 
@@ -54,7 +54,7 @@ Represent Jackie's own identity in any future avatar. Rendering references are n
 
 - Professional context and biography in `AGENTS.md` and `00 Context/bio.md`.
 - Existing Framer project `JackiePortfolio_2026`, used in the audit. Conflicting dates and career descriptions identified there still need verification before reuse.
-- `01 Projects/snoof/case-study.md` is a first draft, not approved final copy. Snoof is an individual educational AI-assisted design project, with documented research and a prototype. It is not a launched product and has no documented completed user or clinical validation.
+- `01 Projects/Snoof/case-study.md` is a first draft, not approved final copy. Snoof is an individual educational AI-assisted design project, with documented research and a prototype. It is not a launched product and has no documented completed user or clinical validation.
 - The owner conducted Snoof interviews, interpreted findings, created the logo and identity, and made design decisions. ChatGPT and Claude supported analysis, documentation, exploration, and implementation. Claude Design carried out substantial prototype construction under her direction; do not claim she manually coded all of it.
 - No portfolio conversion results, testimonials, or approved project-impact metrics have been supplied. Never fabricate them.
 
