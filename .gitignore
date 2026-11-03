@@ -1,0 +1,5 @@
+# Keep source research and participant information off GitHub.
+/01 Projects/Snoof/raw/
+
+# macOS folder display metadata is not part of the project.
+.DS_Store

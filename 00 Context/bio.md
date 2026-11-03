@@ -1,0 +1,3 @@
+# Bio
+
+I'm a Berlin-based senior designer with 18+ years of experience across branding, art direction, visual design, and digital products. My career has taken me from graphic design and editorial work to UI design, design systems, and leading creative teams, while always keeping my hands in the actual design work. These days, I'm exploring how AI, creative coding, and new tools can push my work further, because apparently I still enjoy learning new things.
