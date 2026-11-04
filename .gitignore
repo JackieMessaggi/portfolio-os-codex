@@ -7,3 +7,9 @@
 # Machine-specific Claude Code permissions and private instructions.
 /.claude/settings.local.json
 /CLAUDE.local.md
+
+# Local MCP server configuration (machine-specific).
+/.mcp.json
+
+# Hero study mock not approved for public release.
+/.impeccable/mocks/header-hero-c-v8.png

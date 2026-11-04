@@ -4,78 +4,100 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="Jackie Messaggi portfolio rebuild. Initial structure with placeholder content.">
-  <title>Jackie Messaggi | Portfolio structure preview</title>
+  <meta name="description" content="Portfolio of Jackie Messaggi, Senior Designer working across brand, product, and creative systems. Work in progress.">
+  <meta name="author" content="Jackie Messaggi">
+  <title>Jackie Messaggi | Senior Designer</title>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header wrap">
-    <a class="identity" href="#hero">Jackie Messaggi <span class="small">Logo placeholder</span></a>
-    <nav aria-label="Main navigation">
-      <a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
-    </nav>
+    <a class="monogram" href="#hero"><img src="assets/logo/Jackie_Logo_eggplant_Short.svg" width="56" height="19" alt="Jackie Messaggi, back to the top"></a>
   </header>
+  <!-- Fixed section navigation (interaction-spec.md): bottom bar on desktop, numbered vertical rail on mobile. -->
+  <nav class="section-nav" aria-label="Sections">
+    <div class="section-nav-progress" aria-hidden="true"><span></span></div>
+    <ol>
+      <li><a href="#hero"><span class="nav-num">01</span> <span class="nav-label">Home</span></a></li>
+      <li><a href="#work"><span class="nav-num">02</span> <span class="nav-label">Work</span></a></li>
+      <li><a href="#about"><span class="nav-num">03</span> <span class="nav-label">About</span></a></li>
+      <li><a href="#contact"><span class="nav-num">04</span> <span class="nav-label">Contact</span></a></li>
+    </ol>
+  </nav>
 
   <main id="main">
+    <!-- Hero v03 (approved direction for the November 6 delivery). Headline and supporting sentence are provisional copy. -->
     <section class="hero wrap" id="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Structure preview / Placeholder content</p>
-        <h1 id="hero-title">One character.<br>Many possibilities.</h1>
-        <p class="small">Placeholder headline, not final portfolio copy.</p>
-        <div class="role-preview">
-          <p class="eyebrow">Character customization</p>
-          <h2>Professional role placeholder</h2>
-          <p>A short introduction will connect this stage to my experience. Role names, descriptions, and their order are still to be defined.</p>
-        </div>
-        <ul class="skill-list" aria-label="Skill placeholders">
-          <li>Skill placeholder</li><li>Skill placeholder</li><li>Skill placeholder</li>
-        </ul>
-        <a class="button" href="#work">Explore selected work <span aria-hidden="true">↗</span></a>
+        <h1 id="hero-title">One character. Many possibilities.</h1>
+        <p class="hero-role">Senior Designer <span class="hero-role-sep" aria-hidden="true">| </span><span class="hero-role-spec">Brand, Product &amp; Creative Systems</span></p>
+        <p class="hero-support">18 years of shaping brands, interfaces, and the visual systems that keep them consistent, still very hands-on.</p>
       </div>
-      <figure class="avatar-preview">
-        <div class="avatar-space" role="img" aria-label="Empty placeholder reserved for a future full-body avatar">
-          <span class="avatar-label">Full-body avatar<br>image placeholder</span>
-        </div>
-        <div class="ground-shadow" aria-hidden="true"></div>
-        <figcaption>Character preview / Static placeholder</figcaption>
+      <!-- Avatar slot. A future skin selector swaps the img src and alt and updates data-skin; no interaction is implemented yet. -->
+      <figure class="hero-figure" data-skin="current">
+        <img class="hero-avatar" src="assets/avatar/avatar-dummy-clay.webp" width="585" height="695" alt="Temporary 3D clay figure with glasses, holding an orange cup and a laptop, surrounded by floating shapes (placeholder avatar)">
       </figure>
     </section>
 
-    <section class="section wrap" id="work" aria-labelledby="work-title">
-      <div class="section-heading"><div><p class="eyebrow">01 / Work</p><h2 id="work-title">Selected work</h2></div><p>Project selection and imagery are placeholders.</p></div>
-      <div class="project-grid">
-        <article class="project-card">
-          <div class="project-image beige" role="img" aria-label="Project 01 image placeholder"><span>01</span><span>Project image placeholder</span></div>
-          <div class="project-heading"><h3>Project title placeholder</h3><span aria-hidden="true">01</span></div>
-          <p>Discipline and contribution placeholder.</p>
+    <!-- Selected Work v02 section system. Card images are provisional placeholders. -->
+    <section class="work" id="work" aria-labelledby="work-title">
+      <div class="work-heading wrap">
+        <h2 id="work-title">Selected Work</h2>
+        <p class="work-counter" aria-hidden="true"><span class="work-counter-current">01</span> / 04</p>
+      </div>
+      <div class="work-track" role="region" tabindex="0" aria-label="Selected Work projects">
+        <article class="work-card">
+          <a class="work-card-link" href="snoof.html" aria-label="Snoof, read the case study">
+            <div class="work-media work-media-pending" aria-hidden="true">
+              <span class="work-pending-name">snoof</span>
+              <span class="work-pending-note">Image pending approval</span>
+            </div>
+          </a>
+          <div class="work-meta">
+            <h3 class="visually-hidden">Snoof</h3>
+            <span class="work-index" aria-hidden="true">01</span>
+            <p class="work-disciplines">Self-initiated project · End-to-End Design</p>
+            <p class="work-contribution">I ran the research, made the product and design decisions, and created the identity, with AI supporting analysis and prototyping.</p>
+          </div>
         </article>
-        <article class="project-card">
-          <div class="project-image pink" role="img" aria-label="Project 02 image placeholder"><span>02</span><span>Project image placeholder</span></div>
-          <div class="project-heading"><h3>Project title placeholder</h3><span aria-hidden="true">02</span></div>
-          <p>Discipline and contribution placeholder.</p>
+        <article class="work-card">
+          <img class="work-media" src="assets/work/terrayou-placeholder.jpg" width="1920" height="1200" alt="TerraYou brand identity, website, report, and app screens (placeholder composition)">
+          <div class="work-meta">
+            <h3 class="visually-hidden">TerraYou</h3>
+            <span class="work-index" aria-hidden="true">02</span>
+            <p class="work-disciplines">Brand identity · UI system · Digital product</p>
+            <p class="work-contribution">I led the visual direction, shaping the brand identity and UI foundations across web, reports, and product.</p>
+          </div>
         </article>
-        <article class="project-card">
-          <div class="project-image pink" role="img" aria-label="Project 03 image placeholder"><span>03</span><span>Project image placeholder</span></div>
-          <div class="project-heading"><h3>Project title placeholder</h3><span aria-hidden="true">03</span></div>
-          <p>Discipline and contribution placeholder.</p>
+        <article class="work-card">
+          <img class="work-media" src="assets/work/quiz-bingo-placeholder.jpg" width="1920" height="1200" alt="Quiz Bingo key art and gameplay screens (placeholder composition)">
+          <div class="work-meta">
+            <h3 class="visually-hidden">Quiz Bingo</h3>
+            <span class="work-index" aria-hidden="true">03</span>
+            <p class="work-disciplines">Game UI · Visual direction · Gameplay UX</p>
+            <p class="work-contribution">As Design Lead, I led the visual direction and designed most of the game's interface with a small team.</p>
+          </div>
         </article>
-        <article class="project-card">
-          <div class="project-image beige" role="img" aria-label="Project 04 image placeholder"><span>04</span><span>Project image placeholder</span></div>
-          <div class="project-heading"><h3>Project title placeholder</h3><span aria-hidden="true">04</span></div>
-          <p>Discipline and contribution placeholder.</p>
+        <article class="work-card">
+          <img class="work-media" src="assets/work/damyller-placeholder.jpg" width="1920" height="1200" alt="Damyller Pocket Magazine covers and an editorial spread (placeholder composition)">
+          <div class="work-meta">
+            <h3 class="visually-hidden">Damyller</h3>
+            <span class="work-index" aria-hidden="true">04</span>
+            <p class="work-disciplines">Art direction · Editorial design · Print</p>
+            <p class="work-contribution">I created the Pocket Magazine and art-directed its editions, working with photographers, stylists, and the product team.</p>
+          </div>
         </article>
       </div>
     </section>
 
     <section class="section wrap about" id="about" aria-labelledby="about-title">
-      <div><p class="eyebrow">02 / About</p><h2 id="about-title">A little about me</h2></div>
+      <div><p class="eyebrow">03 / About</p><h2 id="about-title">A little about me</h2></div>
       <div><p class="placeholder-label">Biography placeholder</p><p class="large-copy">This space will introduce my background, how I work, and what I am exploring next.</p><p>The final biography and a dedicated About page will be developed later.</p></div>
     </section>
 
     <section class="section wrap contact" id="contact" aria-labelledby="contact-title">
-      <p class="eyebrow">03 / Contact</p>
+      <p class="eyebrow">04 / Contact</p>
       <h2 id="contact-title">Let’s start a conversation.</h2>
       <p class="placeholder-label">Contact copy placeholder</p>
       <p>Email and professional links will be added here once the contact content is confirmed.</p>

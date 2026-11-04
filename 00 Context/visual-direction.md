@@ -13,22 +13,23 @@ Accent: Signal Orange `#FF5A0A`.
 Secondary surfaces: Warm Cream Beige `#E8D2B5`.
 Occasional decorative detail: Pastel Orchid Pink `#E7B0DE`.
 
-Keep the main avatar area light ivory. Use orange sparingly for selection, progress, and small highlights. Use dark text on colored controls and verify contrast before implementation; orange is not approved as small text on ivory. Beige and pink should remain subordinate to the avatar and project imagery.
+Restricted token, approved November 3, 2026: Deep Orange `#CC4808`, only as a background behind white text (white on `#CC4808` is 4.67:1, WCAG AA for all text sizes). Its first and currently only approved use is the Hero positioning band. `#FF5A0A` remains the original Signal Orange for indicators and small highlights. White `#FFFFFF` is approved only as text on Deep Orange.
+
+Keep the main avatar area light ivory. Use orange sparingly for selection, progress, and small highlights. The Hero positioning band is an intentional exception to this rule; do not extend large orange areas elsewhere without approval. Use dark text on colored controls and verify contrast before implementation; orange is not approved as small text on ivory. Beige and pink should remain subordinate to the avatar and project imagery.
 
 Do not introduce other interface colors. Muted Sage Grey and Deep Burgundy were considered but are not part of the selected direction. Avatar clothing, rendered materials, photographs, and project assets may contain their own colors.
 
 ## Typography
 
-Retain the current portfolio typography and logo. Do not redesign the logo or replace the established typefaces.
+Approved November 3, 2026: Fraunces B, Expressive, is the direction for display headings. This supersedes Dakota Rough for headings and the temporary PNG-title plan. Fraunces A, Editorial, remains a future alternative, not a discarded direction. Preserve all private exploration files.
 
-Read-only Framer inspection confirmed Dakota Rough 400 for the hero name and major page titles, DM Sans 400/500/600/700 for reading and supporting text, and Big Shoulders 700/900 for section headings and graphic text in the old portfolio. The owner has explicitly removed Big Shoulders from the rebuild. Do not use it in any role.
-
-Heading: Dakota Rough, weight 400, for the headline and major section headings. Final sizes remain open.
-Body: DM Sans, weight 400 for reading text, with 500/600/700 available for supporting hierarchy. Final sizes remain open.
-Caption: DM Sans, with a clear hierarchy and readable sizing.
-Do not introduce Dakota Rough Outline or Inter merely because they appear in the old project's font inventory; their use in the rebuild has not been approved.
-Load via: The published portfolio declares Dakota Rough Regular, weight 400, from `https://framerusercontent.com/assets/RX45IJDrRojclxGn1JuRLUJXdYE.woff2`. Its internal PostScript name is `DakotaRough-Regular`, verified by native font rendering. The actual-font specimen is `.impeccable/mocks/dakota-actual-font.png`. This source was used temporarily for the composition study only; local webfont packaging and license documentation remain unresolved. Do not substitute fonts or add remote runtime dependencies without resolving this.
-Do not introduce other font families.
+- Display: Fraunces variable, exact B axes `"wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1`. Use `font-optical-sizing: none` to retain the approved optical setting. Desktop reference: 96 px, line-height 1.04, letter-spacing -0.025em. Do not substitute a generic Black configuration.
+- Role (refined November 3, 2026): Fraunces B is a selective graphic highlight, not the default face for every heading. Planned uses: the Hero headline, the Selected Work title, and the Contact title, each with a different scale and composition. Exception: the Hero headline uses line-height 0.96. Keep Fraunces at 40 px or larger.
+- Body, navigation, About, functional elements, disciplines, contributions, and captions: DM Sans.
+- Dakota Rough: reserved exclusively for the existing logo. Do not redesign the logo, embed Dakota as a webfont, or add its font files to the site or Git. Its Desktop license limitations still apply.
+- Big Shoulders remains excluded. Dakota Rough Outline and Inter are not approved.
+- Local delivery: `02 Site/assets/fonts/Fraunces-variable.woff2`, converted on November 4, 2026 from the official Google Fonts variable TTF without subsetting or renaming (all four axes, 698 glyphs, and the embedded OFL notice kept; only the DSIG signature table is dropped by WOFF2), with `Fraunces-OFL.txt` (SIL Open Font License 1.1). The source TTF is preserved privately in `01 Projects/Portfolio OS/font-sources/`. Source: https://github.com/google/fonts/tree/main/ofl/fraunces. DM Sans remains locally hosted under its OFL license. No remote font runtime dependency.
+- Implemented: the Selected Work title (`clamp(2.5rem, 6.6666667vw, 6rem)`) and the Hero headline (November 4, 2026), both with fixed B axes and `font-display: swap`. Contact is an approved use, not yet implemented.
 
 ## Local Logo Assets
 
@@ -37,7 +38,7 @@ The owner supplied two SVG files in `02 Site/assets/logo/`:
 - `Jackie_Logo_black_Short.svg`
 - `JM_Logo.svg`
 
-Preserve the supplied originals. Visual inspection confirmed that `Jackie_Logo_black_Short.svg` is the JM monogram and `JM_Logo.svg` is the full-name wordmark. The owner approved the monogram for the header and replacing its black fill with the approved Deep Eggplant `#400849`. The derived asset is `Jackie_Logo_eggplant_Short.svg`. Header scale and spacing remain subject to the static composition comparison. The current HTML still contains a logo placeholder; no site implementation is approved at this stage.
+Preserve the supplied originals. Visual inspection confirmed that `Jackie_Logo_black_Short.svg` is the JM monogram and `JM_Logo.svg` is the full-name wordmark. The owner approved the monogram for the header and replacing its black fill with the approved Deep Eggplant `#400849`. The derived asset is `Jackie_Logo_eggplant_Short.svg`. Header scale and spacing remain subject to the static composition comparison. The monogram is implemented in the site header (56 px wide on desktop, 44 px on mobile) since November 4, 2026.
 
 ## Layout
 
@@ -58,9 +59,16 @@ Approved by the portfolio owner on November 3, 2026 as the basis for a static co
 - Use an editorial homepage with restrained character-customization cues. The avatar introduces the multidisciplinary trajectory; selected work provides evidence of design quality.
 - Header: only the approved JM monogram in Deep Eggplant, small and discreet, linking back to the start of the home page. No navigation links in the header and no adjacent name; the header does not need to be fixed. Section navigation moves to the fixed navigation bar described in `interaction-spec.md`. The name appears prominently in the hero. Use orange for interaction, selection, and the active-section indicator without competing with the identity. Approved November 3, 2026; supersedes the earlier Work, About, and Contact header links.
 - Desktop hero: start from a 12-column grid, with five columns for text, one for separation, and six for the full-body avatar. Preserve breathing room and the approved soft ground shadow. Exact widths and spacing remain open.
-- Typography hierarchy: the existing expressive face serves the headline and major section headings; the existing reading face serves role names, descriptions, and captions. Verify the actual font assignments before rendering an identity-faithful study. Keep the professional specialty understandable without following the animation.
-- Skills: a small set of cumulative indicators, without numerical competency bars.
-- Selected Work (approved November 3, 2026): four large, image-led cards for TerraYou, Quiz Bingo, Snoof, and Damyller. Order is not yet defined.
+- Typography hierarchy: follow the Typography section above (Fraunces B as a selective highlight, DM Sans for everything else). Keep the professional specialty understandable without following the animation.
+- Hero, version 03 (approved November 3, 2026 as the direction for the Friday, November 6 delivery; not the definitive version). Reference: `01 Projects/Portfolio OS/Hero Study/hero-study-03.html` and `exports/hero-study-03-1440.png` / `-390.png` (private study).
+  - Headline (provisional copy): “One character. Many possibilities.” in Fraunces B, line-height 0.96, about 104 px at 1440 and 56 px at 390.
+  - Positioning band directly below the headline: `Senior Designer | Brand, Product & Creative Systems`, DM Sans SemiBold, white on Deep Orange `#CC4808`, square corners, no shadow. Desktop: one line, about 22 px. Mobile: compact band, about 18 px, 8 px vertical and 12 px horizontal padding, two lines with the break after “Senior Designer” and the `|` separator hidden.
+  - Short supporting sentence in DM Sans (provisional copy). No CTA and no skill indicators in the Hero.
+  - Two-column composition preserved: text on the left, avatar on the right on desktop; text then avatar on mobile. The avatar remains provisional.
+  - Name (decided November 4, 2026): “Jackie Messaggi” is not the Hero headline; it may appear in the introductory text or in About and stays in the page metadata. Supersedes the earlier two-line hero name.
+  - Implemented in `02 Site/` on November 4, 2026, matching the study at 1440 and 390 px. Between 761 and 1240 px the band uses the compact two-line mobile style, because the one-line band would overlap the avatar.
+- Skills: a small set of cumulative indicators, without numerical competency bars. Removed from the Hero in v03; they belong to the future avatar evolution.
+- Selected Work (approved November 3, 2026): four large, image-led cards for TerraYou, Quiz Bingo, Snoof, and Damyller. Provisional order for the first static study: TerraYou, Quiz Bingo, Snoof, Damyller; it may change after the composition is evaluated.
   - Each card preserves its project's identity, colors, and personality. Custom backgrounds belong to each card's visual composition, not to the Portfolio OS interface palette.
   - Proportions, spacing, and hierarchy follow one consistent card system across the four projects.
   - The project name is integrated into the visual composition and also has an accessible text equivalent.
@@ -69,9 +77,16 @@ Approved by the portfolio owner on November 3, 2026 as the basis for a static co
   - Snoof is identified as an educational project. Damyller is collaborative work; my contribution and the photography credits are documented in its Framer case. Do not invent credits or rebuild a credits list.
   - No final image, mockup, or card composition is approved yet.
 - Evaluate card scale, backgrounds, image framing, and rhythm in a static study before the scroll-driven gallery described in `interaction-spec.md`.
+- Selected Work section system (Exploration 02, approved November 3, 2026):
+  - Section background: Deep Eggplant `#400849`. This applies to the Selected Work section only; the rest of the page keeps the ivory background.
+  - Section title and contribution text in Light Ivory `#F8F5EF`; card numbers, disciplines, and the counter in Warm Cream Beige `#E8D2B5`. Orange only for small indicators.
+  - Card text sits in two columns: the number on the left, content on the right. The number and the first line of disciplines share a baseline and use the same DM Sans Medium, about 13 px, with matching letter spacing.
+  - Contribution text: DM Sans Regular, about 18 px, line-height 1.5, about 12 px below the disciplines, so it reads above the metadata.
+  - Card compositions in the study remain placeholders; individual art direction is a separate stage.
+  - Open: orange as small text on eggplant (used for the active counter number in the study) has not been contrast-checked. The eggplant monogram is not visible on this background; it was left out of the section view because the header is not fixed. A light monogram variant is not approved.
 - About: a short personal introduction with a route to the eventual dedicated About page. Contact: a clear closing section without repeating the resume or introducing another elaborate visual sequence.
 - Mobile: text followed by the avatar, vertically stacked projects with entrance animations, and the compact fixed navigation described in `interaction-spec.md`. Exact motion choreography remains open.
-- Next deliverable: a static composition image before code. Final copy, project selection and order, likeness assets, exact fonts, dimensions, and motion timing remain unresolved. No HTML/CSS, Framer changes, or animation implementation are authorized by this composition approval alone.
+- Final copy, likeness assets, dimensions outside the Hero v03 and Selected Work systems, and motion timing remain unresolved. No HTML/CSS, Framer changes, or animation implementation are authorized by composition approval alone.
 
 ## Avatar Art Direction
 
@@ -104,6 +119,7 @@ The sequence and timing of tattoo additions will be defined later. Do not invent
 - Represent Product Design, AI-assisted workflows, and creative coding as current exploration where appropriate. Do not label these as established specialties without supporting experience.
 - On desktop, large image-led project cards move from right to left in response to continued vertical scrolling, as a horizontal gallery with part of the next project visible. Visitors should not need a separate horizontal scrolling gesture. Return to normal vertical flow after the project sequence. On mobile, projects stack vertically. See `interaction-spec.md`.
 - Priority (approved November 3, 2026): study the Selected Work gallery and the fixed navigation before developing the avatar evolution. The avatar evolution remains a planned future phase, not a discarded idea.
+- Skin selector (planned November 3, 2026, optional P1 for the Friday delivery, not implemented): a simplified first step toward the avatar evolution. See `interaction-spec.md`.
 - Keep titles clear and supporting card information brief. Provide direct navigation to work so viewing every avatar stage is not required.
 - Preserve usable touch and keyboard access. For reduced motion, present readable stages and projects in a normal vertical flow without forced rotation or horizontal movement.
 - Mobile must retain readable text, a recognizable full-body avatar, and easy access to projects. Exact mobile choreography is not yet approved.
@@ -139,3 +155,5 @@ Location placement: The owner requested removing “Berlin, Germany” from the 
 Representative avatar composition test: The owner supplied a second GPT-created image with a smiling, glasses-wearing full-body avatar holding a drink and laptop, accompanied by a cat and floating design and AI objects, and authorized testing it in the existing hero. The resulting static preview is `.impeccable/mocks/header-hero-c-v8.png`. It replaces the mannequin, places the supporting objects around the avatar, and tests the skill indicators in a row below the scene. This is a review proposal, not approval of a final avatar, likeness, tattoo references, object selection, indicator placement, or site implementation. The original supplied image remains the identity reference for this test; generated compositing may introduce differences. Typography and logo rendering remain approximate.
 
 The Work, About, and Contact links shown in v8's header are superseded by the monogram-only header approved on November 3, 2026; v8 itself stays unchanged. The owner subsequently requested leaving v8 as it is for now. Retain it as the current provisional composition reference with the unresolved details above; do not interpret this as final design or implementation approval. See `character-bible.md` for asset status and `project-status.md` for continuity.
+
+Hero Study versions 01 to 03 (November 3, 2026, private, in `01 Projects/Portfolio OS/Hero Study/`) build on v8 with the live fonts. Version 03 is the approved Hero direction for the Friday delivery (see Approved Homepage Composition). It supersedes v8's two-line name, role lines, CTA, and skill row for that delivery; v8 remains the avatar and object reference. Versions 01 and 02 are kept as history.

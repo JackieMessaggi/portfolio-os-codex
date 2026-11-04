@@ -15,12 +15,23 @@ Status: documented interaction intent; detailed choreography and implementation 
 - Header: only the small JM monogram, linking back to the start of the home page. Not fixed. No navigation links in the header.
 - Desktop: a horizontal bar fixed at the bottom, with clickable section names, an active-section indicator, and navigation progress. Selecting a section scrolls smoothly to it.
 - Mobile: a compact vertical bar fixed on the right, with section indicators and the current position. Sections are reachable by touch. It must not cover content or interfere with interaction.
+- Implemented November 4, 2026 (`02 Site/index.html`, `styles.css`, `script.js`): sections Home, Work, About, Contact numbered 01 to 04 (About and Contact eyebrows renumbered). Desktop: centered bottom bar, ivory with a 1 px eggplant border and square corners, DM Sans 13 px uppercase, 44 px targets, 2 px progress line (beige track, Signal Orange fill); active link bold with a 6 px Deep Orange `#CC4808` square and `aria-current`. Mobile (up to 760 px): numbers only on the right edge with a vertical progress line; active number white on Deep Orange; numbers turn ivory over the eggplant Selected Work section; 44 × 44 px targets. Plain anchors work without JavaScript; smooth scrolling only without `prefers-reduced-motion`. Active section = last section whose top passed 35% of the viewport; the page end selects Contact.
+- Known conflicts: on mobile the 44 px targets extend about 24 px over the 20 px gutter outside Selected Work (Selected Work cards now clear the rail); on desktop the bar covers the bottom 75 px of the viewport, including card metadata at some scroll positions. Desktop nav redesign is in the visual backlog.
 
 ### Selected Work gallery (approved direction November 3, 2026)
 
 - Desktop: a horizontal gallery of large cards, with part of the next project visible, driven by continued vertical scrolling. A separate horizontal gesture must not be required. Normal vertical flow resumes after the gallery.
-- Mobile: projects stack vertically, with entrance animations.
+- Mobile: projects stack vertically, with entrance animations. Implemented November 4, 2026 as a functional stack without animations (up to 760 px): full card content, gallery counter hidden, 48 px right padding so cards clear the nav rail. Entrance animations are visual backlog.
 - The exact horizontal mechanic must be validated in an isolated technical proof before it is approved.
+
+### Skin selector (planned November 3, 2026; optional P1; not implemented)
+
+- A simplified first step toward the avatar evolution, inspired by the skin selector pattern in games such as Fortnite. Do not copy any game's identity or assets.
+- Versions of the same avatar represent real professional stages, with different outfits and visual elements. Stages must follow verified experience (see `character-bible.md`).
+- Clickable thumbnails swap the main Hero image. Use real buttons with accessible names and a selected state; keyboard and touch must work.
+- Target three versions; two are enough for the MVP. No 3D rotation and no complex animation.
+- The positioning band stays fixed; it does not change with the selected skin.
+- Only if time and assets allow before Friday, November 6. It must not block the homepage or the Snoof case study.
 
 ### Avatar evolution (future phase)
 
@@ -43,7 +54,7 @@ These requirements describe the intended experience, not evidence that it is imp
 - Final section names and count for the navigation bar.
 - Project order in the gallery.
 - Gallery mechanics: scroll distance, entry and exit, keyboard focus moving into off-screen cards, and how direct links into the gallery behave.
-- Fixed desktop bar versus the lower area of the hero: v8 places skill indicators and the start of Selected Work there, so the hero needs bottom clearance.
+- Fixed desktop bar versus the lower area of the hero: Hero v03 removed the skill row, but Selected Work starts right below, so the hero still needs bottom clearance.
 - Mobile bar versus content width, the full-body avatar, and touch-target size.
 - Performance of large gallery images.
 - Feasibility tests are still required for the gallery, avatar rotation, and outfit transitions. Three.js is optionally approved, but no renderer, asset pipeline, or animation implementation has been selected. Use the stack constraints in `AGENTS.md`.
