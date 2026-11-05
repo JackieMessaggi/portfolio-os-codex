@@ -1,12 +1,17 @@
 # Project Status
 
-Updated: November 4, 2026, by Claude Code. Replace this snapshot; do not append history. Add Active Task / Handoff only for an in-progress or interrupted task, following `agent-collaboration.md`.
+Updated: November 5, 2026, by Claude Code. Replace this snapshot; do not append history. Add Active Task / Handoff only for an in-progress or interrupted task, following `agent-collaboration.md`.
 
 ## Where we are
 
 Working toward the course delivery on Friday, November 6, 2026 (plan in `decision-log.md`). Hero v03, Selected Work, About, Contact, and footer are implemented locally; they are committed (`61184f3`), pushed, and deployed on November 5 (workflow run 41984574625, success; all pages and the 27 referenced assets return 200). Snoof P1 is approved and published with it. Optional: the skin selector (P1). No active task or reserved files.
 
 ## What is ready
+
+Peer review improvements (November 5; scope in `decision-log.md`): homepage Contact copy, layout, and outline icons, mobile "View case study" link and rail labels; Snoof Hero/metadata split, comparison slider, 5B part indicator, details and Tone of Voice in screen context; public build of the self-hosted prototype (`snoof-prototype.html` + `snoof-prototype/`, 6.3 MB, no internal notes, local DM Sans, opens from file:// too); the demo loop in section 7 (64.8 s, 7.5 MB, video-only screen motion, no caption). Validated in headless Chrome at 1440 and 390 px, with and without reduced motion: no overflow, no broken images or failed requests, 5B pin and Origin strip intact, slider and pause toggle work, prototype link and full prototype flow work. Not pushed or deployed. Open for Jackie: the pause toggle versus click-to-pause, and the video weight.
+
+In progress elsewhere, not part of the peer review commit: the Hero skin selector (`index.html` Hero, `script.js` avatar and skin blocks, `styles.css` skin icon rules, new `assets/avatar/` and `assets/hero/` files, the modified `avatar-jackie-idle-alpha.mp4`) and a `.cs-pets` alignment change in `styles.css` of unknown origin. Both stay local and uncommitted.
+
 
 - In `02 Site/`, committed and pushed to `main` on November 4 (commit `ee86c7a`) and deployed to GitHub Pages the same day (workflow run 41860464905, success; all pages and the 27 referenced assets return 200):
   - Monogram header and Hero v03: Fraunces B headline, Deep Orange positioning band, supporting sentence, avatar in a `data-skin` slot ready for a future skin selector (no interaction), currently showing the temporary 3D clay dummy (provisionally approved for Friday). No CTA or skills. Name kept in page metadata and the monogram's accessible name.

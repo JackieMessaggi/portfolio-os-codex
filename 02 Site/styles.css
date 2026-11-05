@@ -139,6 +139,8 @@ h3 { font-size: 1.2rem; line-height: 1.4; }
 .work-index { grid-area: index; color: var(--beige); }
 .work-disciplines { grid-area: disciplines; margin: 0; color: var(--beige); text-transform: uppercase; }
 .work-contribution { grid-area: contribution; margin: .75rem 0 0; max-width: 34em; font-family: "DM Sans", system-ui, sans-serif; font-size: 1.125rem; line-height: 1.5; color: var(--ivory); }
+/* "View case study" text link: mobile only (desktop keeps the image link and horizontal card interaction as they are). */
+.work-cta { display: none; }
 /* About: asymmetric editorial layout on the 12-column grid. Large portrait 1-7, copy 9-12, vertically centered.
    Fraunces B title at a smaller scale than Contact, DM Sans for the text. */
 .about { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; align-items: center; padding-block: 8rem 9rem; scroll-margin-top: 1.5rem; font-family: "DM Sans", system-ui, sans-serif; }
@@ -173,19 +175,24 @@ h3 { font-size: 1.2rem; line-height: 1.4; }
   font-weight: 900;
   font-optical-sizing: none;
   font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1;
-  font-size: clamp(3rem, 7.8vw, 7.5rem);
-  line-height: .98;
+  font-size: clamp(2.75rem, 5vw, 4.75rem);
+  line-height: 1.02;
   letter-spacing: -.025em;
-  max-width: 9.5em;
-  margin: 0 0 6rem;
+  max-width: 11em;
+  margin: 0 0 4rem;
 }
-.contact h2 span { display: block; text-wrap: balance; }
-.contact-body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; align-items: end; }
-.contact-text { grid-column: 1 / 7; }
+.contact h2 { text-wrap: balance; }
+/* Title and supporting line on the left, contact list on the right, vertically centered as one row. */
+.contact-inner { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; align-items: center; }
+.contact-inner > h2 { grid-column: 1 / 8; grid-row: 1; align-self: end; margin-bottom: 1.75rem; }
+.contact-text { align-self: start; }
+.contact-text p:last-child { margin-bottom: 0; }
+.contact-body { display: contents; }
+.contact-text { grid-column: 1 / 8; grid-row: 2; }
 .contact-text p { max-width: 30em; margin: 0 0 1rem; font-size: 1.1875rem; line-height: 1.55; }
 /* Email sits first in the professional links list; the address keeps its natural lowercase. */
 .contact-links .contact-email { text-transform: none; letter-spacing: .01em; font-size: .9375rem; }
-.contact-links { grid-column: 9 / 13; display: grid; margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(232, 210, 181, .35); }
+.contact-links { grid-column: 9 / 13; grid-row: 1 / 3; align-self: center; display: grid; margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(232, 210, 181, .35); }
 .contact-links li { border-bottom: 1px solid rgba(232, 210, 181, .35); }
 .contact-links a, .contact-location { display: flex; align-items: center; gap: .75rem; min-height: 3.25rem; color: var(--beige); font-size: .875rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; }
 .contact-links a:hover { color: var(--ivory); text-decoration: underline; text-underline-offset: .3em; }
@@ -243,7 +250,8 @@ body { padding-bottom: 5.5rem; }
   .about-copy .about-lead { font-size: 1.3125rem; margin-bottom: 1.5rem; }
   .contact { padding-block: 5rem 5.5rem; }
   .contact-inner { padding-right: 1.75rem; }
-  .contact h2 { font-size: 3rem; margin-bottom: 2.5rem; }
+  .contact h2 { font-size: 2.5rem; margin-bottom: 2rem; }
+  .contact-inner { display: block; }
   .contact-body { display: block; }
   .contact-text p { font-size: 1.0625rem; }
   .contact-links { margin-top: 3.5rem; }
@@ -259,6 +267,9 @@ body { padding-bottom: 5.5rem; }
   .work-track { display: grid; gap: 3rem; overflow: visible; padding-inline: 1.25rem 3rem; padding-bottom: 0; }
   .work-card { flex: none; min-width: 0; }
   .work-disciplines { overflow-wrap: anywhere; }
+  .work-meta { grid-template-areas: "index disciplines" ". contribution" ". cta"; }
+  .work-cta { grid-area: cta; justify-self: start; display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; margin-top: .5rem; color: var(--ivory); font-family: "DM Sans", system-ui, sans-serif; font-size: .875rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; text-decoration: underline; text-underline-offset: .3em; }
+  .work-cta:focus-visible { outline: 2px solid var(--ivory); outline-offset: 2px; }
 }
 /* Mobile: numbers-only vertical rail on the right with a vertical progress line.
    Visible numbers sit in the right gutter; 44 px targets extend over the content edge. */
@@ -274,6 +285,9 @@ body { padding-bottom: 5.5rem; }
   .section-nav-progress { order: 2; width: 2px; height: auto; margin-block: .75rem; }
   .section-nav-progress span { width: 100%; height: 100%; transform-origin: top; transform: scaleY(var(--progress, 0)); }
   .section-nav.on-dark a { color: var(--ivory); }
+  /* Clarity: when the active section changes, its name appears next to the number for a moment (script.js adds
+     .show-label), then the rail goes back to numbers only so it does not cover content. */
+  .section-nav.show-label a[aria-current] .nav-label { position: static; width: auto; height: 1.25rem; overflow: visible; clip: auto; order: -1; padding: 0 .25rem 0 .5rem; background: var(--orange-deep); color: #fff; font-size: .6875rem; font-weight: 600; letter-spacing: .08em; line-height: 1.25rem; text-transform: uppercase; }
 }
 
 /* ==========================================================================
@@ -337,7 +351,10 @@ body { padding-bottom: 5.5rem; }
 .cs-hero-copy p { margin-bottom: .75rem; }
 .cs-hero-copy .cs-lede { font-size: clamp(1.25rem, 1.7vw, 1.5rem); }
 .cs-hero-copy .cs-lede { margin-bottom: 1rem; }
-.cs-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 2rem; max-width: 38rem; margin: 1.5rem 0 0; padding-top: 1.125rem; border-top: 1px solid var(--eggplant); }
+/* Metadata band below the Hero: full-width eggplant band, four columns on the grid. */
+.cs-meta-band { padding-block: 2.5rem; background: var(--eggplant); color: var(--ivory); }
+.cs-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem 2rem; margin-block: 0; }
+.cs-meta dt { color: var(--beige); }
 .cs-meta dt { margin-bottom: .375rem; font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .cs-meta dd { margin: 0; font-size: .875rem; line-height: 1.45; }
 
@@ -399,13 +416,36 @@ body { padding-bottom: 5.5rem; }
 .cs-research-foot > :not(:first-child) { grid-column: 7 / 13; margin-bottom: 0; }
 
 /* 04 Problem */
-.cs-problem { padding-block: 8rem; background: var(--ivory); border-top: 1px solid var(--eggplant); }
+.cs-problem { padding-block: 8rem; background: var(--ivory); }
+.cs-problem .cs-copy strong { font-weight: 700; }
 .cs-layers3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; margin: 4rem 0 6rem; padding: 0; list-style: none; counter-reset: layer; }
 .cs-layers3 li { display: flex; flex-direction: column; gap: .75rem; padding-top: 1.25rem; border-top: 2px solid var(--eggplant); font-size: 1.0625rem; counter-increment: layer; }
 .cs-layers3 li::before { content: "0" counter(layer); font-size: .8125rem; font-weight: 600; letter-spacing: .08em; }
 .cs-layer-word { font-size: clamp(2.5rem, 3.2vw, 3rem); }
 .cs-before { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; align-items: center; }
-.cs-before .cs-phone { grid-column: 2 / 6; max-width: 19rem; }
+/* Before/after comparison (v1.0 wireframe over the v2.0 screen). The range input covers the frame, so dragging
+   anywhere (or the arrow keys) moves the divider; script.js keeps --pos in sync. */
+.cs-compare { grid-column: 2 / 6; width: 100%; max-width: 19rem; margin: 0; }
+.cs-compare-frame { position: relative; overflow: hidden; border-radius: 2rem; aspect-ratio: 786 / 1704; background: #fff; }
+.cs-compare-frame img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+.cs-compare-before { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--pos)) 0 0); background: #fff; }
+.cs-compare-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: var(--eggplant); pointer-events: none; }
+.cs-compare-handle::after { content: "‹ ›"; position: absolute; left: 50%; top: 50%; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; transform: translate(-50%, -50%); background: var(--eggplant); color: var(--ivory); border-radius: 50%; font-size: 1.125rem; font-weight: 700; letter-spacing: .1em; }
+.cs-compare-tag { position: absolute; top: .875rem; padding: .25rem .5rem; font-size: .75rem; font-weight: 600; letter-spacing: .08em; line-height: 1.3; pointer-events: none; }
+.cs-compare-tag-before { left: .875rem; background: var(--ivory); color: var(--eggplant); box-shadow: inset 0 0 0 1px var(--eggplant); }
+.cs-compare-tag-after { right: .875rem; background: var(--eggplant); color: var(--ivory); }
+.cs-compare-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; touch-action: pan-y; }
+.cs-compare-frame:has(.cs-compare-range:focus-visible) { outline: 3px solid var(--orange-deep); outline-offset: 3px; }
+.cs-compare figcaption { margin-top: 1rem; font-size: .875rem; line-height: 1.5; text-align: center; }
+.cs-compare figcaption span { display: block; }
+.cs-compare-hint { margin-top: .25rem; font-weight: 600; }
+/* Without JavaScript: the two screens side by side, no divider. */
+html:not(.js) .cs-compare { max-width: 30rem; }
+html:not(.js) .cs-compare-device { background: none; padding: 0; }
+html:not(.js) .cs-compare-frame { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; aspect-ratio: auto; border-radius: 0; background: none; }
+html:not(.js) .cs-compare-before { position: static; order: -1; clip-path: none; }
+html:not(.js) .cs-compare-frame img { border-radius: 1rem; }
+html:not(.js) .cs-compare-handle, html:not(.js) .cs-compare-range, html:not(.js) .cs-compare-hint, html:not(.js) .cs-compare-tag { display: none; }
 .cs-before-copy { grid-column: 7 / 13; font-size: 1.125rem; }
 .cs-marker { font-size: clamp(1.375rem, 2.2vw, 1.75rem); font-weight: 600; line-height: 1.45; letter-spacing: -.01em; }
 .cs-marker { background: linear-gradient(transparent 58%, var(--snoof-peach) 58%); box-decoration-break: clone; -webkit-box-decoration-break: clone; display: inline; }
@@ -452,8 +492,13 @@ body { padding-bottom: 5.5rem; }
 .cs-exploded-layers li { display: grid; grid-row: span 2; grid-template-columns: 2.5rem minmax(0, 1fr); grid-template-rows: subgrid; column-gap: .875rem; align-items: center; }
 .cs-layer-num { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border: 1px solid var(--beige); border-radius: 50%; font-weight: 700; color: var(--beige); }
 .cs-layer-text { font-size: .9375rem; line-height: 1.4; color: var(--beige); }
-.cs-layer-panel { grid-column: 1 / -1; align-self: stretch; display: flex; align-items: center; min-height: 13rem; padding: .5rem; background: #fff; border-radius: 1.25rem; }
-.cs-layer-panel .cs-ui { border-radius: .875rem; }
+.cs-layer-panel { grid-column: 1 / -1; align-self: stretch; overflow: hidden; background: #fff; border-radius: 1.25rem; }
+/* UI detail in its original screen: the whole screen at the same pixel scale, faded, with the detail at full
+   strength on top and the window edges dissolving into the white panel. Values come from the inline custom
+   properties (screen pixels, 786 px wide). */
+.cs-ctx { position: relative; overflow: hidden; aspect-ratio: 786 / var(--win); background: #fff; -webkit-mask-image: linear-gradient(transparent, #000 16%, #000 84%, transparent); mask-image: linear-gradient(transparent, #000 16%, #000 84%, transparent); }
+.cs-ctx-screen { display: block; width: 100%; height: auto; margin-top: calc(-100% * var(--top) / 786); opacity: .3; }
+.cs-ctx-focus { position: absolute; left: calc(100% * var(--fx) / 786); top: calc(100% * var(--fy) / var(--win)); width: calc(100% * var(--fw) / 786); height: auto; }
 .cs-climax { text-wrap: balance; margin: 7rem 0 2.5rem; text-align: center; font-size: clamp(2.75rem, 4.8vw, 4.5rem); line-height: 1; }
 
 /* 06 Meet Snoof */
@@ -497,7 +542,7 @@ body { padding-bottom: 5.5rem; }
 .cs-tone figure { display: grid; grid-template-rows: auto auto 1fr; margin: 0; padding: 2rem; background: var(--beige); border-radius: 1.25rem; }
 .cs-tone-mode { margin: 0; font-size: 2.5rem; }
 .cs-tone-desc { margin: .25rem 0 1.5rem; font-size: .9375rem; }
-.cs-tone figure .cs-ui { align-self: start; padding: .25rem; }
+.cs-tone figure .cs-ctx { align-self: start; border-radius: 1rem; }
 
 /* 07 Prototype */
 .cs-proto { padding-block: 8rem; background: var(--beige); }
@@ -508,8 +553,12 @@ body { padding-bottom: 5.5rem; }
 .cs-steps li::before { content: "0" counter(step); font-size: .8125rem; letter-spacing: .08em; padding-top: .2rem; }
 .cs-video { grid-column: 8 / 12; position: sticky; top: 2rem; margin: 0; }
 .cs-phone-video { position: relative; max-width: 20rem; margin-inline: auto; }
-.cs-video-badge { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: .625rem 1rem; background: var(--eggplant); color: var(--ivory); font-size: .8125rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
-.cs-video figcaption { max-width: 20rem; margin: 1rem auto 0; font-size: .875rem; text-align: center; }
+.cs-demo { display: block; width: 100%; height: auto; aspect-ratio: 640 / 1388; border-radius: 2rem; background: #fff; }
+/* Small pause control (WCAG 2.2.2 for content that moves longer than 5 s); shown only when the loop plays. */
+.cs-demo-toggle { position: absolute; right: .875rem; bottom: .875rem; min-height: 2.75rem; padding: 0 .875rem; border: 0; border-radius: 999px; background: rgba(64, 8, 73, .82); color: var(--ivory); font: 600 .75rem/1 "DM Sans", system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; opacity: 0; transition: opacity .2s ease; }
+.cs-phone-video:hover .cs-demo-toggle, .cs-demo-toggle:focus-visible, .cs-demo-toggle[aria-pressed="true"] { opacity: 1; }
+.cs-demo-toggle:focus-visible { outline: 2px solid var(--orange-deep); outline-offset: 2px; }
+@media (hover: none) { .cs-demo-toggle { opacity: 1; } }
 
 /* 08 Next */
 .cs-next { padding-block: 8rem 5rem; }
@@ -527,6 +576,17 @@ body { padding-bottom: 5.5rem; }
 .cs-end { display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--eggplant); }
 .cs-end-link { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; font-size: clamp(1.25rem, 2vw, 1.75rem); font-weight: 700; letter-spacing: -.01em; text-decoration: none; }
 .cs-end-link:hover { text-decoration: underline; }
+.cs-proto-link { margin-top: 1.5rem; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .25em; }
+
+/* Prototype host page (snoof-prototype.html): centers the exported prototype frame and scales it to fit. */
+.proto-page { padding-bottom: 0; font-family: "DM Sans", system-ui, sans-serif; }
+.proto-bar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-block: 1.25rem; }
+.proto-back { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; font-size: .8125rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; }
+.proto-back:hover { text-decoration: underline; }
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 0 1rem 1.5rem; }
+.proto-frame { --s: 1; width: calc(393px * var(--s)); height: calc(852px * var(--s)); overflow: hidden; border-radius: calc(2rem * var(--s)); box-shadow: 0 0 0 calc(.4rem * var(--s)) var(--eggplant); }
+.proto-frame iframe { display: block; width: 393px; height: 852px; border: 0; transform: scale(var(--s)); transform-origin: 0 0; background: #fff; }
+.proto-note { margin: 1.25rem 0 0; font-size: .875rem; font-style: italic; opacity: .82; text-align: center; }
 
 /* 5B static captions (also the reduced-motion and no-JavaScript fallback). */
 .cs-step-caption { max-width: 17rem; margin: 1.25rem auto 0; text-align: center; font-size: .9375rem; line-height: 1.45; color: var(--ivory); }
@@ -652,6 +712,7 @@ html:not(.js) .case-menu a::before, html:not(.js) .case-menu .nav-num { display:
 @media (max-width: 1100px) {
   .cs-hero-figure { width: 42vw; }
   .cs-exploded-layers { gap: 1.25rem; }
+  .cs-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* Case study: mobile */
@@ -663,12 +724,13 @@ html:not(.js) .case-menu a::before, html:not(.js) .case-menu .nav-num { display:
   /* Mobile: title, then a full-bleed square photo, so both share the first screen. */
   .cs-hero-figure { position: relative; top: auto; bottom: auto; width: auto; margin: 1.5rem -1.25rem 2rem; }
   .cs-hero-figure img { height: auto; aspect-ratio: 1 / 1; object-position: 62% 88%; }
-  .cs-hero-text { padding-block: 1.75rem 4.5rem; }
+  .cs-hero-text { padding-block: 1.75rem 3rem; }
   .cs-project { margin-bottom: 1.25rem; }
   .cs-project img { width: 5rem; }
   .cs-display { font-size: 3.25rem; margin-bottom: 0; }
   .cs-hero-copy { font-size: 1.0625rem; }
-  .cs-meta { gap: 1.25rem; margin-top: 2.5rem; }
+  .cs-meta-band { padding-block: 2rem; }
+  .cs-meta { gap: 1.25rem; }
   .cs-origin, .cs-research, .cs-problem, .cs-dots, .cs-uncertainty, .cs-proto, .cs-next { padding-block: 5rem; }
   .cs-brand { padding-bottom: 5rem; }
   .cs-copy { font-size: 1.0625rem; }
@@ -698,7 +760,8 @@ html:not(.js) .case-menu a::before, html:not(.js) .case-menu .nav-num { display:
   .cs-alts li { grid-row: auto; display: flex; flex-direction: column; gap: .75rem; padding: 1.5rem; }
   .cs-next-grid { gap: 3rem; }
   .cs-layers3 { margin: 2.5rem 0 4rem; }
-  .cs-before .cs-phone { max-width: 15rem; margin: 0 auto 2.5rem; }
+  .cs-compare { max-width: 15rem; margin: 0 auto 2.5rem; }
+  html:not(.js) .cs-compare { max-width: none; }
   .cs-statement { margin-top: 4.5rem; }
   .cs-alts { margin: 2.5rem 0 4rem; }
   .cs-choice-visual { margin-top: 3rem; }

@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Snoof · Saved Assessment</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/snoof/tokens.css">
+<link rel="stylesheet" href="ds/snoof/components/bundle.css">
+<script src="ds/snoof/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="fonts.css">
+<style>
+body{margin:0}
+[data-scr09] .snoof-primary-finding { max-width: none; }
+
+svg.snoof-icon { background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+svg.snoof-icon > path { display: none; }
+svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/5a17696d64aada300e3862b0fdf0c2d7.svg); }
+svg.snoof-icon:has(> path[d^="M6 9.5L12 15.5"]) { --ph: url(./assets/89e1454b27752d22ac58a3f3220a3a72.svg); }
+svg.snoof-icon:has(> path[d^="M6 14.5L12 8.5"]) { --ph: url(./assets/fd076a444125da00f2bce56cbee04db1.svg); }
+svg.snoof-icon:has(> path[d^="M6 6L18 18"]) { --ph: url(./assets/14bef5553e71350a3032d97f3a186146.svg); }
+svg.snoof-icon:has(> path[d^="M5.5 12.5L10 17"]) { --ph: url(./assets/f4dc0311a65d7c61f8058e7e193c8bd5.svg); }
+svg.snoof-icon:has(> path[d^="M17.5 11C17.5"]) { --ph: url(./assets/9049b921979416ee2b11521ad75a308c.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5C4 7.67"]) { --ph: url(./assets/36e4efd505e7191b15d20080f71906a1.svg); }
+svg.snoof-icon:has(> path[d^="M5 19C5 11"]) { --ph: url(./assets/3cab38dfd7960290960118f9d2e6c9c2.svg); }
+svg.snoof-icon:has(> path[d^="M16.2 15.5"]) { --ph: url(./assets/b91b45286903793f5d8bcf2c10337565.svg); }
+svg.snoof-icon:has(> path[d^="M4 11L12 4"]) { --ph: url(./assets/af168cf055a6ac6c9900d94ad8bb2377.svg); }
+svg.snoof-icon:has(> path[d^="M6.5 5L17.5 5"]) { --ph: url(./assets/71d92769e689d60afa493b3213470154.svg); }
+svg.snoof-icon:has(> path[d^="M21 12A9"]) { --ph: url(./assets/4308e2cfbb785e3c639ab18dbd4aeeec.svg); }
+svg.snoof-icon:has(> path[d^="M12 7.5L12 13"]) { --ph: url(./assets/5b81970de0340b150014be09c812c8da.svg); }
+svg.snoof-icon:has(> path[d^="M8 12.3L10.8 15"]) { --ph: url(./assets/8a26ed102bb510bbb0c3b34114c49aaa.svg); }
+svg.snoof-icon:has(> path[d^="M9.6 9.6C"]) { --ph: url(./assets/9bccaa1e974c420416ef47405eb19238.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5L17 8.5"]) { --ph: url(./assets/68a2006d1445269654c7077a1050bfa2.svg); }
+svg.snoof-icon:has(> path[d^="M14.5 12C14.5"]) { --ph: url(./assets/f7dfd99cca32ad53925996515d81b49e.svg); }
+svg.snoof-icon:has(> path[d^="M18 12C18 15.314"]) { --ph: url(./assets/19ddc5ed85133b4330fc607905e0eee0.svg); }
+[style*="scaleX(-1)"] > svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/6b2b7faf67d973c6ba75a8f759c3f89e.svg); transform: scaleX(-1); }
+.ph-glyph { display: inline-block; flex: none; background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+.ph-warning { --ph: url(./assets/018512a459a165a551d190d6ca4b98d3.svg); }
+.ph-retry { --ph: url(./assets/04977d6593de335f5a8428579ff633ed.svg); }
+.ph-edit { --ph: url(./assets/103a367eb80fedd613b7ca5c4d3c0f91.svg); }
+.ph-info { --ph: url(./assets/07e49e2ea3d2498dce5e22f4488fc729.svg); }
+</style>
+</helmet>
+<div data-scr09="true" style="width: 393px; height: {{rootHeight}}; min-height: 852px; box-sizing: border-box; overflow: hidden; position: relative; display: flex; flex-direction: column; background: var(--surface-default); color: var(--text-primary); font-family: var(--font-text);">
+  <div data-scroll-region="true" ref="{{scrollRef}}" style="flex: {{scrollFlex}}; min-height: 0; overflow-y: {{scrollOverflow}}; overflow-x: hidden; position: relative; scrollbar-width: none;">
+
+    <div style="position: relative; height: 340px; overflow: hidden; background: var(--surface-nature);">
+      <img src="{{photo}}" alt="{{photoAlt}}" style="width: 100%; height: 100%; object-fit: {{photoFit}}; object-position: 50% 30%; display: block;">
+      <div style="position: absolute; top: calc(var(--space-48) + var(--space-4)); left: var(--space-16);">
+        <button type="button" aria-label="Back" onClick="{{on.back}}" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); border: 0; padding: 0; border-radius: var(--radius-full); background: color-mix(in srgb, var(--surface-inverse) 40%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <span style="display: flex; transform: scaleX(-1);"><x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-on-inverse)"></x-import></span>
+        </button>
+      </div>
+      <div style="position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: var(--space-4); align-items: flex-start; padding: var(--space-40) var(--space-16) calc(var(--space-32) + var(--space-12)); background: linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--surface-inverse) 28%, transparent) 40%, color-mix(in srgb, var(--surface-inverse) 50%, transparent) 100%); color: var(--text-on-inverse);">
+        <span class="text-caption-1" style="display: inline-flex; align-items: center; gap: var(--space-4); padding: var(--space-2) var(--padding-sm); border-radius: var(--radius-full); color: var(--text-primary); background: var(--surface-default);">
+          <x-import component-from-global-scope="Snoof.Icon" name="Check" size="{{n14}}" color="var(--text-accent)"></x-import><span>Saved check · 27/10/2026</span>
+        </span>
+        <div style="display: flex; flex-direction: column; gap: 0; margin-top: var(--space-4); text-shadow: 0 0 2px color-mix(in srgb, var(--surface-inverse) 70%, transparent), 0 1px 10px color-mix(in srgb, var(--surface-inverse) 65%, transparent);">
+          <h1 class="display-title-1" style="margin: 0; color: var(--text-on-inverse);">{{plantName}}</h1>
+          <span class="text-body" style="font-style: italic; color: var(--text-on-inverse); margin-top: calc(var(--space-2) * -1);">{{sciName}}<span style="font-style: normal;">{{sciCv}}</span></span>
+          <span class="text-footnote" style="color: var(--text-on-inverse); margin-top: var(--space-4);">{{provenance}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="position: relative; margin-top: calc(var(--space-32) * -1); border-radius: var(--radius-xl) var(--radius-xl) 0 0; background: var(--surface-default); padding: var(--space-16) var(--space-16) var(--space-24); display: flex; flex-direction: column; gap: var(--space-16);">
+
+      <sc-if value="{{shieldSaved}}" hint-placeholder-val="{{ false }}">
+        <x-import component-from-global-scope="Snoof.PrimaryFinding" style="display: block;" classification="Insufficient evidence" insufficient-label="Not enough information" statement="We couldn't find enough reliable information to classify this plant for cats." limitation="This doesn't confirm whether the plant is toxic or non-toxic." note="Insufficient information at the time"></x-import>
+      </sc-if>
+      <sc-if value="{{fernSaved}}" hint-placeholder-val="{{ false }}">
+        <x-import component-from-global-scope="Snoof.PrimaryFinding" style="display: block;" classification="Documented non-toxicity" non-toxic-label="Non-toxic to cats" attribution="Listed as non-toxic by the ASPCA Animal Poison Control."></x-import>
+      </sc-if>
+      <sc-if value="{{lilySaved}}" hint-placeholder-val="{{ true }}">
+        <x-import component-from-global-scope="Snoof.PrimaryFinding" style="display: block;" classification="Documented toxicity" toxic-label="Toxic to cats" attribution="ASPCA, Pet Poison Helpline and Cats Protection classify Easter lily as toxic to cats."></x-import>
+      </sc-if>
+      <sc-if value="{{noSource}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary); border: var(--border-width-default) solid var(--border-strong);">
+          <p class="text-body" style="margin: 0;">No relevant source was found for this plant. This confirms neither toxicity nor non-toxicity.</p>
+        </div>
+      </sc-if>
+
+      <section style="display: flex; flex-direction: column; gap: var(--space-4); align-items: flex-start; padding: var(--padding-md) var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+        <span class="text-caption-1" style="color: var(--text-secondary);">Your decision</span>
+        <span class="display-title-3">{{decisionLabel}}</span>
+        <sc-if value="{{reasonView}}" hint-placeholder-val="{{ true }}">
+        <span class="text-callout" style="color: var(--text-secondary);">{{reasonLine}}</span>
+        <div style="display: flex; margin-left: calc(var(--space-12) * -1);">
+          <x-import component-from-global-scope="Snoof.Button" hierarchy="Text" label="Edit reason" on-click="{{on.editReason}}"></x-import>
+        </div>
+        </sc-if>
+        <sc-if value="{{reasonEditing}}" hint-placeholder-val="{{ false }}">
+          <div style="align-self: stretch; margin-top: var(--space-4);"><x-import component-from-global-scope="Snoof.TextField" editable="true" fill="true" label="Reason (optional)" placeholder="Add a note for yourself" max-length="120" value="{{reasonDraft}}" on-input="{{onReason}}" show-helper="false" style="display: block;"></x-import></div>
+          <div style="align-self: stretch; display: flex; gap: var(--space-8); margin-top: var(--space-4);">
+            <x-import component-from-global-scope="Snoof.Button" hierarchy="Text" label="Cancel" style="flex: 1;" fill="{{yes}}" on-click="{{on.cancelReason}}"></x-import>
+            <x-import component-from-global-scope="Snoof.Button" hierarchy="Secondary" label="Save" style="flex: 1;" fill="{{yes}}" on-click="{{on.saveReason}}"></x-import>
+          </div>
+        </sc-if>
+      </section>
+
+      <div role="tablist" aria-label="Saved assessment sections" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); padding: var(--space-4); border-radius: var(--radius-full); background: var(--background-primary);">
+        <button type="button" role="tab" aria-selected="{{tS.sel}}" onClick="{{on.tabSafety}}" class="{{tS.cls}}" style="min-height: var(--size-touch-target-min); border: 0; border-radius: var(--radius-full); background: {{tS.bg}}; box-shadow: {{tS.sh}}; color: var(--text-primary); cursor: pointer;">Pet safety</button>
+        <button type="button" role="tab" aria-selected="{{tI.sel}}" onClick="{{on.tabInfo}}" class="{{tI.cls}}" style="min-height: var(--size-touch-target-min); border: 0; border-radius: var(--radius-full); background: {{tI.bg}}; box-shadow: {{tI.sh}}; color: var(--text-primary); cursor: pointer;">Plant info</button>
+        <button type="button" role="tab" aria-selected="{{tE.sel}}" onClick="{{on.tabEvidence}}" class="{{tE.cls}}" style="min-height: var(--size-touch-target-min); border: 0; border-radius: var(--radius-full); background: {{tE.bg}}; box-shadow: {{tE.sh}}; color: var(--text-primary); cursor: pointer;">Evidence</button>
+      </div>
+
+      <sc-if value="{{tabSafetyOn}}" hint-placeholder-val="{{ true }}">
+      <div role="tabpanel" style="display: flex; flex-direction: column; gap: var(--space-12);">
+        <section style="display: flex; flex-direction: column; gap: var(--space-8);">
+          <h2 class="text-subheadline-emphasized" style="margin: 0; color: var(--text-secondary);">Pet at the time</h2>
+          <div style="display: flex; align-items: center; gap: var(--space-12); padding: var(--padding-md); border-radius: var(--radius-lg); background: var(--surface-nature);">
+            <img src="{{petAvatar}}" alt="" style="width: 56px; height: 56px; flex: none; border-radius: var(--radius-full); object-fit: cover; background: var(--surface-warm);">
+            <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-2);">
+              <span class="text-subheadline-emphasized">{{petLine}}</span>
+              <sc-if value="{{hasPetSub}}" hint-placeholder-val="{{ true }}"><span class="text-footnote" style="color: var(--text-secondary);">{{petSub}}</span></sc-if>
+            </div>
+          </div>
+        </section>
+
+        <sc-if value="{{shieldSaved}}" hint-placeholder-val="{{ false }}">
+          <section style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <h3 class="display-title-3" style="margin: 0;">What was documented</h3>
+            <p class="text-callout" style="margin: 0;">Listed as “caution advised” by Cats Protection. The source doesn't explain what this category means or describe effects.</p>
+          </section>
+          <section style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <h3 class="display-title-3" style="margin: 0;">What wasn't known</h3>
+            <p class="text-callout" style="margin: 0;">For cats, no reliable information was found on classification, effects, severity, plant parts or exposure routes.</p>
+          </section>
+          <div style="display: flex; flex-direction: column; gap: var(--space-8); align-items: flex-start; padding: var(--space-12) var(--space-4) 0; border-top: var(--border-width-default) solid var(--border-subtle);">
+            <span class="text-footnote" style="color: var(--text-secondary);">Evidence status on 27/10/2026</span>
+            <x-import component-from-global-scope="Snoof.EvidenceStatus" state="Single source" label="Single source"></x-import>
+            <p class="text-footnote" style="margin: 0; color: var(--text-secondary);">“Caution advised” listing — Cats Protection only.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{fernSaved}}" hint-placeholder-val="{{ false }}">
+          <section style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <h3 class="display-title-3" style="margin: 0;">What wasn't known</h3>
+            <ul class="text-callout" style="margin: 0; padding-left: var(--space-20); display: flex; flex-direction: column; gap: var(--space-8);">
+              <li>No specific toxic effects were described in the cited ASPCA entry, and no plant-specific route details were provided.</li>
+              <li>The classification is not a guarantee that every exposure is harmless.</li>
+            </ul>
+          </section>
+          <div style="display: flex; flex-direction: column; gap: var(--space-8); align-items: flex-start; padding: var(--space-12) var(--space-4) 0; border-top: var(--border-width-default) solid var(--border-subtle);">
+            <span class="text-footnote" style="color: var(--text-secondary);">Evidence status on 27/10/2026</span>
+            <x-import component-from-global-scope="Snoof.EvidenceStatus" state="Single source" label="Single relevant toxicity source"></x-import>
+            <p class="text-footnote" style="margin: 0; color: var(--text-secondary);">Not cross-checked with another toxicity source.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{lilySaved}}" hint-placeholder-val="{{ true }}">
+          <section style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <h3 class="display-title-3" style="margin: 0;">What wasn't known</h3>
+            <ul class="text-callout" style="margin: 0; padding-left: var(--space-20); display: flex; flex-direction: column; gap: var(--space-8);">
+              <li>Nothing here predicts what will happen to {{petName}}, and habits can change.</li>
+              <li>Not every plant called 'lily' is a true lily. MSD Veterinary Manual lists plants such as peace lily and calla lily as 'imposter' lilies, so the exact plant matters.</li>
+              <li>'Pollen-free' lilies can be marked as safe for cats. International Cat Care says they are still unsafe.</li>
+              <li>Sources differ slightly on which lilies they include.</li>
+              <li>Plant lists from these sources aren't complete.</li>
+            </ul>
+          </section>
+          <div style="display: flex; flex-direction: column; gap: var(--space-8); align-items: flex-start; padding: var(--space-12) var(--space-4) 0; border-top: var(--border-width-default) solid var(--border-subtle);">
+            <span class="text-footnote" style="color: var(--text-secondary);">Evidence status on 27/10/2026</span>
+            <x-import component-from-global-scope="Snoof.EvidenceStatus" state="Sources agree, independence not verified" label="Sources agree on the classification"></x-import>
+            <p class="text-footnote" style="margin: 0; color: var(--text-secondary);">We couldn't verify whether these sources are independent of each other.</p>
+          </div>
+        </sc-if>
+      </div>
+
+      </sc-if>
+
+      <sc-if value="{{infoShield}}" hint-placeholder-val="{{ false }}">
+        <div role="tabpanel" style="display: flex; flex-direction: column; gap: var(--space-12);">
+          <section style="display: flex; flex-direction: column; gap: var(--space-12); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <div style="display: flex; align-items: center; gap: var(--space-8);">
+              <x-import component-from-global-scope="Snoof.Icon" name="Leaf" size="{{n24}}" color="var(--text-accent)"></x-import>
+              <h2 class="display-title-3" style="margin: 0;">About Red shield plant</h2>
+            </div>
+            <p class="text-body" style="margin: 0;">A tropical perennial with heart-shaped foliage and reddish petioles.</p>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2); padding-top: var(--space-12); border-top: var(--border-width-default) solid var(--border-subtle);">
+              <span class="text-subheadline-emphasized">Scientific name</span>
+              <span class="text-body" style="color: var(--text-secondary);"><i>Homalomena rubescens</i> (Roxb.) Kunth</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+              <span class="text-subheadline-emphasized">Family</span>
+              <span class="text-body" style="color: var(--text-secondary);">Araceae</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+              <span class="text-subheadline-emphasized">Common names</span>
+              <span class="text-body" style="color: var(--text-secondary);">Red shield plant, Queen of Hearts</span>
+            </div>
+          </section>
+        </div>
+      </sc-if>
+      <sc-if value="{{infoFern}}" hint-placeholder-val="{{ false }}">
+        <div role="tabpanel" style="display: flex; flex-direction: column; gap: var(--space-12);">
+          <section style="display: flex; flex-direction: column; gap: var(--space-12); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <div style="display: flex; align-items: center; gap: var(--space-8);">
+              <x-import component-from-global-scope="Snoof.Icon" name="Leaf" size="{{n24}}" color="var(--text-accent)"></x-import>
+              <h2 class="display-title-3" style="margin: 0;">About Boston fern</h2>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2); padding-top: var(--space-12); border-top: var(--border-width-default) solid var(--border-subtle);">
+              <span class="text-subheadline-emphasized">Scientific name</span>
+              <span class="text-body" style="color: var(--text-secondary);"><i>Nephrolepis exaltata</i> 'Bostoniensis'</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+              <span class="text-subheadline-emphasized">Common name</span>
+              <span class="text-body" style="color: var(--text-secondary);">Boston fern</span>
+            </div>
+          </section>
+        </div>
+      </sc-if>
+      <sc-if value="{{infoLily}}" hint-placeholder-val="{{ false }}">
+        <div role="tabpanel" style="display: flex; flex-direction: column; gap: var(--space-12);">
+          <section style="display: flex; flex-direction: column; gap: var(--space-12); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <div style="display: flex; align-items: center; gap: var(--space-8);">
+              <x-import component-from-global-scope="Snoof.Icon" name="Leaf" size="{{n24}}" color="var(--text-accent)"></x-import>
+              <h2 class="display-title-3" style="margin: 0;">About Easter lily</h2>
+            </div>
+            <p class="text-body" style="margin: 0;">Easter lily (<i>Lilium longiflorum</i>) is a bulbous perennial known for its large, white, trumpet-shaped flowers. It is commonly grown as an ornamental plant, especially around Easter.</p>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2); padding-top: var(--space-12); border-top: var(--border-width-default) solid var(--border-subtle);">
+              <span class="text-subheadline-emphasized">Scientific name</span>
+              <span class="text-body" style="font-style: italic; color: var(--text-secondary);">Lilium longiflorum</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+              <span class="text-subheadline-emphasized">Common name</span>
+              <span class="text-body" style="color: var(--text-secondary);">Easter lily</span>
+            </div>
+          </section>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{evShield}}" hint-placeholder-val="{{ false }}">
+        <section style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+          <h3 class="display-title-3" style="margin: 0;">Sources &amp; evidence</h3>
+          <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">“Caution advised” listing</span> — Single source · Cats Protection</p>
+          <p class="text-callout" style="margin: 0;">The category isn't defined by the source; no cat-specific effects or exposure routes were documented.</p>
+          <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Botanical identity and care</span> — NParks Flora &amp; Fauna Web, NC State Extension</p>
+          <p class="text-footnote" style="margin: 0; color: var(--text-secondary);">Botanical and horticultural sources are not toxicity evidence.</p>
+        </section>
+      </sc-if>
+      <sc-if value="{{evFern}}" hint-placeholder-val="{{ false }}">
+        <section style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+          <h3 class="display-title-3" style="margin: 0;">Sources &amp; evidence</h3>
+          <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Toxicity classification</span> — Single relevant toxicity source · ASPCA</p>
+          <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Botanical identity</span> — NC State Extension</p>
+          <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Horticultural guidance</span> — RHS, NYBG</p>
+          <p class="text-footnote" style="margin: 0; color: var(--text-secondary);">Botanical and horticultural sources are not counted as independent toxicity confirmation.</p>
+        </section>
+      </sc-if>
+      <sc-if value="{{evLily}}" hint-placeholder-val="{{ false }}">
+        <section style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+          <h3 class="display-title-3" style="margin: 0;">Sources &amp; evidence</h3>
+          <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Classification</span> — Sources agree on this · ASPCA, Pet Poison Helpline, Cats Protection</p>
+          <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Kidney failure</span> — Sources agree on this · ASPCA, MSD Veterinary Manual</p>
+          <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Vase water</span> — Sources agree on this, for lilies · Pet Poison Helpline, International Cat Care</p>
+          <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Pollen through rubbing and licking</span> — Single source · Cats Protection</p>
+          <div style="display: flex; margin-left: calc(var(--space-12) * -1);">
+            <x-import component-from-global-scope="Snoof.Button" hierarchy="Text" label="View details"></x-import>
+          </div>
+        </section>
+      </sc-if>
+
+      <div role="note" style="padding: var(--padding-md) var(--padding-lg); border-radius: var(--radius-lg); background: var(--surface-subtle);">
+        <p class="text-callout" style="margin: 0;">This is what was known on 27/10/2026. Information can change as sources are updated, and this record isn't a safety guarantee.</p>
+      </div>
+
+      <p class="text-footnote" style="margin: 0; color: var(--text-secondary);">{{checkAgainHelper}}</p>
+
+      <sc-if value="{{isFailure}}" hint-placeholder-val="{{ false }}">
+        <div role="alert" style="display: flex; gap: var(--space-12); align-items: flex-start; padding: var(--padding-md); border-radius: var(--radius-lg); background: var(--feedback-system-background);">
+          <span class="ph-glyph ph-warning" aria-hidden="true" style="width: 20px; height: 20px; flex: none; margin-top: var(--space-2); color: var(--feedback-system-icon);"></span>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-4); align-items: flex-start;">
+            <p class="text-callout" style="margin: 0;">Couldn't remove this saved check. It's still in your collection.</p>
+            <button type="button" style="display: inline-flex; align-items: center; gap: var(--space-8); min-height: var(--size-touch-target-min); padding: 0; border: 0; background: transparent; color: var(--feedback-system-foreground); font: inherit; cursor: pointer;">
+              <span class="ph-glyph ph-retry" aria-hidden="true" style="width: 18px; height: 18px; flex: none; color: var(--feedback-system-icon);"></span>
+              <span class="text-subheadline-emphasized">Try again</span>
+            </button>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+    <div aria-hidden="true" style="height: {{footerSpacer}};"></div>
+  </div>
+
+  <div data-glass-footer="true" style="position: {{footerPosition}}; left: 0; right: 0; bottom: 0; flex: none; display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-12) var(--space-24) calc(var(--space-32) + var(--space-2)); background: color-mix(in srgb, var(--surface-default) 45%, transparent); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4); border-top: var(--border-width-default) solid color-mix(in srgb, var(--border-subtle) 60%, transparent);">
+    <x-import component-from-global-scope="Snoof.Button" hierarchy="Primary" label="Check again" fill="{{yes}}" on-click="{{on.checkAgain}}"></x-import>
+    <x-import component-from-global-scope="Snoof.Button" hierarchy="Text" label="Remove" fill="{{yes}}" on-click="{{on.remove}}"></x-import>
+  </div>
+
+  <sc-if value="{{isConfirm}}" hint-placeholder-val="{{ false }}">
+    <div aria-hidden="true" style="position: absolute; inset: 0; background: var(--surface-inverse); opacity: 0.4;"></div>
+    <div role="alertdialog" aria-label="Remove this saved check?" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 270px; display: flex; flex-direction: column; border-radius: var(--radius-sm); overflow: hidden; background: var(--surface-default); box-shadow: var(--elevation-3-sheet);">
+      <div style="padding: var(--padding-lg); text-align: center;">
+        <span class="text-headline">Remove this saved check?</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--border-width-default) solid var(--border-default);">
+        <button type="button" class="text-body" onClick="{{on.cancelRemove}}" style="min-height: var(--size-touch-target-min); border: 0; border-right: var(--border-width-default) solid var(--border-default); background: transparent; color: var(--action-tertiary-text); font-family: var(--font-text); cursor: pointer;">Cancel</button>
+        <button type="button" class="text-body-emphasized" onClick="{{on.confirmRemove}}" style="min-height: var(--size-touch-target-min); border: 0; background: transparent; color: var(--text-primary); font-family: var(--font-text); cursor: pointer;">Remove</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["Default","RemoveConfirm","NoSource","Failure"],"default":"Default"},"capture":{"editor":"boolean","default":false},"$preview":{"width":393,"height":852}}'>
+class Component extends DCLogic {
+  renderVals() {
+
+    const A = this.props.act || null;
+    const PN = (A && this.props.petName) || 'J\u00e4ger';
+    const AN = (A && this.props.activeName) || PN;
+
+    const JSUB = (A && typeof this.props.petSub === 'string') ? this.props.petSub : 'Chews plants · Drinks from vases · Lies or sleeps on plants · Sniffs plants' + (A && this.props.petOther ? ' · ' + this.props.petOther : '');
+    const fire = (k) => (e) => { if (!A || !A[k]) return; if (e && e.preventDefault) e.preventDefault(); A[k](); };
+    const lk = (href) => (A ? '#' : href);
+    const on = {back: fire('back'), checkAgain: fire('checkAgain'), remove: fire('remove'), cancelRemove: fire('cancelRemove'), confirmRemove: fire('confirmRemove'), tabSafety: fire('tabSafety'), tabInfo: fire('tabInfo'), tabEvidence: fire('tabEvidence'), editReason: fire('editReason'), cancelReason: fire('cancelReason'), saveReason: fire('saveReason')};
+    const P = this.props;
+    const ctl = !!A;
+    const tab = ctl && (P.tab === 'evidence' || P.tab === 'info') ? P.tab : 'safety';
+    const tabOf = (k) => ({ sel: tab === k, bg: tab === k ? 'var(--surface-default)' : 'transparent', sh: tab === k ? 'var(--elevation-1-card)' : 'none', cls: tab === k ? 'text-subheadline-emphasized' : 'text-subheadline' });
+    const searched = ctl && P.entry === 'search';
+    const nobeh = ctl && P.pet === 'nobeh';
+    const another = !!A && P.pet === 'another';
+    const temp = !!A && (P.pet === 'temp' || another);
+    if (!this._refFn) this._refFn = (el) => { this._scrollEl = el; };
+    const v = this.props.variant ?? 'Default';
+    const capture = this.props.capture === true || this.props.capture === 'true';
+    const ns = v === 'NoSource';
+    const fern = ctl && P.plant === 'fern' && !ns;
+    const shield = ctl && P.plant === 'shield' && !ns;
+    return {
+      petName: PN,
+      yes: true, n14: 14, n24: 24,
+      tabEvidence: tab === 'evidence', tabSafetyOn: tab === 'safety', tS: tabOf('safety'), tE: tabOf('evidence'), tI: tabOf('info'), infoLily: tab === 'info' && !ns && !fern && !shield, infoFern: tab === 'info' && fern, infoShield: tab === 'info' && shield, evLily: tab === 'evidence' && !fern && !shield, evFern: tab === 'evidence' && fern, evShield: tab === 'evidence' && shield,
+      lilySaved: !ns && !fern && !shield, fernSaved: fern, shieldSaved: shield,
+      reasonEditing: ctl && typeof P.reasonDraft === 'string', reasonView: !(ctl && typeof P.reasonDraft === 'string'), reasonDraft: ctl ? (P.reasonDraft || '') : '',
+      onReason: (e) => { if (A && A.setReason) A.setReason(e.target.value); },
+      on: on, decisionLabel: ctl ? (P.decision || 'Considering') : 'Considering', reasonLine: ctl && P.reason ? 'Reason: ' + P.reason : 'Reason: none added',
+      petAvatar: (nobeh || temp) ? './assets/0d3c5d8c6ff3eda65ae4c2dfdc11d819.webp' : './assets/f5fa5afeba27b05a659116906727db05.webp',
+      petLine: temp ? (another ? 'Another cat · Cat' : 'A cat · for this check only') : nobeh ? 'A cat · behaviours not provided for this check' : '' + PN + ' · Cat', hasPetSub: !nobeh && (temp || !!JSUB), petSub: temp ? (another ? 'Bites, chews or eats plants · Touches or rubs against plants' : 'Bites, chews or eats plants · Touches or rubs against plants · Other') : JSUB,
+      photoFit: ns ? 'contain' : 'cover',
+      footerPosition: capture ? 'relative' : 'absolute',
+      footerSpacer: capture ? '0px' : 'calc(var(--space-64) + var(--space-64) + var(--space-16))',
+      scrollRef: this._refFn,
+      rootHeight: capture ? 'auto' : '852px',
+      scrollFlex: capture ? 'none' : '1 1 0%',
+      scrollOverflow: capture ? 'visible' : 'auto',
+      plantName: ns ? 'Sample plant' : (fern ? 'Boston fern' : shield ? 'Red shield plant' : 'Easter lily'),
+      sciName: ns ? 'Not covered in this prototype' : (fern ? 'Nephrolepis exaltata' : shield ? 'Homalomena rubescens' : 'Lilium longiflorum'),
+      sciCv: fern ? " 'Bostoniensis'" : '',
+      provenance: (ns || searched) ? 'Searched by name · confirmed by you' : 'From your photo · confirmed by you',
+      photo: ns ? './assets/7b6f139cd26eb212507c9f33fa0f569c.webp' : fern ? './assets/31b9d25fd1e264befc2c44be38752950.webp' : shield ? './assets/3f5e32b899a267e6f2283c637cc0fdbf.webp' : (searched ? './assets/8e7686951eee93b967400333c6be835a.webp' : './assets/d3b7042829f983af4e0c06b2e946359c.webp'),
+      photoAlt: ns ? 'No plant photo' : fern ? 'Boston fern reference image' : shield ? 'Red shield plant reference image' : (searched ? 'Easter lily reference image' : 'Your photo of the plant'),
+      hasSource: !ns,
+      noSource: ns,
+      isFailure: v === 'Failure',
+      isConfirm: ctl ? !!P.confirm : v === 'RemoveConfirm',
+
+      checkAgainHelper: (() => {
+        const plantRef = ns ? 'this plant' : (fern ? 'Boston fern' : shield ? 'Red shield plant' : 'Easter lily');
+        const hc = ctl ? (P.homeCtx || 'ps1') : 'ps1';
+        if (hc === 'ps0') return 'Starts a new check of ' + plantRef + '. You’ll choose the pet for this check first.';
+        if (hc === 'ps2') return 'Starts a new check of ' + plantRef + ' for Another cat, the temporary pet for this check.';
+        return 'Starts a new check of ' + plantRef + ' for ' + AN + ', the active pet on Home.';
+      })()
+    };
+  }
+  componentDidMount() {
+
+    const v = this.props.variant ?? 'Default';
+    const capture = this.props.capture === true || this.props.capture === 'true';
+    if (capture || v !== 'Failure') return;
+    [80, 500, 1500].forEach((t) => setTimeout(() => { const el = this._scrollEl; if (el) el.scrollTop = el.scrollHeight; }, t));
+  }
+}
+</script>
+</body>
+</html>

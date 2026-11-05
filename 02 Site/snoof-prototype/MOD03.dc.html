@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Snoof · OS Camera / Gallery Picker</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/snoof/tokens.css">
+<link rel="stylesheet" href="ds/snoof/components/bundle.css">
+<script src="ds/snoof/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="fonts.css">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width: 393px; height: 852px; position: relative; overflow: hidden; background: var(--background-primary); font-family: var(--font-text); color: var(--text-primary);">
+  <dc-import name="SCR02" variant="{{homeVariant}}" hint-size="393px,852px"></dc-import>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: var(--surface-inverse); opacity: 0.4;"></div>
+  <div role="dialog" aria-label="Add a photo of your plant" style="position: absolute; left: var(--space-8); right: var(--space-8); bottom: calc(var(--space-32) + var(--space-2)); display: flex; flex-direction: column; gap: var(--space-8);">
+    <div style="display: flex; flex-direction: column; border-radius: var(--radius-sm); overflow: hidden; background: var(--surface-default);">
+      <span class="text-footnote" style="padding: var(--padding-md) var(--padding-lg); text-align: center; color: var(--text-secondary); border-bottom: var(--border-width-default) solid var(--border-default);">iOS system picker (native) — represented</span>
+      <button type="button" class="text-body" onClick="{{on.take}}" style="min-height: 56px; border: 0; border-bottom: var(--border-width-default) solid var(--border-default); background: transparent; color: var(--action-tertiary-text); font-family: var(--font-text); cursor: pointer;">Take Photo</button>
+      <button type="button" class="text-body" onClick="{{on.library}}" style="min-height: 56px; border: 0; background: transparent; color: var(--action-tertiary-text); font-family: var(--font-text); cursor: pointer;">Choose from Library</button>
+    </div>
+    <button type="button" class="text-body-emphasized" onClick="{{on.cancel}}" style="min-height: 56px; border: 0; border-radius: var(--radius-sm); background: var(--surface-default); color: var(--action-tertiary-text); font-family: var(--font-text); cursor: pointer;">Cancel</button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":393,"height":852}}'>
+class Component extends DCLogic {
+  renderVals() {
+
+    const A = this.props.act || null;
+    const fire = (k) => (e) => { if (!A || !A[k]) return; if (e && e.preventDefault) e.preventDefault(); A[k](); };
+    const lk = (href) => (A ? '#' : href);
+    const on = {take: fire('take'), library: fire('library'), cancel: fire('cancel')};
+    return { on: on, homeVariant: (A && this.props.homeVariant) || 'PS1' };
+  }
+}
+</script>
+</body>
+</html>

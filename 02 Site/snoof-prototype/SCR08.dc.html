@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Snoof · Collection</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/snoof/tokens.css">
+<link rel="stylesheet" href="ds/snoof/components/bundle.css">
+<script src="ds/snoof/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="fonts.css">
+<style>
+body{margin:0}
+
+[data-scr08] .snoof-bottom-navigation { max-width: none; background: color-mix(in srgb, var(--surface-default) 45%, transparent); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4); border-top-color: color-mix(in srgb, var(--border-subtle) 60%, transparent); }
+
+svg.snoof-icon { background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+svg.snoof-icon > path { display: none; }
+svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/5a17696d64aada300e3862b0fdf0c2d7.svg); }
+svg.snoof-icon:has(> path[d^="M6 9.5L12 15.5"]) { --ph: url(./assets/89e1454b27752d22ac58a3f3220a3a72.svg); }
+svg.snoof-icon:has(> path[d^="M6 14.5L12 8.5"]) { --ph: url(./assets/fd076a444125da00f2bce56cbee04db1.svg); }
+svg.snoof-icon:has(> path[d^="M6 6L18 18"]) { --ph: url(./assets/14bef5553e71350a3032d97f3a186146.svg); }
+svg.snoof-icon:has(> path[d^="M5.5 12.5L10 17"]) { --ph: url(./assets/f4dc0311a65d7c61f8058e7e193c8bd5.svg); }
+svg.snoof-icon:has(> path[d^="M17.5 11C17.5"]) { --ph: url(./assets/9049b921979416ee2b11521ad75a308c.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5C4 7.67"]) { --ph: url(./assets/36e4efd505e7191b15d20080f71906a1.svg); }
+svg.snoof-icon:has(> path[d^="M5 19C5 11"]) { --ph: url(./assets/3cab38dfd7960290960118f9d2e6c9c2.svg); }
+svg.snoof-icon:has(> path[d^="M16.2 15.5"]) { --ph: url(./assets/b91b45286903793f5d8bcf2c10337565.svg); }
+svg.snoof-icon:has(> path[d^="M4 11L12 4"]) { --ph: url(./assets/af168cf055a6ac6c9900d94ad8bb2377.svg); }
+svg.snoof-icon:has(> path[d^="M6.5 5L17.5 5"]) { --ph: url(./assets/71d92769e689d60afa493b3213470154.svg); }
+svg.snoof-icon:has(> path[d^="M21 12A9"]) { --ph: url(./assets/4308e2cfbb785e3c639ab18dbd4aeeec.svg); }
+svg.snoof-icon:has(> path[d^="M12 7.5L12 13"]) { --ph: url(./assets/5b81970de0340b150014be09c812c8da.svg); }
+svg.snoof-icon:has(> path[d^="M8 12.3L10.8 15"]) { --ph: url(./assets/8a26ed102bb510bbb0c3b34114c49aaa.svg); }
+svg.snoof-icon:has(> path[d^="M9.6 9.6C"]) { --ph: url(./assets/9bccaa1e974c420416ef47405eb19238.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5L17 8.5"]) { --ph: url(./assets/68a2006d1445269654c7077a1050bfa2.svg); }
+svg.snoof-icon:has(> path[d^="M14.5 12C14.5"]) { --ph: url(./assets/f7dfd99cca32ad53925996515d81b49e.svg); }
+svg.snoof-icon:has(> path[d^="M18 12C18 15.314"]) { --ph: url(./assets/19ddc5ed85133b4330fc607905e0eee0.svg); }
+[style*="scaleX(-1)"] > svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/6b2b7faf67d973c6ba75a8f759c3f89e.svg); transform: scaleX(-1); }
+.ph-glyph { display: inline-block; flex: none; background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+.ph-warning { --ph: url(./assets/018512a459a165a551d190d6ca4b98d3.svg); }
+.ph-retry { --ph: url(./assets/04977d6593de335f5a8428579ff633ed.svg); }
+.ph-edit { --ph: url(./assets/103a367eb80fedd613b7ca5c4d3c0f91.svg); }
+.ph-info { --ph: url(./assets/07e49e2ea3d2498dce5e22f4488fc729.svg); }
+</style>
+</helmet>
+<div data-scr08="true" style="width: 393px; height: 852px; box-sizing: border-box; overflow: hidden; position: relative; display: flex; flex-direction: column; background: var(--surface-default); color: var(--text-primary); font-family: var(--font-text);">
+  <div data-scroll-region="true" style="flex: 1 1 0%; min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: none;">
+    <div style="height: calc(var(--space-48) + var(--space-12));"></div>
+    <div style="display: flex; flex-direction: column; gap: var(--space-16); padding: var(--space-8) var(--space-16) calc(var(--space-64) + var(--space-48) + var(--space-8));">
+      <header style="display: flex; flex-direction: column; gap: var(--space-4); padding: 0 var(--space-8);">
+        <h1 class="display-title-1" style="margin: 0;">Collection</h1>
+        <sc-if value="{{hasItems}}" hint-placeholder-val="{{ true }}">
+          <span class="text-body" style="color: var(--text-secondary);">{{countLabel}}</span>
+        </sc-if>
+      </header>
+
+      <sc-if value="{{isRemoved}}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="display: flex; align-items: center; gap: var(--space-8); padding: var(--padding-md) var(--padding-lg); border-radius: var(--radius-lg); background: var(--surface-nature);">
+          <x-import component-from-global-scope="Snoof.Icon" name="Check" size="{{n20}}"></x-import>
+          <span class="text-body-emphasized">Removed from your collection.</span>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{hasItems}}" hint-placeholder-val="{{ true }}">
+        <div role="tablist" aria-label="Filter by documented classification" style="display: flex; gap: var(--space-8); overflow-x: auto; scrollbar-width: none; margin-right: calc(var(--space-16) * -1); padding-right: var(--space-16);">
+          <button type="button" role="tab" aria-selected="{{tA.sel}}" onClick="{{on.fAll}}" class="{{tA.cls}}" style="min-height: var(--size-touch-target-min); padding: 0 var(--space-16); border: 0; border-radius: var(--radius-full); background: {{tA.bg}}; color: {{tA.fg}}; cursor: pointer; white-space: nowrap;">All plants</button>
+          <button type="button" role="tab" aria-selected="{{tT.sel}}" onClick="{{on.fToxic}}" class="{{tT.cls}}" style="min-height: var(--size-touch-target-min); padding: 0 var(--space-16); border: 0; border-radius: var(--radius-full); background: {{tT.bg}}; color: {{tT.fg}}; cursor: pointer; white-space: nowrap;">Toxic</button>
+          <button type="button" role="tab" aria-selected="{{tN.sel}}" onClick="{{on.fNonToxic}}" class="{{tN.cls}}" style="min-height: var(--size-touch-target-min); padding: 0 var(--space-16); border: 0; border-radius: var(--radius-full); background: {{tN.bg}}; color: {{tN.fg}}; cursor: pointer; white-space: nowrap;">Non-toxic</button>
+          <button type="button" role="tab" aria-selected="{{tU.sel}}" onClick="{{on.fUnclear}}" title="Saved records classified with insufficient evidence only" class="{{tU.cls}}" style="min-height: var(--size-touch-target-min); padding: 0 var(--space-16); border: 0; border-radius: var(--radius-full); background: {{tU.bg}}; color: {{tU.fg}}; cursor: pointer; white-space: nowrap;">Unclear</button>
+        </div>
+        <sc-if value="{{noMatch}}" hint-placeholder-val="{{ false }}">
+          <p role="status" class="text-body" style="margin: 0; padding: var(--space-8) var(--space-8) 0; color: var(--text-secondary);">No plants match this filter.</p>
+        </sc-if>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-12); align-items: start;">
+        <sc-if value="{{showFern}}" hint-placeholder-val="{{ true }}">
+        <a href="{{hOther}}" onClick="{{on.openFern}}" data-opens="SCR-09" aria-label="Boston fern, Non-toxic to cats, {{fernDecision}}" style="display: flex; flex-direction: column; border-radius: var(--radius-lg); overflow: hidden; background: var(--background-primary); color: var(--text-primary); text-decoration: none;">
+          <img src="./assets/28aa3c74e1b57904f7126f303fb8108e.webp" alt="" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; background: var(--surface-nature);">
+          <div style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--space-12);">
+            <div style="display: flex; flex-direction: column; gap: var(--space-2); min-width: 0;">
+              <span class="text-headline">Boston fern</span>
+              <span class="text-footnote" style="color: var(--text-secondary);"><i>Nephrolepis exaltata</i> 'Bostoniensis'</span>
+            </div>
+            <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-8); border-radius: var(--radius-sm); background: var(--finding-non-toxic-background); color: var(--finding-non-toxic-foreground); box-shadow: inset 0 0 0 var(--border-width-default) var(--finding-non-toxic-border);">
+              <x-import component-from-global-scope="Snoof.Icon" name="Finding Non-toxic" size="{{n16}}" color="var(--finding-non-toxic-foreground)"></x-import>
+              <span class="text-caption-1" style="font-weight: 600;">Non-toxic to cats</span>
+            </span>
+            <div style="padding-top: var(--space-8); border-top: var(--border-width-default) solid var(--border-subtle); display: flex; flex-direction: column; gap: var(--space-2);">
+              <span class="text-caption-1" style="color: var(--text-secondary);">Your decision</span>
+              <span class="text-footnote" style="font-weight: 600;">{{fernDecision}}</span>
+            </div>
+          </div>
+        </a>
+        </sc-if>
+        <sc-if value="{{showLily}}" hint-placeholder-val="{{ true }}">
+        <a href="{{hLily}}" onClick="{{on.openLily}}" data-opens="SCR-09" aria-label="Easter lily, Toxic to cats, {{lilyDecision}}" style="display: flex; flex-direction: column; border-radius: var(--radius-lg); overflow: hidden; background: var(--background-primary); color: var(--text-primary); text-decoration: none;">
+          <img src="./assets/d3b7042829f983af4e0c06b2e946359c.webp" alt="" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; background: var(--surface-nature);">
+          <div style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--space-12);">
+            <div style="display: flex; flex-direction: column; gap: var(--space-2); min-width: 0;">
+              <span class="text-headline">Easter lily</span>
+              <span class="text-footnote" style="font-style: italic; color: var(--text-secondary);">Lilium longiflorum</span>
+            </div>
+            <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-8); border-radius: var(--radius-sm); background: var(--finding-toxic-background); color: var(--finding-toxic-foreground); box-shadow: inset 0 0 0 var(--border-width-default) var(--finding-toxic-border);">
+              <x-import component-from-global-scope="Snoof.Icon" name="Finding Toxic" size="{{n16}}" color="var(--finding-toxic-foreground)"></x-import>
+              <span class="text-caption-1" style="font-weight: 600;">Toxic to cats</span>
+            </span>
+            <div style="padding-top: var(--space-8); border-top: var(--border-width-default) solid var(--border-subtle); display: flex; flex-direction: column; gap: var(--space-2);">
+              <span class="text-caption-1" style="color: var(--text-secondary);">Your decision</span>
+              <span class="text-footnote" style="font-weight: 600;">{{lilyDecision}}</span>
+            </div>
+          </div>
+        </a>
+        </sc-if>
+        <sc-if value="{{showShield}}" hint-placeholder-val="{{ true }}">
+        <a href="{{hOther}}" onClick="{{on.openShield}}" data-opens="SCR-09" aria-label="Red shield plant, Insufficient information, {{shieldDecision}}" style="display: flex; flex-direction: column; border-radius: var(--radius-lg); overflow: hidden; background: var(--background-primary); color: var(--text-primary); text-decoration: none;">
+          <img src="./assets/353781f3ee1c2fb2f016f87f93307115.webp" alt="" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; background: var(--surface-nature);">
+          <div style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--space-12);">
+            <div style="display: flex; flex-direction: column; gap: var(--space-2); min-width: 0;">
+              <span class="text-headline">Red shield plant</span>
+              <span class="text-footnote" style="font-style: italic; color: var(--text-secondary);">Homalomena rubescens</span>
+            </div>
+            <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-8); border-radius: var(--radius-sm); background: var(--evidence-insufficient-background); color: var(--evidence-insufficient-foreground); box-shadow: inset 0 0 0 var(--border-width-default) var(--evidence-insufficient-border);">
+              <x-import component-from-global-scope="Snoof.Icon" name="Evidence Limited" size="{{n16}}" color="var(--evidence-insufficient-foreground)"></x-import>
+              <span class="text-caption-1" style="font-weight: 600;">Insufficient information</span>
+            </span>
+            <span class="text-caption-1" style="color: var(--text-secondary);">Insufficient information at the time</span>
+            <div style="padding-top: var(--space-8); border-top: var(--border-width-default) solid var(--border-subtle); display: flex; flex-direction: column; gap: var(--space-2);">
+              <span class="text-caption-1" style="color: var(--text-secondary);">Your decision</span>
+              <span class="text-footnote" style="font-weight: 600;">{{shieldDecision}}</span>
+            </div>
+          </div>
+        </a>
+        </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isEmpty}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: var(--layout-gap-group); padding: var(--space-16) var(--space-8) 0; text-align: center;">
+          <img src="./assets/b51ea83352eb8e8eff888e3d7c2455d0.webp" alt="" style="width: 240px; height: 240px; object-fit: contain;">
+          <p class="text-headline" style="margin: 0;">Nothing saved yet.</p>
+          <p class="text-body" style="margin: 0; color: var(--text-secondary);">Saving a plant is optional. You can save any check, even if you haven't decided.</p>
+          <x-import component-from-global-scope="Snoof.Button" hierarchy="Primary" label="Check a plant" fill="{{yes}}" style="align-self: stretch;" on-click="{{on.checkPlant}}"></x-import>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 0;">
+    <x-import component-from-global-scope="Snoof.BottomNavigation" active="Plants" style="display: block;" on-select="{{onNav}}"></x-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["List","Empty","Removed"],"default":"List"},"$preview":{"width":393,"height":852}}'>
+class Component extends DCLogic {
+  renderVals() {
+
+    const A = this.props.act || null;
+    const fire = (k) => (e) => { if (!A || !A[k]) return; if (e && e.preventDefault) e.preventDefault(); A[k](); };
+    const lk = (href) => (A ? '#' : href);
+    const on = {openLily: fire('openLily'), openFern: fire('openFern'), openShield: fire('openShield'), fAll: fire('fAll'), fToxic: fire('fToxic'), fNonToxic: fire('fNonToxic'), fUnclear: fire('fUnclear'), checkPlant: fire('checkPlant')};
+    const P = this.props;
+    const ctl = !!A;
+    const f = ctl ? (P.filter || 'all') : 'all';
+    const tabOf = (k) => ({ sel: f === k, bg: f === k ? 'var(--surface-inverse)' : 'var(--background-primary)', fg: f === k ? 'var(--text-on-inverse)' : 'var(--text-primary)', cls: f === k ? 'text-subheadline-emphasized' : 'text-subheadline' });
+    const nav = (t) => { if (!A) return; if (t === 'Home' && A.home) A.home(); if (t === 'Pets' && A.navPets) A.navPets(); };
+    const v = this.props.variant ?? 'List';
+    const sLily = (ctl ? !!P.lily : v !== 'Removed') && (f === 'all' || f === 'toxic');
+    const sFern = (ctl ? !!P.fern : true) && (f === 'all' || f === 'nontoxic');
+    const sShield = (ctl ? !!P.shield : true) && (f === 'all' || f === 'unclear');
+    return {
+
+      noMatch: v !== 'Empty' && !(sLily || sFern || sShield),
+      yes: true, no: false, n16: 16, n20: 20,
+      hasItems: v !== 'Empty',
+      isEmpty: v === 'Empty',
+      showLily: (ctl ? !!P.lily : v !== 'Removed') && (f === 'all' || f === 'toxic'),
+      showFern: (ctl ? !!P.fern : true) && (f === 'all' || f === 'nontoxic'),
+      fernDecision: ctl ? (P.fernDecision || 'Considering') : 'Keeping or getting',
+      showShield: (ctl ? !!P.shield : true) && (f === 'all' || f === 'unclear'),
+      shieldDecision: ctl ? (P.shieldDecision || 'Considering') : 'Considering',
+      lilyDecision: ctl ? (P.lilyDecision || 'Considering') : 'Considering',
+      isRemoved: ctl ? !!P.removed : v === 'Removed',
+      countLabel: (ctl ? ((P.shield ? 1 : 0) + (P.lily ? 1 : 0) + (P.fern ? 1 : 0)) : (v !== 'Removed' ? 3 : 2)) + ' plant' + ((ctl ? ((P.shield ? 1 : 0) + (P.lily ? 1 : 0) + (P.fern ? 1 : 0)) : 2) === 1 ? '' : 's') + ' in your collection',
+      on: on, onNav: nav, hLily: lk('SCR09.dc.html'), hOther: lk('SCR09.dc.html'),
+      tA: tabOf('all'), tT: tabOf('toxic'), tN: tabOf('nontoxic'), tU: tabOf('unclear')
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Snoof · Plant Search</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/snoof/tokens.css">
+<link rel="stylesheet" href="ds/snoof/components/bundle.css">
+<script src="ds/snoof/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="fonts.css">
+<style>
+body{margin:0}
+[data-scr03] .snoof-search-field { width: 100%; }
+[data-scr03] [data-carousel]::-webkit-scrollbar { display: none; }
+
+[data-scr03] .snoof-search-field .snoof-field__value, [data-scr03] .snoof-search-field .snoof-field__placeholder { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+[data-scr03] [data-typed="true"] .snoof-search-field.is-focused .snoof-field__placeholder { direction: rtl; text-overflow: clip; }
+
+[data-scr03] [data-typed="true"] .snoof-search-field.is-focused .snoof-field__placeholder { color: var(--text-primary); order: 1; flex: 0 1 auto; }
+[data-scr03] [data-typed="true"] .snoof-search-field.is-focused .snoof-caret { order: 2; margin-left: calc(var(--space-8) * -1 + 1px); }
+
+[data-scr03] [data-ios-kb] button { -webkit-tap-highlight-color: transparent; }
+[data-scr03] [data-ios-kb] button:active { filter: brightness(0.9); }
+
+svg.snoof-icon { background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+svg.snoof-icon > path { display: none; }
+svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/5a17696d64aada300e3862b0fdf0c2d7.svg); }
+svg.snoof-icon:has(> path[d^="M6 9.5L12 15.5"]) { --ph: url(./assets/89e1454b27752d22ac58a3f3220a3a72.svg); }
+svg.snoof-icon:has(> path[d^="M6 14.5L12 8.5"]) { --ph: url(./assets/fd076a444125da00f2bce56cbee04db1.svg); }
+svg.snoof-icon:has(> path[d^="M6 6L18 18"]) { --ph: url(./assets/14bef5553e71350a3032d97f3a186146.svg); }
+svg.snoof-icon:has(> path[d^="M5.5 12.5L10 17"]) { --ph: url(./assets/f4dc0311a65d7c61f8058e7e193c8bd5.svg); }
+svg.snoof-icon:has(> path[d^="M17.5 11C17.5"]) { --ph: url(./assets/9049b921979416ee2b11521ad75a308c.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5C4 7.67"]) { --ph: url(./assets/36e4efd505e7191b15d20080f71906a1.svg); }
+svg.snoof-icon:has(> path[d^="M5 19C5 11"]) { --ph: url(./assets/3cab38dfd7960290960118f9d2e6c9c2.svg); }
+svg.snoof-icon:has(> path[d^="M16.2 15.5"]) { --ph: url(./assets/b91b45286903793f5d8bcf2c10337565.svg); }
+svg.snoof-icon:has(> path[d^="M4 11L12 4"]) { --ph: url(./assets/af168cf055a6ac6c9900d94ad8bb2377.svg); }
+svg.snoof-icon:has(> path[d^="M6.5 5L17.5 5"]) { --ph: url(./assets/71d92769e689d60afa493b3213470154.svg); }
+svg.snoof-icon:has(> path[d^="M21 12A9"]) { --ph: url(./assets/4308e2cfbb785e3c639ab18dbd4aeeec.svg); }
+svg.snoof-icon:has(> path[d^="M12 7.5L12 13"]) { --ph: url(./assets/5b81970de0340b150014be09c812c8da.svg); }
+svg.snoof-icon:has(> path[d^="M8 12.3L10.8 15"]) { --ph: url(./assets/8a26ed102bb510bbb0c3b34114c49aaa.svg); }
+svg.snoof-icon:has(> path[d^="M9.6 9.6C"]) { --ph: url(./assets/9bccaa1e974c420416ef47405eb19238.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5L17 8.5"]) { --ph: url(./assets/68a2006d1445269654c7077a1050bfa2.svg); }
+svg.snoof-icon:has(> path[d^="M14.5 12C14.5"]) { --ph: url(./assets/f7dfd99cca32ad53925996515d81b49e.svg); }
+svg.snoof-icon:has(> path[d^="M18 12C18 15.314"]) { --ph: url(./assets/19ddc5ed85133b4330fc607905e0eee0.svg); }
+[style*="scaleX(-1)"] > svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/6b2b7faf67d973c6ba75a8f759c3f89e.svg); transform: scaleX(-1); }
+.ph-glyph { display: inline-block; flex: none; background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+.ph-warning { --ph: url(./assets/018512a459a165a551d190d6ca4b98d3.svg); }
+.ph-retry { --ph: url(./assets/04977d6593de335f5a8428579ff633ed.svg); }
+.ph-edit { --ph: url(./assets/103a367eb80fedd613b7ca5c4d3c0f91.svg); }
+.ph-info { --ph: url(./assets/07e49e2ea3d2498dce5e22f4488fc729.svg); }
+</style>
+</helmet>
+<div data-scr03="true" style="width: 393px; height: 852px; box-sizing: border-box; overflow: hidden; position: relative; display: flex; flex-direction: column; background: var(--surface-default); color: var(--text-primary); font-family: var(--font-text);">
+  <div style="height: calc(var(--space-48) + var(--space-12)); flex: none;"></div>
+
+  <div style="position: relative; flex: none; display: flex; align-items: center; justify-content: center; min-height: var(--size-touch-target-min); padding: 0 var(--space-12);">
+    <button type="button" aria-label="Back" onClick="{{on.back}}" style="position: absolute; left: var(--space-8); top: 0; width: var(--size-touch-target-min); height: var(--size-touch-target-min); border: 0; padding: 0; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+      <span style="display: flex; transform: scaleX(-1);"><x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-primary)"></x-import></span>
+    </button>
+    <h1 class="display-title-2" style="margin: 0;">Search by name</h1>
+  </div>
+
+  <div style="flex: 1 1 0%; min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; display: flex; flex-direction: column; gap: var(--space-16); padding: var(--space-12) var(--space-24) {{contentPadBottom}};">
+
+    <sc-if value="{{isCorrection}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: var(--space-8);">
+        <span role="status" style="align-self: flex-start; display: inline-flex; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-12); border-radius: var(--radius-full); background: var(--feedback-system-background); color: var(--feedback-system-foreground); border: var(--border-width-default) solid var(--feedback-system-border);">
+          <x-import component-from-global-scope="Snoof.Icon" name="Leaf" size="{{n16}}" color="var(--feedback-system-icon)"></x-import>
+          <span class="text-footnote" style="font-weight: 600;">Correcting the plant</span>
+        </span>
+        <div role="status" style="display: flex; align-items: center; gap: var(--space-12); min-height: var(--size-touch-target-min); padding: var(--padding-sm) var(--padding-md); border-radius: var(--radius-lg); background: var(--surface-nature);">
+          <img src="./assets/f5fa5afeba27b05a659116906727db05.webp" alt="" style="width: 32px; height: 32px; flex: none; border-radius: var(--radius-full); object-fit: cover; background: var(--surface-warm);">
+          <span class="text-subheadline-emphasized" style="flex: 1;">Checking for {{petName}} · Cat</span>
+        </div>
+      </div>
+    </sc-if>
+
+    <div data-typed="{{typed}}" style="position: relative;">
+      <x-import component-from-global-scope="Snoof.SearchField" style="display: block;" placeholder="{{fieldText}}" query="{{query}}" state="{{fieldState}}" on-clear="{{clearField}}"></x-import>
+      <sc-if value="{{canFocus}}" hint-placeholder-val="{{ false }}">
+        <button type="button" aria-label="Search field, edit search" onClick="{{on.focusSearch}}" style="position: absolute; left: 0; top: 0; bottom: 0; right: calc(var(--space-48)); border: 0; padding: 0; background: transparent; cursor: text;"></button>
+      </sc-if>
+    </div>
+
+    <sc-if value="{{isInput}}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{hasCollection}}" hint-placeholder-val="{{ true }}">
+        <section style="display: flex; flex-direction: column; gap: var(--space-8);">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <h2 class="text-headline" style="margin: 0;">Your plant collection</h2>
+            <a href="{{hCollection}}" onClick="{{on.collection}}" class="text-subheadline-emphasized" style="display: flex; align-items: center; gap: var(--space-2); min-height: var(--size-touch-target-min); color: var(--action-tertiary-text); text-decoration: none;">See all<x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n16}}" color="var(--action-tertiary-text)"></x-import></a>
+          </div>
+          <div data-carousel="true" style="display: flex; gap: var(--space-8); overflow-x: auto; scrollbar-width: none; margin-right: calc(var(--space-24) * -1); padding-right: var(--space-24);">
+            <sc-if value="{{cLily}}" hint-placeholder-val="{{ true }}"><a href="{{hSaved}}" onClick="{{on.openLily}}" data-opens="SCR-09" aria-label="Easter lily, saved check" style="flex: none; width: 104px; color: inherit; text-decoration: none; display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-8); border-radius: var(--radius-md); background: var(--background-primary);">
+              <img src="./assets/8e7686951eee93b967400333c6be835a.webp" alt="" style="width: 100%; height: 88px; border-radius: var(--radius-sm); object-fit: cover; background: var(--surface-nature);">
+              <span class="text-footnote" style="font-weight: 600;">Easter lily</span>
+              <span class="text-caption-1" style="font-style: italic; color: var(--text-secondary);">Lilium longiflorum</span>
+            </a></sc-if>
+            <sc-if value="{{cShield}}" hint-placeholder-val="{{ true }}"><a href="{{hSaved}}" onClick="{{on.openShield}}" data-opens="SCR-09" aria-label="Red shield plant, saved check" style="flex: none; width: 104px; color: inherit; text-decoration: none; display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-8); border-radius: var(--radius-md); background: var(--background-primary);">
+              <img src="./assets/353781f3ee1c2fb2f016f87f93307115.webp" alt="" style="width: 100%; height: 88px; border-radius: var(--radius-sm); object-fit: cover; background: var(--surface-nature);">
+              <span class="text-footnote" style="font-weight: 600;">Red shield plant</span>
+              <span class="text-caption-1" style="font-style: italic; color: var(--text-secondary);">Homalomena rubescens</span>
+            </a></sc-if>
+            <sc-if value="{{cFern}}" hint-placeholder-val="{{ true }}"><a href="{{hSaved}}" onClick="{{on.openFern}}" data-opens="SCR-09" aria-label="Boston fern, saved check" style="flex: none; width: 104px; color: inherit; text-decoration: none; display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-8); border-radius: var(--radius-md); background: var(--background-primary);">
+              <img src="./assets/28aa3c74e1b57904f7126f303fb8108e.webp" alt="" style="width: 100%; height: 88px; border-radius: var(--radius-sm); object-fit: cover; background: var(--surface-nature);">
+              <span class="text-footnote" style="font-weight: 600;">Boston fern</span>
+              <span class="text-caption-1" style="color: var(--text-secondary);"><i>Nephrolepis exaltata</i> 'Bostoniensis'</span>
+            </a></sc-if>
+          </div>
+        </section>
+      </sc-if>
+      <x-import component-from-global-scope="Snoof.Button" hierarchy="Secondary" label="Try a photo instead" fill="{{yes}}" on-click="{{on.photo}}"></x-import>
+    </sc-if>
+
+    <sc-if value="{{showResults}}" hint-placeholder-val="{{ true }}">
+      <section style="display: flex; flex-direction: column; gap: var(--space-8);">
+        <h2 class="text-headline" style="margin: 0;">Matching plants</h2>
+        <sc-if value="{{lilyResults}}" hint-placeholder-val="{{ true }}">
+        <a href="{{hConfirm}}" onClick="{{on.pickLily}}" data-opens="MOD-02" aria-label="Easter lily, Lilium longiflorum. Select to confirm" style="display: flex; align-items: center; gap: var(--space-16); padding: var(--padding-md); border-radius: var(--radius-lg); color: var(--text-primary); text-decoration: none; background: var(--background-primary); border: 2px solid transparent">
+              <img src="./assets/8e7686951eee93b967400333c6be835a.webp" alt="" style="width: 96px; height: 96px; flex: none; border-radius: var(--radius-md); object-fit: cover; background: var(--surface-nature);">
+              <span style="flex: 1; display: flex; flex-direction: column; gap: var(--space-4); min-width: 0;">
+                <span class="display-title-3">Easter lily</span>
+                <span class="text-subheadline" style="font-style: italic; color: var(--text-secondary);">Lilium longiflorum</span>
+              </span>
+              <span aria-hidden="true" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); flex: none; border-radius: var(--radius-full); background: var(--surface-default); display: flex; align-items: center; justify-content: center;">
+                <x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-primary)"></x-import>
+              </span>
+            </a>
+        <div style="display: flex; align-items: center; gap: var(--space-16); padding: var(--padding-md); border-radius: var(--radius-lg); color: var(--text-primary); text-decoration: none; background: var(--background-primary); border: 2px solid transparent">
+              <img src="./assets/8bf5c35f966fd73ac9f6c65a1ccb5633.jpg" alt="" style="width: 96px; height: 96px; flex: none; border-radius: var(--radius-md); object-fit: cover; background: var(--surface-nature);">
+              <span style="flex: 1; display: flex; flex-direction: column; gap: var(--space-4); min-width: 0;">
+                <span class="display-title-3">Peace lily</span>
+                <span class="text-subheadline" style="color: var(--text-secondary);"><i>Spathiphyllum</i> spp.</span>
+              </span>
+              <span aria-hidden="true" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); flex: none; border-radius: var(--radius-full); background: var(--surface-default); display: flex; align-items: center; justify-content: center;">
+                <x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-primary)"></x-import>
+              </span>
+            </div>
+        <div style="display: flex; align-items: center; gap: var(--space-16); padding: var(--padding-md); border-radius: var(--radius-lg); color: var(--text-primary); text-decoration: none; background: var(--background-primary); border: 2px solid transparent">
+              <img src="./assets/7dbd385583397568bbddc71035e2827e.jpg" alt="" style="width: 96px; height: 96px; flex: none; border-radius: var(--radius-md); object-fit: cover; background: var(--surface-nature);">
+              <span style="flex: 1; display: flex; flex-direction: column; gap: var(--space-4); min-width: 0;">
+                <span class="display-title-3">Calla lily</span>
+                <span class="text-subheadline" style="font-style: italic; color: var(--text-secondary);">Zantedeschia aethiopica</span>
+              </span>
+              <span aria-hidden="true" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); flex: none; border-radius: var(--radius-full); background: var(--surface-default); display: flex; align-items: center; justify-content: center;">
+                <x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-primary)"></x-import>
+              </span>
+            </div>
+        </sc-if>
+        <sc-if value="{{fernResults}}" hint-placeholder-val="{{ false }}">
+        <a href="{{hConfirm}}" onClick="{{on.pickFern}}" data-opens="MOD-02" aria-label="Boston fern, Nephrolepis exaltata 'Bostoniensis'. Select to confirm" style="display: flex; align-items: center; gap: var(--space-16); padding: var(--padding-md); border-radius: var(--radius-lg); color: var(--text-primary); text-decoration: none; background: var(--background-primary); border: 2px solid transparent">
+              <img src="./assets/28aa3c74e1b57904f7126f303fb8108e.webp" alt="" style="width: 96px; height: 96px; flex: none; border-radius: var(--radius-md); object-fit: cover; background: var(--surface-nature);">
+              <span style="flex: 1; display: flex; flex-direction: column; gap: var(--space-4); min-width: 0;">
+                <span class="display-title-3">Boston fern</span>
+                <span class="text-subheadline" style="color: var(--text-secondary);"><i>Nephrolepis exaltata</i> 'Bostoniensis'</span>
+              </span>
+              <span aria-hidden="true" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); flex: none; border-radius: var(--radius-full); background: var(--surface-default); display: flex; align-items: center; justify-content: center;">
+                <x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-primary)"></x-import>
+              </span>
+            </a>
+        </sc-if>
+        <sc-if value="{{shieldResults}}" hint-placeholder-val="{{ false }}">
+        <a href="{{hConfirm}}" onClick="{{on.pickShield}}" data-opens="MOD-02" aria-label="Red shield plant, Homalomena rubescens. Select to confirm" style="display: flex; align-items: center; gap: var(--space-16); padding: var(--padding-md); border-radius: var(--radius-lg); color: var(--text-primary); text-decoration: none; background: var(--background-primary); border: 2px solid transparent">
+              <img src="./assets/353781f3ee1c2fb2f016f87f93307115.webp" alt="" style="width: 96px; height: 96px; flex: none; border-radius: var(--radius-md); object-fit: cover; background: var(--surface-nature);">
+              <span style="flex: 1; display: flex; flex-direction: column; gap: var(--space-4); min-width: 0;">
+                <span class="display-title-3">Red shield plant</span>
+                <span class="text-subheadline" style="font-style: italic; color: var(--text-secondary);">Homalomena rubescens</span>
+              </span>
+              <span aria-hidden="true" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); flex: none; border-radius: var(--radius-full); background: var(--surface-default); display: flex; align-items: center; justify-content: center;">
+                <x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-primary)"></x-import>
+              </span>
+            </a>
+        </sc-if>
+      </section>
+      <div style="display: flex; justify-content: center;">
+        <x-import component-from-global-scope="Snoof.Button" hierarchy="Text" label="Try a photo instead" on-click="{{on.photo}}"></x-import>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{showIllustration}}" hint-placeholder-val="{{ false }}">
+      <img src="./assets/7b6f139cd26eb212507c9f33fa0f569c.webp" alt="" style="width: 184px; height: 184px; align-self: center; object-fit: contain; display: block; margin-top: var(--space-8);">
+    </sc-if>
+
+    <sc-if value="{{showFeedback}}" hint-placeholder-val="{{ false }}">
+      <div role="{{feedbackRole}}" style="display: flex; gap: var(--space-12); align-items: flex-start; padding: var(--padding-md); border-radius: var(--radius-lg); background: var(--feedback-system-background);">
+        <span class="ph-glyph ph-warning" aria-hidden="true" style="width: 20px; height: 20px; flex: none; margin-top: var(--space-2); color: var(--feedback-system-icon);"></span>
+        <p class="text-callout" style="margin: 0; flex: 1; min-width: 0; overflow-wrap: anywhere; color: var(--text-primary);">{{feedbackText}}</p>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isNoResults}}" hint-placeholder-val="{{ false }}">
+      <x-import component-from-global-scope="Snoof.Button" hierarchy="Secondary" label="Try a photo instead" fill="{{yes}}" on-click="{{on.photo}}"></x-import>
+    </sc-if>
+    <sc-if value="{{isNotIdentified}}" hint-placeholder-val="{{ false }}">
+      <x-import component-from-global-scope="Snoof.Button" hierarchy="Primary" label="Back to Home" fill="{{yes}}" on-click="{{on.home}}"></x-import>
+    </sc-if>
+    <sc-if value="{{isError}}" hint-placeholder-val="{{ false }}">
+      <x-import component-from-global-scope="Snoof.Button" hierarchy="Primary" label="Try again" fill="{{yes}}" on-click="{{on.retry}}"></x-import>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{isInput}}" hint-placeholder-val="{{ false }}">
+    <div data-ios-kb="true" role="group" aria-label="Keyboard" style="position: absolute; left: 0; right: 0; bottom: 0; height: 291px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; padding: 8px 3px 0; background: #d1d4da; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;">
+      <sc-for list="{{kbRows}}" as="row" hint-placeholder-count="4">
+        <div style="display: flex; gap: 6px; height: 42px; padding: 0 {{row.pad}};">
+          <sc-for list="{{row.keys}}" as="k" hint-placeholder-count="10">
+            <button type="button" aria-label="{{k.aria}}" onClick="{{k.press}}" style="flex: {{k.flex}}; min-width: 0; height: 42px; margin: 0; padding: 0; border: 0; border-radius: 5px; background: {{k.bg}}; color: {{k.fg}}; box-shadow: 0 1px 0 #898a8d; font-family: inherit; font-size: {{k.fs}}; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer;">{{k.label}}</button>
+          </sc-for>
+        </div>
+      </sc-for>
+      <div aria-hidden="true" style="flex: 1;"></div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["Results","Input","NoResults","NotIdentified","Error","Correction"],"default":"Results"},"$preview":{"width":393,"height":852}}'>
+class Component extends DCLogic {
+  renderVals() {
+
+    const A = this.props.act || null;
+    const PN = (A && this.props.petName) || 'J\u00e4ger';
+    const fire = (k) => (e) => { if (!A || !A[k]) return; if (e && e.preventDefault) e.preventDefault(); A[k](); };
+    const lk = (href) => (A ? '#' : href);
+    const on = {focusSearch: fire('focusSearch'), back: fire('back'), pickLily: fire('pickLily'), pickFern: fire('pickFern'), openLily: fire('openLily'), openFern: fire('openFern'), openShield: fire('openShield'), pickShield: fire('pickShield'), clear: fire('clear'), photo: fire('photo'), collection: fire('collection'), home: fire('home'), retry: fire('retry')};
+    const v = this.props.variant ?? 'Results';
+    const P = this.props;
+    const ctl = !!A;
+
+    const q = ctl ? (P.query || '') : (v === 'NoResults' ? 'lilly' : (v === 'Input' ? '' : (P.results === 'fern' ? 'fern' : (P.results === 'shield' ? 'red shield' : 'lily'))));
+    const shift = ctl && !!P.shift;
+    const SV = (ctl && P.saved && typeof P.saved === 'object') ? P.saved : {};
+
+    const NAMES = { lily: ['easter lily', 'lilium longiflorum', 'peace lily', 'spathiphyllum', 'calla lily', 'zantedeschia aethiopica'], fern: ['boston fern', "nephrolepis exaltata 'bostoniensis'"], shield: ['red shield plant', 'homalomena rubescens', 'queen of hearts'] };
+    const matchOf = (query) => { const t = String(query || '').trim().toLowerCase().replace(/\s+/g, ' '); const m = {}; if (!t) return m; Object.keys(NAMES).forEach((k) => { m[k] = NAMES[k].some((n) => n.includes(t)); }); return m; };
+    const mq = P.results ? { [P.results]: true } : matchOf(q);
+    const anyQ = !!(mq.lily || mq.fern || mq.shield);
+    const fernQ = !!mq.fern;
+    const shieldQ = !!mq.shield;
+    const lilyQ = !!mq.lily || !anyQ;
+    const press = (c) => () => { if (A && A.searchKey) A.searchKey(c); };
+    const key = (c) => ({ label: shift ? c.toUpperCase() : c, aria: c, press: press(c), flex: '1 1 0', bg: '#ffffff', fg: '#000000', fs: '22px' });
+    const special = (label, aria, c, flex, bg, fg, fs) => ({ label: label, aria: aria, press: press(c), flex: flex, bg: bg, fg: fg, fs: fs });
+    const kbRows = [
+      { pad: '0px', keys: 'qwertyuiop'.split('').map(key) },
+      { pad: '19px', keys: 'asdfghjkl'.split('').map(key) },
+      { pad: '0px', keys: [special('⇧', 'Shift', 'shift', '0 0 42px', shift ? '#ffffff' : '#abb0bc', '#000000', '20px')].concat('zxcvbnm'.split('').map(key), [special('⌫', 'Delete', 'del', '0 0 42px', '#abb0bc', '#000000', '20px')]) },
+      { pad: '0px', keys: [special('123', 'Numbers', 'none', '0 0 87px', '#abb0bc', '#000000', '16px'), special('space', 'Space', 'space', '1 1 0', '#ffffff', '#000000', '16px'), special('search', 'Search', 'enter', '0 0 87px', q.trim() ? '#007aff' : '#abb0bc', q.trim() ? '#ffffff' : '#000000', '16px')] }
+    ];
+    const clearField = () => { if (A && A.clear) A.clear(); };
+    const feedback = {
+      NoResults: "No plants match “" + q + "”. Check the name on the plant's label, or try a photo.",
+      NotIdentified: "We couldn't identify this plant, so we can't show plant-specific information. This doesn't tell you whether it's toxic or not.",
+      Error: "Search isn't working right now. Your search is kept, so you can try again."
+    }[v];
+    return {
+      petName: PN,
+      yes: true,
+      on: on, hCollection: lk('SCR08.dc.html'), hConfirm: lk('MOD02.dc.html'),
+      n16: 16, n20: 20, n24: 24,
+      isCorrection: v === 'Correction',
+      isNoResults: v === 'NoResults',
+      isNotIdentified: v === 'NotIdentified',
+      isError: v === 'Error',
+      isInput: v === 'Input',
+
+      hasCollection: ctl ? !!(SV.lily || SV.fern || SV.shield) : true,
+      cLily: ctl ? !!SV.lily : true, cFern: ctl ? !!SV.fern : true, cShield: ctl ? !!SV.shield : true, hSaved: lk('SCR09.dc.html'),
+      showResults: v === 'Results' || v === 'Correction',
+      fernResults: fernQ, shieldResults: shieldQ, lilyResults: lilyQ,
+      showIllustration: v === 'NoResults' || v === 'NotIdentified',
+      showFeedback: !!feedback,
+      feedbackText: feedback || '',
+      feedbackRole: v === 'Error' ? 'alert' : 'status',
+      query: q,
+      fieldState: v === 'Input' ? 'Focused' : 'Filled',
+
+      fieldText: v === 'Input' && q ? '\u200E' + q + '\u200E' : 'Plant name',
+      typed: v === 'Input' && !!q,
+      canFocus: ctl && v !== 'Input',
+      clearField: clearField,
+      kbRows: kbRows,
+      contentPadBottom: v === 'Input' ? 'calc(291px + var(--space-16))' : 'calc(var(--space-32) + var(--space-2))'
+    };
+  }
+}
+</script>
+</body>
+</html>

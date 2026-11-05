@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Snoof · Sources &amp; Evidence</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/snoof/tokens.css">
+<link rel="stylesheet" href="ds/snoof/components/bundle.css">
+<script src="ds/snoof/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="fonts.css">
+<style>body{margin:0}
+
+svg.snoof-icon { background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+svg.snoof-icon > path { display: none; }
+svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/5a17696d64aada300e3862b0fdf0c2d7.svg); }
+svg.snoof-icon:has(> path[d^="M6 9.5L12 15.5"]) { --ph: url(./assets/89e1454b27752d22ac58a3f3220a3a72.svg); }
+svg.snoof-icon:has(> path[d^="M6 14.5L12 8.5"]) { --ph: url(./assets/fd076a444125da00f2bce56cbee04db1.svg); }
+svg.snoof-icon:has(> path[d^="M6 6L18 18"]) { --ph: url(./assets/14bef5553e71350a3032d97f3a186146.svg); }
+svg.snoof-icon:has(> path[d^="M5.5 12.5L10 17"]) { --ph: url(./assets/f4dc0311a65d7c61f8058e7e193c8bd5.svg); }
+svg.snoof-icon:has(> path[d^="M17.5 11C17.5"]) { --ph: url(./assets/9049b921979416ee2b11521ad75a308c.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5C4 7.67"]) { --ph: url(./assets/36e4efd505e7191b15d20080f71906a1.svg); }
+svg.snoof-icon:has(> path[d^="M5 19C5 11"]) { --ph: url(./assets/3cab38dfd7960290960118f9d2e6c9c2.svg); }
+svg.snoof-icon:has(> path[d^="M16.2 15.5"]) { --ph: url(./assets/b91b45286903793f5d8bcf2c10337565.svg); }
+svg.snoof-icon:has(> path[d^="M4 11L12 4"]) { --ph: url(./assets/af168cf055a6ac6c9900d94ad8bb2377.svg); }
+svg.snoof-icon:has(> path[d^="M6.5 5L17.5 5"]) { --ph: url(./assets/71d92769e689d60afa493b3213470154.svg); }
+svg.snoof-icon:has(> path[d^="M21 12A9"]) { --ph: url(./assets/4308e2cfbb785e3c639ab18dbd4aeeec.svg); }
+svg.snoof-icon:has(> path[d^="M12 7.5L12 13"]) { --ph: url(./assets/5b81970de0340b150014be09c812c8da.svg); }
+svg.snoof-icon:has(> path[d^="M8 12.3L10.8 15"]) { --ph: url(./assets/8a26ed102bb510bbb0c3b34114c49aaa.svg); }
+svg.snoof-icon:has(> path[d^="M9.6 9.6C"]) { --ph: url(./assets/9bccaa1e974c420416ef47405eb19238.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5L17 8.5"]) { --ph: url(./assets/68a2006d1445269654c7077a1050bfa2.svg); }
+svg.snoof-icon:has(> path[d^="M14.5 12C14.5"]) { --ph: url(./assets/f7dfd99cca32ad53925996515d81b49e.svg); }
+svg.snoof-icon:has(> path[d^="M18 12C18 15.314"]) { --ph: url(./assets/19ddc5ed85133b4330fc607905e0eee0.svg); }
+[style*="scaleX(-1)"] > svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/6b2b7faf67d973c6ba75a8f759c3f89e.svg); transform: scaleX(-1); }
+.ph-glyph { display: inline-block; flex: none; background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+.ph-warning { --ph: url(./assets/018512a459a165a551d190d6ca4b98d3.svg); }
+.ph-retry { --ph: url(./assets/04977d6593de335f5a8428579ff633ed.svg); }
+.ph-edit { --ph: url(./assets/103a367eb80fedd613b7ca5c4d3c0f91.svg); }
+.ph-info { --ph: url(./assets/07e49e2ea3d2498dce5e22f4488fc729.svg); }
+</style>
+</helmet>
+<div style="width: 393px; height: {{rootHeight}}; min-height: 852px; position: relative; overflow: hidden; background: var(--background-primary); font-family: var(--font-text); color: var(--text-primary);">
+  <div style="position: absolute; left: 0; top: 0; width: 393px; height: 852px; overflow: hidden;">
+    <sc-if value="{{lily}}" hint-placeholder-val="{{ true }}"><dc-import name="SCR05" variant="Default" hint-size="393px,852px"></dc-import></sc-if>
+    <sc-if value="{{shield}}" hint-placeholder-val="{{ false }}"><dc-import name="SCR07" variant="Default" hint-size="393px,852px"></dc-import></sc-if>
+  </div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: var(--surface-inverse); opacity: 0.4;"></div>
+  <section role="dialog" aria-label="Sources and evidence" style="position: {{sheetPosition}}; left: 0; right: 0; top: {{sheetTop}}; bottom: 0; margin-top: {{sheetMarginTop}}; display: flex; flex-direction: column; background: var(--surface-default); border-radius: var(--radius-xl) var(--radius-xl) 0 0; box-shadow: var(--elevation-3-sheet);">
+    <div style="flex: none; display: flex; justify-content: center; padding: var(--space-8) 0 var(--space-4);">
+      <span style="width: 60px; height: 4px; border-radius: var(--radius-full); background: var(--border-default);"></span>
+    </div>
+    <div style="flex: none; display: flex; align-items: center; gap: var(--space-8); padding: var(--space-4) var(--padding-sm) var(--space-4) var(--padding-lg); border-bottom: var(--border-width-default) solid var(--border-subtle);">
+      <h2 class="display-title-3" style="margin: 0; flex: 1;">Sources &amp; evidence</h2>
+      <x-import component-from-global-scope="Snoof.IconButton" icon="Close" label="Close" on-click="{{onClose}}"></x-import>
+    </div>
+
+    <div data-scroll-region="true" style="flex: {{scrollFlex}}; min-height: 0; overflow-y: {{scrollOverflow}}; overflow-x: hidden; scrollbar-width: none;">
+      <div style="display: flex; flex-direction: column; gap: var(--layout-gap-section); padding: var(--space-16) var(--padding-lg) calc(var(--space-32) + var(--space-32) + var(--space-2));">
+        <sc-if value="{{lily}}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+          <span><span class="text-headline">Easter lily</span> <span class="text-body" style="color: var(--text-secondary);">·</span> <span class="text-body" style="font-style: italic;">Lilium longiflorum</span></span>
+          <span class="text-subheadline" style="color: var(--text-secondary);">Checked for cats</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-12);">
+          <span class="text-subheadline-emphasized" style="color: var(--text-secondary);">Each source</span>
+
+          <article style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-md); border-radius: var(--radius-sm); border: var(--border-width-default) solid var(--border-default);">
+            <span class="text-headline">ASPCA</span>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Supports: </span>classification (toxic to cats); effects including kidney failure, and that death is possible; kidney failure within 48–72 hours; very small exposures, including pollen; cats as the only species known to be affected.</p>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Refers to: </span>Easter lily · cats</p>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Independence: </span>not verified.</p>
+          </article>
+
+          <article style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-md); border-radius: var(--radius-sm); border: var(--border-width-default) solid var(--border-default);">
+            <span class="text-headline">Pet Poison Helpline</span>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Supports: </span>classification; all plant parts; eating any part of a lily from the Lilium genus; water from a vase holding lilies.</p>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Refers to: </span>lilies (Lilium genus) · cats</p>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Independence: </span>counts as one source together with MSD Veterinary Manual.</p>
+          </article>
+
+          <article style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-md); border-radius: var(--radius-sm); border: var(--border-width-default) solid var(--border-default);">
+            <span class="text-headline">Cats Protection</span>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Supports: </span>classification; pollen picked up by rubbing against the flower and licking the fur; advice not to have lilies in the home or garden.</p>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Refers to: </span>lilies · cats</p>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Independence: </span>not verified.</p>
+          </article>
+
+          <article style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-md); border-radius: var(--radius-sm); border: var(--border-width-default) solid var(--border-default);">
+            <span class="text-headline">MSD Veterinary Manual</span>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Supports: </span>kidney failure 2–4 days after ingestion; peace lily and calla lily listed as 'imposter' lilies.</p>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Refers to: </span>lilies · cats</p>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Independence: </span>MSD Veterinary Manual and Pet Poison Helpline count as one source here, because a Pet Poison Helpline toxicologist wrote the MSD chapter.</p>
+          </article>
+
+          <article style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-md); border-radius: var(--radius-sm); border: var(--border-width-default) solid var(--border-default);">
+            <span class="text-headline">International Cat Care</span>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Supports: </span>vase water, for lilies; 'pollen-free' lilies are still unsafe.</p>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Refers to: </span>lilies · cats</p>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Independence: </span>not verified.</p>
+          </article>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-8); align-items: flex-start;">
+          <span class="text-subheadline-emphasized" style="color: var(--text-secondary);">Where sources agree</span>
+          <x-import component-from-global-scope="Snoof.EvidenceStatus" state="Sources agree, independence not verified" label="Sources agree on this"></x-import>
+          <ul class="text-callout" style="margin: 0; padding-left: var(--space-20); display: flex; flex-direction: column; gap: var(--space-4);">
+            <li>Classification — ASPCA, Pet Poison Helpline, Cats Protection</li>
+            <li>Kidney failure — ASPCA, MSD Veterinary Manual</li>
+            <li>Vase water, for lilies — Pet Poison Helpline, International Cat Care</li>
+          </ul>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-8);">
+          <span class="text-subheadline-emphasized" style="color: var(--text-secondary);">Where sources differ</span>
+          <p class="text-callout" style="margin: 0;">Sources differ slightly on which lilies they include.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-8); align-items: flex-start;">
+          <span class="text-subheadline-emphasized" style="color: var(--text-secondary);">Gaps</span>
+          <x-import component-from-global-scope="Snoof.EvidenceStatus" state="Single source" label="Single source"></x-import>
+          <p class="text-callout" style="margin: 0;">Pollen through rubbing and licking — Cats Protection only.</p>
+          <p class="text-callout" style="margin: 0;">Plant lists from these sources aren't complete.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-8);">
+          <span class="text-subheadline-emphasized" style="color: var(--text-secondary);">Remaining limitations</span>
+          <p class="text-callout" style="margin: 0;">We couldn't verify whether these sources are independent of each other.</p>
+          <p class="text-callout" style="margin: 0;">Nothing here predicts what will happen to Jäger, and habits can change.</p>
+        </div>
+              </sc-if>
+        <sc-if value="{{shield}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+          <span><span class="text-headline">Red shield plant</span> <span class="text-body" style="color: var(--text-secondary);">·</span> <span class="text-body" style="font-style: italic;">Homalomena rubescens</span></span>
+          <span class="text-subheadline" style="color: var(--text-secondary);">Checked for cats</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-12);">
+          <span class="text-subheadline-emphasized" style="color: var(--text-secondary);">Each source</span>
+          <article style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-md); border-radius: var(--radius-sm); border: var(--border-width-default) solid var(--border-default);">
+            <span class="text-headline">Cats Protection</span>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Supports: </span>“caution advised” listing.</p>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Refers to: </span>Homalomena rubescens · cats</p>
+            <p class="text-callout" style="margin: 0;"><span class="text-subheadline-emphasized">Independence: </span>single source for this listing.</p>
+          </article>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-8); align-items: flex-start;">
+          <span class="text-subheadline-emphasized" style="color: var(--text-secondary);">Gaps</span>
+          <x-import component-from-global-scope="Snoof.EvidenceStatus" state="Limited information" label="Not enough information"></x-import>
+          <p class="text-callout" style="margin: 0;">The “caution advised” category isn't defined by the source.</p>
+          <p class="text-callout" style="margin: 0;">No cat-specific classification, effects, severity, plant parts or exposure routes are documented in the sources checked.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-8);">
+          <span class="text-subheadline-emphasized" style="color: var(--text-secondary);">Not toxicity evidence</span>
+          <p class="text-callout" style="margin: 0;">NParks Flora &amp; Fauna Web and NC State Extension are used for botanical and horticultural information only. NC State's genus-level toxicity information is pending separate evidence review.</p>
+          <span class="text-caption-1" style="color: var(--text-secondary);">Based on the sources listed. Not yet reviewed by an expert.</span>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"capture":{"editor":"boolean","default":false},"$preview":{"width":393,"height":852}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const capture = this.props.capture === true || this.props.capture === 'true';
+    const A = this.props.act || null;
+    const shield = !!A && this.props.plant === 'shield';
+    return {
+      lily: !shield, shield: shield,
+      onClose: (e) => { if (!A || !A.close) return; if (e && e.preventDefault) e.preventDefault(); A.close(); },
+      rootHeight: capture ? 'auto' : '852px',
+      sheetPosition: capture ? 'relative' : 'absolute',
+      sheetTop: capture ? '0px' : 'calc(var(--space-48) + var(--space-12))',
+      sheetMarginTop: capture ? 'calc(var(--space-48) + var(--space-12))' : '0px',
+      scrollFlex: capture ? 'none' : '1 1 0%',
+      scrollOverflow: capture ? 'visible' : 'auto'
+    };
+  }
+}
+</script>
+</body>
+</html>

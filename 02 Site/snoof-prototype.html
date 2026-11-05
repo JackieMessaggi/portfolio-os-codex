@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Interactive Snoof prototype by Jackie Messaggi, built in Claude Design. Runs on sample data.">
+  <meta name="author" content="Jackie Messaggi">
+  <title>Snoof, Interactive Prototype | Jackie Messaggi</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<!-- Host page for the Snoof prototype (snoof-prototype/, a public build of the Claude Design export with the same
+     screens and behavior). The prototype renders at a fixed 393 × 852 frame; this page only centers that frame and
+     scales it down to fit smaller screens. -->
+<body class="proto-page">
+  <header class="proto-bar wrap">
+    <a class="monogram" href="index.html"><img src="assets/logo/Jackie_Logo_eggplant_Short.svg" width="56" height="19" alt="Jackie Messaggi, home"></a>
+    <a class="proto-back" href="snoof.html#prototype"><span aria-hidden="true">←</span> Snoof case study</a>
+  </header>
+  <main class="proto-stage">
+    <div class="proto-frame">
+      <iframe src="snoof-prototype/Prototype.standalone.html" width="393" height="852" title="Snoof interactive prototype"></iframe>
+    </div>
+    <p class="proto-note">Runs on sample data, and progress resets every session.</p>
+  </main>
+  <script>
+    // Scale the fixed 393 × 852 prototype frame to the space available (never above 100%).
+    (() => {
+      const frame = document.querySelector('.proto-frame');
+      const fit = () => {
+        const stage = document.querySelector('.proto-stage');
+        const avW = stage.clientWidth;
+        const avH = window.innerHeight - stage.getBoundingClientRect().top - 72;
+        const s = Math.min(1, avW / 393, Math.max(0.5, avH / 852));
+        frame.style.setProperty('--s', s.toFixed(4));
+      };
+      fit();
+      window.addEventListener('resize', fit);
+    })();
+  </script>
+</body>
+</html>

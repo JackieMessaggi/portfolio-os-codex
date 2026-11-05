@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Snoof · Avatar Creator</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/snoof/tokens.css">
+<link rel="stylesheet" href="ds/snoof/components/bundle.css">
+<script src="ds/snoof/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="fonts.css">
+<style>
+body{margin:0}
+[data-avc] [data-cat-nav]::-webkit-scrollbar, [data-avc] [data-options]::-webkit-scrollbar { display: none; }
+[data-avc] .snoof-avatar-placeholder { width: 100% !important; height: 100% !important; border-radius: var(--radius-sm); }
+
+svg.snoof-icon { background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+svg.snoof-icon > path { display: none; }
+svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/5a17696d64aada300e3862b0fdf0c2d7.svg); }
+svg.snoof-icon:has(> path[d^="M6 9.5L12 15.5"]) { --ph: url(./assets/89e1454b27752d22ac58a3f3220a3a72.svg); }
+svg.snoof-icon:has(> path[d^="M6 14.5L12 8.5"]) { --ph: url(./assets/fd076a444125da00f2bce56cbee04db1.svg); }
+svg.snoof-icon:has(> path[d^="M6 6L18 18"]) { --ph: url(./assets/14bef5553e71350a3032d97f3a186146.svg); }
+svg.snoof-icon:has(> path[d^="M5.5 12.5L10 17"]) { --ph: url(./assets/f4dc0311a65d7c61f8058e7e193c8bd5.svg); }
+svg.snoof-icon:has(> path[d^="M17.5 11C17.5"]) { --ph: url(./assets/9049b921979416ee2b11521ad75a308c.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5C4 7.67"]) { --ph: url(./assets/36e4efd505e7191b15d20080f71906a1.svg); }
+svg.snoof-icon:has(> path[d^="M5 19C5 11"]) { --ph: url(./assets/3cab38dfd7960290960118f9d2e6c9c2.svg); }
+svg.snoof-icon:has(> path[d^="M16.2 15.5"]) { --ph: url(./assets/b91b45286903793f5d8bcf2c10337565.svg); }
+svg.snoof-icon:has(> path[d^="M4 11L12 4"]) { --ph: url(./assets/af168cf055a6ac6c9900d94ad8bb2377.svg); }
+svg.snoof-icon:has(> path[d^="M6.5 5L17.5 5"]) { --ph: url(./assets/71d92769e689d60afa493b3213470154.svg); }
+svg.snoof-icon:has(> path[d^="M21 12A9"]) { --ph: url(./assets/4308e2cfbb785e3c639ab18dbd4aeeec.svg); }
+svg.snoof-icon:has(> path[d^="M12 7.5L12 13"]) { --ph: url(./assets/5b81970de0340b150014be09c812c8da.svg); }
+svg.snoof-icon:has(> path[d^="M8 12.3L10.8 15"]) { --ph: url(./assets/8a26ed102bb510bbb0c3b34114c49aaa.svg); }
+svg.snoof-icon:has(> path[d^="M9.6 9.6C"]) { --ph: url(./assets/9bccaa1e974c420416ef47405eb19238.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5L17 8.5"]) { --ph: url(./assets/68a2006d1445269654c7077a1050bfa2.svg); }
+svg.snoof-icon:has(> path[d^="M14.5 12C14.5"]) { --ph: url(./assets/f7dfd99cca32ad53925996515d81b49e.svg); }
+svg.snoof-icon:has(> path[d^="M18 12C18 15.314"]) { --ph: url(./assets/19ddc5ed85133b4330fc607905e0eee0.svg); }
+[style*="scaleX(-1)"] > svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/6b2b7faf67d973c6ba75a8f759c3f89e.svg); transform: scaleX(-1); }
+.ph-glyph { display: inline-block; flex: none; background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+.ph-warning { --ph: url(./assets/018512a459a165a551d190d6ca4b98d3.svg); }
+.ph-retry { --ph: url(./assets/04977d6593de335f5a8428579ff633ed.svg); }
+.ph-edit { --ph: url(./assets/103a367eb80fedd613b7ca5c4d3c0f91.svg); }
+.ph-info { --ph: url(./assets/07e49e2ea3d2498dce5e22f4488fc729.svg); }
+</style>
+</helmet>
+<div data-avc="true" style="width: 393px; height: 852px; box-sizing: border-box; overflow: hidden; position: relative; display: flex; flex-direction: column; background: var(--surface-default); color: var(--text-primary); font-family: var(--font-text);">
+  <div style="height: calc(var(--space-48) + var(--space-12)); flex: none;"></div>
+
+  <div style="position: relative; flex: none; display: flex; align-items: center; justify-content: center; min-height: var(--size-touch-target-min);">
+    <a href="{{exitHref}}" onClick="{{on.exitCreator}}" aria-label="Back without saving" style="position: absolute; left: var(--space-8); top: 0; width: var(--size-touch-target-min); height: var(--size-touch-target-min); display: flex; align-items: center; justify-content: center;">
+      <span style="display: flex; transform: scaleX(-1);"><x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-primary)"></x-import></span>
+    </a>
+    <h1 class="display-title-2" style="margin: 0;">Customise avatar</h1>
+  </div>
+
+  <div style="flex: none; margin: var(--space-8) var(--space-16) 0; padding: var(--space-12) var(--space-16) 0; border-radius: var(--radius-xl); background: var(--background-primary); display: flex; flex-direction: column; align-items: center; gap: var(--space-4);">
+    <div style="position: relative; width: 212px; height: 212px; display: flex; align-items: center; justify-content: center;">
+      <div aria-hidden="true" style="position: absolute; left: 16px; top: 16px; width: 180px; height: 180px; border-radius: var(--radius-full); background: var(--surface-warm);"></div>
+      <sc-if value="{{isSingle}}" hint-placeholder-val="{{ false }}">
+        <img src="{{previewSrc}}" alt="{{previewAlt}}" style="position: relative; width: 212px; height: 212px; object-fit: contain; display: block;">
+      </sc-if>
+      <sc-if value="{{isDuo}}" hint-placeholder-val="{{ true }}">
+        <div style="position: relative; display: flex; align-items: flex-end; justify-content: center; gap: 0; width: 300px; height: 212px;">
+          <img src="./assets/6d16d4b742ad7235765e6fdbd45ebd44.webp" alt="Cat" style="width: 150px; height: 200px; object-fit: contain; display: block;">
+          <img src="./assets/4f27b42de08554516bfffef50e4b614d.webp" alt="Dog" style="width: 150px; height: 200px; object-fit: contain; display: block;">
+        </div>
+      </sc-if>
+    </div>
+    <div style="height: calc(var(--space-32) + var(--space-2)); display: flex; align-items: center; justify-content: center;">
+      <sc-if value="{{hasGap}}" hint-placeholder-val="{{ false }}">
+        <p class="text-caption-1" style="margin: 0; text-align: center; color: var(--text-secondary);">{{gapText}}</p>
+      </sc-if>
+    </div>
+  </div>
+
+  <div data-cat-nav="true" role="tablist" aria-label="Avatar categories" style="flex: none; display: flex; gap: var(--space-4); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; scroll-behavior: smooth; overscroll-behavior-x: contain; touch-action: pan-x; scroll-padding: 0 var(--space-16); padding: var(--space-12) var(--space-16) var(--space-4);">
+    <sc-for list="{{cats}}" as="c" hint-placeholder-count="7">
+      <button type="button" role="tab" aria-selected="{{c.active}}" aria-disabled="{{c.disabled}}" onClick="{{c.go}}" data-cat-index="{{c.index}}" class="text-subheadline-emphasized" style="flex: none; white-space: nowrap; display: flex; align-items: center; gap: var(--space-4); min-height: var(--size-touch-target-min); padding: 0 var(--space-12); border: 0; border-radius: var(--radius-full); background: {{c.bg}}; color: {{c.fg}}; font-family: var(--font-text); cursor: {{c.cursor}};">
+        <sc-if value="{{c.done}}" hint-placeholder-val="{{ false }}">
+          <x-import component-from-global-scope="Snoof.Icon" name="Check" size="{{n16}}" color="{{c.fg}}"></x-import>
+        </sc-if>
+        <span>{{c.label}}</span>
+      </button>
+    </sc-for>
+  </div>
+
+  <p class="text-footnote" style="flex: none; margin: 0; padding: var(--space-4) var(--space-24) var(--space-8); color: var(--text-secondary);">{{guideText}}</p>
+
+  <div data-options="true" style="flex: 1 1 0%; min-height: 0; overflow-y: scroll; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; touch-action: pan-y; scrollbar-width: none; padding: 0 var(--space-16) calc(var(--space-64) + var(--space-64) + var(--space-48));">
+    <div role="radiogroup" aria-label="{{activeLabel}}" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-8);">
+      <sc-for list="{{opts}}" as="o" hint-placeholder-count="8">
+        <button type="button" role="radio" aria-checked="{{o.selected}}" onClick="{{o.pick}}" style="display: flex; flex-direction: column; align-items: center; gap: var(--space-4); padding: var(--space-4); border: 0; border-radius: var(--radius-md); background: transparent; font-family: var(--font-text); color: var(--text-primary); cursor: pointer;">
+          <span style="width: 72px; height: 72px; box-sizing: border-box; border-radius: var(--radius-md); background: var(--background-primary); box-shadow: {{o.ring}}; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+            <sc-if value="{{o.hasThumb}}" hint-placeholder-val="{{ true }}">
+              <img src="{{o.thumb}}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            </sc-if>
+            <sc-if value="{{o.noThumb}}" hint-placeholder-val="{{ false }}">
+              <span title="Thumbnail not available in this prototype" style="width: 64px; height: 64px; display: block;"><x-import component-from-global-scope="Snoof.AvatarPlaceholder" size="64px"></x-import></span>
+            </sc-if>
+          </span>
+          <span class="text-caption-1" style="text-align: center; font-weight: {{o.weight}};">{{o.label}}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div data-glass-footer="true" style="position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-12) var(--space-24) calc(var(--space-32) + var(--space-2)); background: color-mix(in srgb, var(--surface-default) 45%, transparent); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4); border-top: var(--border-width-default) solid color-mix(in srgb, var(--border-subtle) 60%, transparent);">
+    <sc-if value="{{canSave}}" hint-placeholder-val="{{ false }}">
+      <a href="{{saveHref}}" onClick="{{on.saveAvatar}}" aria-label="Save avatar" style="display: block; text-decoration: none;">
+        <x-import component-from-global-scope="Snoof.Button" hierarchy="Primary" label="Save avatar" fill="{{yes}}"></x-import>
+      </a>
+    </sc-if>
+    <sc-if value="{{cannotSave}}" hint-placeholder-val="{{ true }}">
+      <x-import component-from-global-scope="Snoof.Button" hierarchy="Primary" label="Save avatar" state="Disabled" fill="{{yes}}"></x-import>
+    </sc-if>
+    <a href="{{exitHref}}" onClick="{{on.exitCreator}}" aria-label="Cancel without saving" style="display: block; text-decoration: none;">
+      <x-import component-from-global-scope="Snoof.Button" hierarchy="Text" label="Cancel" fill="{{yes}}"></x-import>
+    </a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"context":{"editor":"enum","options":["Setup","Profile","Edit"],"default":"Setup"},"preset":{"editor":"enum","options":["Start","Ready"],"default":"Start"},"$preview":{"width":393,"height":852}}'>
+const B = id => '/_blob/' + id;
+
+const CATS = [
+  { key: 'pet', label: 'Pet', req: 'cat', opts: [
+    { id: 'cat', label: 'Cat', thumb: '1c5cd65777d130c534e884c6e4a834f7', main: '6d16d4b742ad7235765e6fdbd45ebd44' },
+    { id: 'dog', label: 'Dog', thumb: '75dc6773d5be169e6821fd2f98ebe77a', main: '4f27b42de08554516bfffef50e4b614d' } ] },
+  { key: 'body', label: 'Body', req: 'tall-slim', opts: [
+    { id: 'tall-slim', label: 'Tall slim', thumb: 'a0faa83c600aea63663fa70013a4ea4b' , main: '1fa1c0ad1dbef146f1d00c1ef248f0be' },
+    { id: 'medium', label: 'Medium', thumb: 'bd5e042e02da4d5ec4e388e613b8b27a', main: '2369f9306d68ed6e97c3647b6cf309cf' },
+    { id: 'small-compact', label: 'Small compact', thumb: 'ec4b9a2c461d0c37cab1e74b8a93c6d3', main: '311e83293f0d28ab2735126466aec1f9' },
+    { id: 'chubby-round', label: 'Chubby round', thumb: 'c0f94e433fded93800a728c739d23de5' , main: '555fdd4b0e3cbe40fc060f083dc5f306' } ] },
+  { key: 'coat', label: 'Coat', req: 'short', opts: [
+    { id: 'short', label: 'Short', thumb: 'b15d65a67be2f3807ca83beb6d2812d1', main: null, gap: true },
+    { id: 'medium', label: 'Medium', thumb: '253b43c7657d17adc04c8311eeae8ab9', main: 'eb15f5f81ce8761f3ea0ae28605d47e8' },
+    { id: 'long', label: 'Long', thumb: 'cc769db9a8f342bd7d8aa7c9b54b9538', main: null, gap: true },
+    { id: 'curly', label: 'Curly', thumb: '4ff4417ec8993796d712940d26fa7f97', main: 'c940d64ff2223e98f2087bd9e3d41566' },
+    { id: 'sleek', label: 'Sleek', thumb: '72e400bbf6caea0dddd272aea1b66c79', main: '4c534ed45a3c0f8724c043b2da7fd4ba' },
+    { id: 'fluffy', label: 'Fluffy', thumb: '48939771816988628f07d92300350b8d', main: null } ] },
+  { key: 'pattern', label: 'Pattern', req: 'tuxedo', opts: [
+    { id: 'tuxedo', label: 'Tuxedo', thumb: '03e992974c196934a93d9075c58b160b', main: '8d77763b3a5f4afa1f9821894a3c5eb3' },
+    { id: 'black', label: 'Black', thumb: '6e049093b569a3527935dc6d28d53929', main: '863c216854be2789771fa93b43ad77bc' },
+    { id: 'white', label: 'White', thumb: '9a6fbf84fa430c76ab011f31e87eb14e', main: 'db0d84abc1965a28e14b690fad82b11e' },
+    { id: 'brown-tabby', label: 'Brown tabby', thumb: '9bfff5286836386c5e05163f358b1f6e', main: 'be780279cb3a7fdb21c3a8349f39239d' },
+    { id: 'orange-tabby', label: 'Orange tabby', thumb: '335668ad9b034f263dfc6c357b650c7d', main: '7973fb822dfc21a665b8b8d46d8dfef3' },
+    { id: 'silver-tabby', label: 'Silver tabby', thumb: '60f9a3f08eb51281bcbf31ed75d1327e', main: '4467a19a511e5df20a27670232f6bef4' },
+    { id: 'calico', label: 'Calico', thumb: '64401ed6a80e55fca2832de3a29f5714', main: 'f8e1a08a370df05dd13c1e2512d61d80' },
+    { id: 'pointed', label: 'Pointed', thumb: 'ed4751862b12d32be732937822618ca8', main: '962a8ed3fcfb29cc3d60d0dbf306a847' },
+    { id: 'spotted', label: 'Spotted', thumb: '467863e2ed786ce7ff9b29320766255e', main: 'd86576bc0f8bd3a0be799625cfd9871f' } ] },
+  { key: 'eyes', label: 'Eyes', req: 'green', opts: [
+    { id: 'green', label: 'Green', thumb: '4502d0c8f22678ef055a7e207eb7b3d2', main: '30f329211dfeed295769d6ba66078fe1' },
+    { id: 'amber', label: 'Amber', thumb: '86cc99f34f25c3c237b4d5a40cdc5ed0', main: 'd78b922d8c3f0cde1cf13039bc29b0fd' },
+    { id: 'blue', label: 'Blue', thumb: '81ade7ea009171a2ab3cb0ae20036f7e', main: 'a01a222bb0e9c56bcad0855c2ab8f3c1' },
+    { id: 'yellow', label: 'Yellow', thumb: '29b812dea47985634bf9b98c42c80ebc', main: null },
+    { id: 'odd', label: 'Odd', thumb: 'c73ddd10892f652d79ca72f2679fae2d', main: '6ce1643b137a2f3db4d76943a28e8b17' } ] },
+  { key: 'face', label: 'Face', req: 'tufted', opts: [
+    { id: 'tufted', label: 'Tufted', thumb: '604ba11270ba1fd2cbd3b84c10ef550b', main: '390d852a2f3e35ae61312b2c8b38e931' },
+    { id: 'standard', label: 'Standard', thumb: '3ceb6b2e0d942fcbf18a3ffabd782055', main: 'ed9acc78cd18d53d5ec12401fb9138a2' },
+    { id: 'rounded', label: 'Rounded', thumb: '124e3daa813841269fcade9937622928', main: 'c86695f38b796ffd03db6be2b2ca66e5' },
+    { id: 'wide', label: 'Wide', thumb: 'e5e3fca0c4313d0f3119a6627b0321b7', main: '15a76daec6c8f8164053dce5bc226c40' },
+    { id: 'large-ears', label: 'Large ears', thumb: '9b8a763476a024b02c5d334a383897e8', main: 'd4324090cdf53d579fc0c1e0f03b8a3c' } ] },
+  { key: 'expression', label: 'Expression', req: 'neutral', opts: [
+    { id: 'neutral', label: 'Neutral', thumb: '62e197566f4a9d79dab410aa7332cc0f', main: 'a185654144fc8c721af3e7c09fea7881' },
+    { id: 'content', label: 'Content', thumb: 'f0683893d19c2d41f1b1440a37a2fee1', main: '3edadb06e1ae410e5689136b62848834' },
+    { id: 'happy', label: 'Happy', thumb: '796430109399cc84bae9f5bb9cfbf338', main: '4092e4d1604cba2f79cd24dd8fe4a50c' },
+    { id: 'surprised', label: 'Surprised', thumb: '51e5b5f97363dfae4f79a7d53107b5bf', main: '67c23a3c6cd866784694128dc2d7f5d2' },
+    { id: 'wink', label: 'Wink', thumb: '03a63169d30215359bf6d62dd19a9fb9', main: 'e2be56003d5878959cfdc7436c8c2fd0' },
+    { id: 'curious', label: 'Curious', thumb: '4747c1549c0b19e7a2c5c5abbd83521b', main: null },
+    { id: 'playful', label: 'Playful', thumb: 'ba9a7a46b20b937e3aaa88160803fc09', main: null },
+    { id: 'excited', label: 'Excited', thumb: 'a5fc4b92e86acea13c0b25528f1e5b37', main: null },
+    { id: 'sleepy', label: 'Sleepy', thumb: '313b4b321c37b8e8f2db1dc11ba9c0da', main: null },
+    { id: 'silly', label: 'Silly', thumb: 'd214bd4e653ca981911f37c4b8a3decf', main: null },
+    { id: 'confused', label: 'Confused', thumb: 'd671264f8f479c465593f72a3aee753b', main: null },
+    { id: 'scared', label: 'Scared', thumb: '1f4dfda3ecb8eb8ecdbd96fe4b29be43', main: null },
+    { id: 'angry', label: 'Angry', thumb: '276451efa983bb21508e367ec780387b', main: null },
+    { id: 'sad', label: 'Sad', thumb: 'b32baaeb626a4070a375d3c5330df93e', main: null } ] }
+];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const ready = (props && props.preset) === 'Ready';
+    const sel = {};
+    if (ready) CATS.forEach(c => { sel[c.key] = c.req; });
+    const start = 'duo';
+    this.state = {
+      sel: sel,
+      active: ready ? CATS.length - 1 : 0,
+      preview: ready ? CATS[6].opts[0].main : start,
+      gap: null
+    };
+  }
+
+  frontier(sel) {
+    for (let i = 0; i < CATS.length; i++) if (sel[CATS[i].key] !== CATS[i].req) return i;
+    return CATS.length;
+  }
+  pick(ci, opt) {
+    const cat = CATS[ci];
+    const sel = { ...this.state.sel, [cat.key]: opt.id };
+    const next = { sel: sel };
+    if (opt.main) { next.preview = opt.main; next.gap = null; }
+    else { next.gap = cat.label + ' · ' + opt.label; }
+
+    const f = this.frontier(sel);
+    if (opt.id === cat.req && ci < CATS.length - 1 && f > ci) next.active = ci + 1;
+    this.setState(next);
+  }
+
+  centreActive() {
+    if (typeof document === 'undefined') return;
+    const run = () => {
+      const nav = document.querySelector('[data-avc] [data-cat-nav]');
+      const tab = nav && nav.querySelector('[aria-selected="true"]');
+      if (!nav || !tab) return;
+      const target = nav.scrollLeft + (tab.getBoundingClientRect().left - nav.getBoundingClientRect().left) - (nav.clientWidth - tab.offsetWidth) / 2;
+      const max = nav.scrollWidth - nav.clientWidth;
+      nav.scrollTo({ left: Math.max(0, Math.min(max, target)), behavior: 'smooth' });
+    };
+    requestAnimationFrame(() => requestAnimationFrame(run));
+  }
+  componentDidMount() { this.centreActive(); }
+  setState(next) { super.setState(next); if (next && 'active' in next) this.centreActive(); }
+  renderVals() {
+
+    const A = this.props.act || null;
+    const fire = (k) => (e) => { if (!A || !A[k]) return; if (e && e.preventDefault) e.preventDefault(); A[k](); };
+    const lk = (href) => (A ? '#' : href);
+    const on = {saveAvatar: fire('saveAvatar'), exitCreator: fire('exitCreator')};
+    const ctx = ['Profile', 'Edit'].includes(this.props.context) ? this.props.context : 'Setup';
+    const back = { Setup: 'SCR10-SetupEnabled.dc.html', Profile: 'SCR10.dc.html', Edit: 'SCR10-Edit.dc.html' }[ctx];
+    const { sel, active, preview, gap } = this.state;
+    const f = this.frontier(sel);
+    const unlocked = Math.min(f, CATS.length - 1);
+    const act = Math.min(active, unlocked);
+    const cat = CATS[act];
+    const cats = CATS.map((c, i) => {
+      const disabled = i > unlocked;
+      const isActive = i === act;
+      return {
+        index: i, label: c.label, active: isActive, disabled: disabled, done: i < f && !isActive,
+        bg: isActive ? 'var(--surface-nature)' : 'transparent',
+        fg: disabled ? 'var(--action-disabled-text)' : (isActive ? 'var(--text-accent)' : 'var(--text-primary)'),
+        cursor: disabled ? 'default' : 'pointer',
+        go: () => { if (!disabled) this.setState({ active: i }); }
+      };
+    });
+    const opts = cat.opts.map(o => {
+      const selected = sel[cat.key] === o.id;
+      return {
+        label: o.label, selected: selected,
+        thumb: o.thumb ? B(o.thumb) : '', hasThumb: !!o.thumb, noThumb: !o.thumb,
+        ring: selected ? 'inset 0 0 0 var(--border-width-strong) var(--border-focus)' : 'none',
+        weight: selected ? 600 : 400,
+        pick: () => this.pick(act, o)
+      };
+    });
+    let guide;
+    if (f >= CATS.length) guide = 'All set. Save to apply this avatar' + (ctx === 'Setup' ? ' — it stays provisional until you confirm the profile.' : (ctx === 'Edit' ? ' to the form, then save your changes.' : ' to Jäger’s profile.'));
+    else if (act < f) guide = 'You can change this. In this demo, a different choice pauses the later categories until the guided choice is back.';
+    else {
+      const req = cat.opts.find(o => o.id === cat.req);
+      guide = act === CATS.length - 1
+        ? 'Demo prototype: choose ' + req.label + ' to enable Save avatar.'
+        : 'Demo prototype: choose ' + req.label + ' to unlock ' + CATS[act + 1].label + '.';
+    }
+    const canSave = f >= CATS.length;
+    return {
+      yes: true, n16: 16, n24: 24,
+      isDuo: preview === 'duo', isSingle: preview !== 'duo',
+      previewSrc: preview === 'duo' ? '' : B(preview),
+      previewAlt: 'Avatar preview',
+      hasGap: !!gap,
+      gapText: gap ? 'No preview for ' + gap + ' in this prototype. Showing the last available one.' : '',
+      cats: cats, opts: opts, activeLabel: cat.label,
+      guideText: guide,
+      canSave: canSave, cannotSave: !canSave,
+      on: on,
+      saveHref: lk(back),
+      exitHref: lk(back)
+    };
+  }
+}
+</script>
+</body>
+</html>

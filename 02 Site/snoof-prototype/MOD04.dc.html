@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Snoof · Correct Identified Plant</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/snoof/tokens.css">
+<link rel="stylesheet" href="ds/snoof/components/bundle.css">
+<script src="ds/snoof/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="fonts.css">
+<style>body{margin:0}
+
+svg.snoof-icon { background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+svg.snoof-icon > path { display: none; }
+svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/5a17696d64aada300e3862b0fdf0c2d7.svg); }
+svg.snoof-icon:has(> path[d^="M6 9.5L12 15.5"]) { --ph: url(./assets/89e1454b27752d22ac58a3f3220a3a72.svg); }
+svg.snoof-icon:has(> path[d^="M6 14.5L12 8.5"]) { --ph: url(./assets/fd076a444125da00f2bce56cbee04db1.svg); }
+svg.snoof-icon:has(> path[d^="M6 6L18 18"]) { --ph: url(./assets/14bef5553e71350a3032d97f3a186146.svg); }
+svg.snoof-icon:has(> path[d^="M5.5 12.5L10 17"]) { --ph: url(./assets/f4dc0311a65d7c61f8058e7e193c8bd5.svg); }
+svg.snoof-icon:has(> path[d^="M17.5 11C17.5"]) { --ph: url(./assets/9049b921979416ee2b11521ad75a308c.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5C4 7.67"]) { --ph: url(./assets/36e4efd505e7191b15d20080f71906a1.svg); }
+svg.snoof-icon:has(> path[d^="M5 19C5 11"]) { --ph: url(./assets/3cab38dfd7960290960118f9d2e6c9c2.svg); }
+svg.snoof-icon:has(> path[d^="M16.2 15.5"]) { --ph: url(./assets/b91b45286903793f5d8bcf2c10337565.svg); }
+svg.snoof-icon:has(> path[d^="M4 11L12 4"]) { --ph: url(./assets/af168cf055a6ac6c9900d94ad8bb2377.svg); }
+svg.snoof-icon:has(> path[d^="M6.5 5L17.5 5"]) { --ph: url(./assets/71d92769e689d60afa493b3213470154.svg); }
+svg.snoof-icon:has(> path[d^="M21 12A9"]) { --ph: url(./assets/4308e2cfbb785e3c639ab18dbd4aeeec.svg); }
+svg.snoof-icon:has(> path[d^="M12 7.5L12 13"]) { --ph: url(./assets/5b81970de0340b150014be09c812c8da.svg); }
+svg.snoof-icon:has(> path[d^="M8 12.3L10.8 15"]) { --ph: url(./assets/8a26ed102bb510bbb0c3b34114c49aaa.svg); }
+svg.snoof-icon:has(> path[d^="M9.6 9.6C"]) { --ph: url(./assets/9bccaa1e974c420416ef47405eb19238.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5L17 8.5"]) { --ph: url(./assets/68a2006d1445269654c7077a1050bfa2.svg); }
+svg.snoof-icon:has(> path[d^="M14.5 12C14.5"]) { --ph: url(./assets/f7dfd99cca32ad53925996515d81b49e.svg); }
+svg.snoof-icon:has(> path[d^="M18 12C18 15.314"]) { --ph: url(./assets/19ddc5ed85133b4330fc607905e0eee0.svg); }
+[style*="scaleX(-1)"] > svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/6b2b7faf67d973c6ba75a8f759c3f89e.svg); transform: scaleX(-1); }
+.ph-glyph { display: inline-block; flex: none; background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+.ph-warning { --ph: url(./assets/018512a459a165a551d190d6ca4b98d3.svg); }
+.ph-retry { --ph: url(./assets/04977d6593de335f5a8428579ff633ed.svg); }
+.ph-edit { --ph: url(./assets/103a367eb80fedd613b7ca5c4d3c0f91.svg); }
+.ph-info { --ph: url(./assets/07e49e2ea3d2498dce5e22f4488fc729.svg); }
+</style>
+</helmet>
+<div style="width: 393px; height: 852px; position: relative; overflow: hidden; background: var(--background-primary); font-family: var(--font-text); color: var(--text-primary);">
+  <sc-if value="{{overFinding}}" hint-placeholder-val="{{ true }}">
+    <dc-import name="SCR05" variant="Default" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{overGap}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="SCR07" variant="Default" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: var(--surface-inverse); opacity: 0.4;"></div>
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: center;">
+    <section role="dialog" aria-label="Correct the plant" style="width: 100%; max-width: 390px; box-sizing: border-box; display: flex; flex-direction: column; padding-bottom: calc(var(--space-32) + var(--space-2)); background: var(--surface-default); border-radius: var(--radius-xl) var(--radius-xl) 0 0; box-shadow: var(--elevation-3-sheet);">
+      <div style="display: flex; justify-content: center; padding: var(--space-8) 0 var(--space-4);">
+        <span style="width: 60px; height: 4px; border-radius: var(--radius-full); background: var(--border-default);"></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-8); padding: var(--space-4) var(--padding-sm) var(--space-4) var(--padding-lg);">
+        <h2 class="display-title-3" style="margin: 0; flex: 1;">Correct the plant</h2>
+        <x-import component-from-global-scope="Snoof.IconButton" icon="Close" label="Close" on-click="{{on.close}}"></x-import>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: var(--layout-gap-group); padding: var(--space-8) var(--padding-lg) 0; align-items: center;">
+        <p class="text-body" style="margin: 0; align-self: stretch;">{{explainer}}</p>
+        <button type="button" onClick="{{on.search}}" style="align-self: stretch; display: flex; align-items: center; gap: var(--space-12); min-height: 56px; padding: var(--padding-sm) var(--padding-md); border: 0; border-radius: var(--radius-lg); background: var(--action-secondary-background); color: var(--action-secondary-text); font: inherit; text-align: left; cursor: pointer; box-sizing: border-box;">
+          <x-import component-from-global-scope="Snoof.Icon" name="Search" size="{{n24}}" color="var(--action-secondary-text)"></x-import>
+          <span class="text-headline" style="flex: 1;">Search by name</span>
+          <x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n20}}" color="var(--action-secondary-text)"></x-import>
+        </button>
+        <button type="button" onClick="{{on.photo}}" style="align-self: stretch; display: flex; align-items: center; gap: var(--space-12); min-height: 56px; padding: var(--padding-sm) var(--padding-md); border: 0; border-radius: var(--radius-lg); background: var(--action-secondary-background); color: var(--action-secondary-text); font: inherit; text-align: left; cursor: pointer; box-sizing: border-box;">
+          <x-import component-from-global-scope="Snoof.Icon" name="Camera" size="{{n24}}" color="var(--action-secondary-text)"></x-import>
+          <span class="text-headline" style="flex: 1;">Identify from photo</span>
+          <x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n20}}" color="var(--action-secondary-text)"></x-import>
+        </button>
+        <div style="align-self: stretch; display: flex;">
+          <x-import component-from-global-scope="Snoof.Button" hierarchy="Text" label="Cancel" fill="{{yes}}" style="flex: 1;" on-click="{{on.cancel}}"></x-import>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"host":{"editor":"enum","options":["SCR05","SCR07"],"default":"SCR05"},"$preview":{"width":393,"height":852}}'>
+class Component extends DCLogic {
+  renderVals() {
+
+    const A = this.props.act || null;
+    const PN = (A && this.props.petName) || 'J\u00e4ger';
+    const fire = (k) => (e) => { if (!A || !A[k]) return; if (e && e.preventDefault) e.preventDefault(); A[k](); };
+    const lk = (href) => (A ? '#' : href);
+    const on = {close: fire('close'), cancel: fire('cancel'), search: fire('search'), photo: fire('photo')};
+    const h = this.props.host ?? 'SCR05';
+    return {
+      petName: PN,
+      yes: true,
+      on: on,
+      n20: 20, n24: 24,
+      overFinding: h === 'SCR05',
+      overGap: h === 'SCR07',
+      explainer: h === 'SCR07'
+        ? 'Choosing another plant replaces this result. The pet stays the same: ' + PN + ' · Cat.'
+        : 'Choosing another plant replaces this result. The pet stays the same: ' + PN + ' · Cat.'
+    };
+  }
+}
+</script>
+</body>
+</html>

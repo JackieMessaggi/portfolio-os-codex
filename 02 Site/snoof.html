@@ -59,15 +59,19 @@
         <p>He started sleeping in its pot, bending the trunk a little more every week. Which raised a simple question: is this plant actually safe for him?</p>
         <p>Snoof is what came out of that question. Twice.</p>
       </div>
-      <dl class="cs-meta">
+      </div>
+      </div>
+    </section>
+
+    <!-- Project metadata, moved out of the Hero so it reads as title + short description. -->
+    <div class="cs-meta-band">
+      <dl class="wrap cs-meta">
         <div><dt>Project</dt><dd>Self-initiated, revisited during <i>Design OS: AI Workflows for UX/UI Designers</i> at Spiced Academy</dd></div>
         <div><dt>My role</dt><dd>End-to-end design: research, strategy, branding, UX, UI, and visual direction</dd></div>
         <div><dt>Tools</dt><dd>Figma, FigJam, Claude Code, Claude Design, ChatGPT</dd></div>
         <div><dt>Status</dt><dd>Interactive prototype. Not yet tested with users.</dd></div>
       </dl>
-      </div>
-      </div>
-    </section>
+    </div>
 
     <!-- 02 Where it started: v1.0 as a draggable timeline strip -->
     <section class="cs-origin" id="origin" aria-labelledby="origin-title" data-label="Origin">
@@ -180,7 +184,7 @@
         <p class="cs-eyebrow">04 / Problem</p>
         <h2 id="problem-title" class="cs-h2">Defining the right problem</h2>
         <div class="cs-copy cs-copy-wide">
-          <p>I wrote five possible problem statements and chose the one that held up against every framing check I’d set: people can find out that a plant is “toxic,” but not what that means for their own pet.</p>
+          <p>I wrote five possible problem statements and chose the one that held up against every framing check I’d set: <strong>people can find out that a plant is “toxic,” but not what that means for their own pet.</strong></p>
           <p>Getting there meant untangling three things my v1.0 wireframes had blended together.</p>
         </div>
 
@@ -191,13 +195,25 @@
         </ol>
 
         <div class="cs-before">
-          <figure class="cs-phone cs-phone-wire">
-            <img src="assets/snoof/v1-wireframe-risky-match.webp" width="370" height="800" loading="lazy" alt="v1.0 wireframe: “This plant is not a good match to your house!” with a dog, two cats, and a plant, followed by risks, symptoms, and safer alternatives">
+          <!-- Before/after comparison: the v1.0 wireframe and the v2.0 prototype screen for a risky plant (existing assets only).
+               Without JavaScript the two screens sit side by side. -->
+          <figure class="cs-compare" style="--pos: 50%">
+            <div class="cs-phone cs-compare-device">
+              <div class="cs-compare-frame">
+                <img class="cs-compare-after" src="assets/snoof/scr-finding-easter-lily.webp" width="786" height="1704" loading="lazy" alt="v2.0 prototype: Easter lily, “Toxic to cats,” with the sources that classify it and a card checking for Jäger">
+                <div class="cs-compare-before"><img src="assets/snoof/v1-wireframe-risky-match.webp" width="370" height="800" loading="lazy" alt="v1.0 wireframe: “This plant is not a good match to your house!” with a dog, two cats, and a plant, followed by risks, symptoms, and safer alternatives"></div>
+                <span class="cs-compare-tag cs-compare-tag-before" aria-hidden="true">v1.0</span>
+                <span class="cs-compare-tag cs-compare-tag-after" aria-hidden="true">v2.0</span>
+                <span class="cs-compare-handle" aria-hidden="true"></span>
+                <input class="cs-compare-range" type="range" min="0" max="100" value="50" aria-label="Compare the v1.0 wireframe with the v2.0 prototype screen">
+              </div>
+            </div>
+            <figcaption><span>Left: v1.0 low-fidelity wireframe, July 2026.</span> <span>Right: v2.0 prototype screen.</span> <span class="cs-compare-hint">Drag to compare.</span></figcaption>
           </figure>
           <div class="cs-before-copy">
             <p class="cs-label">v1.0, a guess dressed up as an answer</p>
-            <p class="cs-marker">“Since Luna, Charlie and Bob love chewing plants, we believe this plant can be risky to your household.”</p>
-            <p>In v1.0, a pet’s habits fed straight into a verdict. It sounded personal.</p>
+            <p class="cs-marker">In v1.0, a pet’s habits fed straight into a verdict.</p>
+            <p>The wireframe read: “Since Luna, Charlie and Bob love chewing plants, we believe this plant can be risky to your household.” It sounded personal.</p>
             <div class="cs-flow" role="img" aria-label="Version 1.0: behavior led to a verdict. Version 2.0: behavior adds context.">
               <p class="cs-flow-old"><span>v1.0</span> Behavior <span aria-hidden="true">→</span> <s>Verdict</s></p>
               <p class="cs-flow-new"><span>v2.0</span> Behavior <span aria-hidden="true">→</span> Context</p>
@@ -261,6 +277,7 @@
 
       <div class="cs-uncertainty">
         <div class="wrap">
+          <p class="cs-eyebrow">05 / Decisions, part 2</p>
           <h2 class="cs-h2" id="uncertainty-title">Designing for uncertainty</h2>
           <div class="cs-copy">
             <p>Then the prototype raised an awkward question. What happens when the information isn’t clear enough?</p>
@@ -290,10 +307,12 @@
             <div class="cs-copy">
               <p>So I retired the Good Match verdicts and kept three things separate.</p>
             </div>
+            <!-- Each detail sits in its original screen (same pixel scale), with the surrounding UI faded.
+                 --top/--win: visible window in screen pixels; --fx/--fy/--fw: the detail's position inside that window. -->
             <ol class="cs-exploded-layers">
-              <li><span class="cs-layer-num">1</span><span class="cs-layer-text">What we know about the plant, attributed to its sources</span><div class="cs-layer-panel"><img class="cs-ui" src="assets/snoof/crop-gap-finding.webp" width="742" height="352" loading="lazy" alt="Finding card: Not enough information. We couldn’t find enough reliable information to classify this plant for cats."></div></li>
-              <li><span class="cs-layer-num">2</span><span class="cs-layer-text">How strong that evidence is</span><div class="cs-layer-panel"><img class="cs-ui" src="assets/snoof/crop-gap-evidence.webp" width="742" height="290" loading="lazy" alt="Evidence card: Cats Protection supports a “caution advised” listing for Homalomena rubescens and cats; single source for this listing"></div></li>
-              <li><span class="cs-layer-num">3</span><span class="cs-layer-text">What we know about the pet</span><div class="cs-layer-panel"><img class="cs-ui" src="assets/snoof/crop-gap-pet.webp" width="742" height="186" loading="lazy" alt="Pet context: checking for Jäger, a cat who chews plants, drinks from vases, lies or sleeps on plants, and sniffs plants"></div></li>
+              <li><span class="cs-layer-num">1</span><span class="cs-layer-text">What we know about the plant, attributed to its sources</span><div class="cs-layer-panel"><div class="cs-ctx" style="--top: 542; --win: 540; --fx: 22; --fy: 94; --fw: 742"><img class="cs-ctx-screen" src="assets/snoof/scr-information-gap.webp" width="786" height="1704" loading="lazy" alt=""><img class="cs-ctx-focus" src="assets/snoof/crop-gap-finding.webp" width="742" height="352" loading="lazy" alt="Finding card: Not enough information. We couldn’t find enough reliable information to classify this plant for cats."></div></div></li>
+              <li><span class="cs-layer-num">2</span><span class="cs-layer-text">How strong that evidence is</span><div class="cs-layer-panel"><div class="cs-ctx" style="--top: 375; --win: 540; --fx: 22; --fy: 125; --fw: 742"><img class="cs-ctx-screen" src="assets/snoof/scr-sources-evidence.webp" width="786" height="1704" loading="lazy" alt=""><img class="cs-ctx-focus" src="assets/snoof/crop-gap-evidence.webp" width="742" height="290" loading="lazy" alt="Evidence card in the Sources and evidence panel: Cats Protection supports a “caution advised” listing for Homalomena rubescens and cats; single source for this listing"></div></div></li>
+              <li><span class="cs-layer-num">3</span><span class="cs-layer-text">What we know about the pet</span><div class="cs-layer-panel"><div class="cs-ctx" style="--top: 956; --win: 540; --fx: 22; --fy: 177; --fw: 742"><img class="cs-ctx-screen" src="assets/snoof/scr-information-gap.webp" width="786" height="1704" loading="lazy" alt=""><img class="cs-ctx-focus" src="assets/snoof/crop-gap-pet.webp" width="742" height="186" loading="lazy" alt="Pet context: checking for Jäger, a cat who chews plants, drinks from vases, lies or sleeps on plants, and sniffs plants"></div></div></li>
             </ol>
           </div>
 
@@ -383,12 +402,12 @@
           <figure>
             <p class="cs-tone-mode">At home</p>
             <p class="cs-tone-desc">Warm, playful, conversational</p>
-            <img class="cs-ui" src="assets/snoof/crop-welcome-copy.webp" width="729" height="208" loading="lazy" alt="“Made for curious pets and careful humans. Explore what reliable sources say about plants, how they relate to your pet’s habits, and what we still don’t know.”">
+            <div class="cs-ctx" style="--top: 937; --win: 560; --fx: 29; --fy: 176; --fw: 729"><img class="cs-ctx-screen" src="assets/snoof/scr-welcome.webp" width="786" height="1704" loading="lazy" alt=""><img class="cs-ctx-focus" src="assets/snoof/crop-welcome-copy.webp" width="729" height="208" loading="lazy" alt="On the welcome screen: “Made for curious pets and careful humans. Explore what reliable sources say about plants, how they relate to your pet’s habits, and what we still don’t know.”"></div>
           </figure>
           <figure>
             <p class="cs-tone-mode">When it matters</p>
             <p class="cs-tone-desc">Calm, clear, factual</p>
-            <img class="cs-ui" src="assets/snoof/crop-gap-finding.webp" width="742" height="352" loading="lazy" alt="“Not enough information. We couldn’t find enough reliable information to classify this plant for cats. This doesn’t confirm whether the plant is toxic or non-toxic.”">
+            <div class="cs-ctx" style="--top: 532; --win: 560; --fx: 22; --fy: 104; --fw: 742"><img class="cs-ctx-screen" src="assets/snoof/scr-information-gap.webp" width="786" height="1704" loading="lazy" alt=""><img class="cs-ctx-focus" src="assets/snoof/crop-gap-finding.webp" width="742" height="352" loading="lazy" alt="On the Red shield plant result: “Not enough information. We couldn’t find enough reliable information to classify this plant for cats. This doesn’t confirm whether the plant is toxic or non-toxic.”"></div>
           </figure>
         </div>
         <p class="cs-note cs-note-center">The identity is the chosen direction for v2.0. Like the product, it can keep evolving.</p>
@@ -411,14 +430,16 @@
           </ol>
           <p>I designed the prototype in Claude Design, directing it screen by screen. It covers the full core journey across three plants: one toxic, one non-toxic, and one with not enough information. AI-run QA compared the build against my specs, and I fixed the design gaps it found myself.</p>
           <p class="cs-note">It runs on sample data, and progress resets every session. Photo identification is simulated, and only three plants are fully actionable. It’s a prototype for learning, not a product.</p>
+          <a class="cs-end-link cs-proto-link" href="snoof-prototype.html" target="_blank" rel="noopener">Explore interactive prototype <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
         </div>
         <figure class="cs-video">
+          <!-- Demo loop: muted, no controls, plays like an animation while in view (script.js). With reduced motion or
+               without JavaScript, the poster (the loop's first frame) stays. Recorded from the real prototype; the screen
+               entrance motion was added for the video only (the prototype has no such transitions). -->
           <div class="cs-phone cs-phone-video">
-            <img src="assets/snoof/scr-welcome.webp" width="786" height="1704" loading="lazy" alt="Snoof welcome screen, poster for the upcoming demo video">
-            <span class="cs-video-badge">Demo video coming soon</span>
-          </div>
-          <figcaption>Vertical walkthrough of the working prototype. Recorded from the real build, functional interactions only.</figcaption>
-        </figure>
+            <video class="cs-demo" width="640" height="1388" muted loop playsinline preload="none" poster="assets/snoof/snoof-demo-poster.webp" data-src="assets/snoof/snoof-demo-loop.mp4" aria-label="Looping demo of the Snoof prototype: setting up Jäger’s profile, checking an Easter lily (toxic to cats) and a Red shield plant (not enough information), and saving both to the collection"></video>
+            <button class="cs-demo-toggle" type="button" aria-pressed="false" hidden>Pause demo</button>
+          </div>        </figure>
       </div>
     </section>
 

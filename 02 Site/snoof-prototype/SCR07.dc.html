@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Snoof · Information Gap</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/snoof/tokens.css">
+<link rel="stylesheet" href="ds/snoof/components/bundle.css">
+<script src="ds/snoof/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="fonts.css">
+<style>
+body{margin:0}
+
+.snoof-primary-finding.is-insufficient { max-width: none; }
+
+svg.snoof-icon { background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+svg.snoof-icon > path { display: none; }
+svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/5a17696d64aada300e3862b0fdf0c2d7.svg); }
+svg.snoof-icon:has(> path[d^="M6 9.5L12 15.5"]) { --ph: url(./assets/89e1454b27752d22ac58a3f3220a3a72.svg); }
+svg.snoof-icon:has(> path[d^="M6 14.5L12 8.5"]) { --ph: url(./assets/fd076a444125da00f2bce56cbee04db1.svg); }
+svg.snoof-icon:has(> path[d^="M6 6L18 18"]) { --ph: url(./assets/14bef5553e71350a3032d97f3a186146.svg); }
+svg.snoof-icon:has(> path[d^="M5.5 12.5L10 17"]) { --ph: url(./assets/f4dc0311a65d7c61f8058e7e193c8bd5.svg); }
+svg.snoof-icon:has(> path[d^="M17.5 11C17.5"]) { --ph: url(./assets/9049b921979416ee2b11521ad75a308c.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5C4 7.67"]) { --ph: url(./assets/36e4efd505e7191b15d20080f71906a1.svg); }
+svg.snoof-icon:has(> path[d^="M5 19C5 11"]) { --ph: url(./assets/3cab38dfd7960290960118f9d2e6c9c2.svg); }
+svg.snoof-icon:has(> path[d^="M16.2 15.5"]) { --ph: url(./assets/b91b45286903793f5d8bcf2c10337565.svg); }
+svg.snoof-icon:has(> path[d^="M4 11L12 4"]) { --ph: url(./assets/af168cf055a6ac6c9900d94ad8bb2377.svg); }
+svg.snoof-icon:has(> path[d^="M6.5 5L17.5 5"]) { --ph: url(./assets/71d92769e689d60afa493b3213470154.svg); }
+svg.snoof-icon:has(> path[d^="M21 12A9"]) { --ph: url(./assets/4308e2cfbb785e3c639ab18dbd4aeeec.svg); }
+svg.snoof-icon:has(> path[d^="M12 7.5L12 13"]) { --ph: url(./assets/5b81970de0340b150014be09c812c8da.svg); }
+svg.snoof-icon:has(> path[d^="M8 12.3L10.8 15"]) { --ph: url(./assets/8a26ed102bb510bbb0c3b34114c49aaa.svg); }
+svg.snoof-icon:has(> path[d^="M9.6 9.6C"]) { --ph: url(./assets/9bccaa1e974c420416ef47405eb19238.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5L17 8.5"]) { --ph: url(./assets/68a2006d1445269654c7077a1050bfa2.svg); }
+svg.snoof-icon:has(> path[d^="M14.5 12C14.5"]) { --ph: url(./assets/f7dfd99cca32ad53925996515d81b49e.svg); }
+svg.snoof-icon:has(> path[d^="M18 12C18 15.314"]) { --ph: url(./assets/19ddc5ed85133b4330fc607905e0eee0.svg); }
+[style*="scaleX(-1)"] > svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/6b2b7faf67d973c6ba75a8f759c3f89e.svg); transform: scaleX(-1); }
+.ph-glyph { display: inline-block; flex: none; background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+.ph-warning { --ph: url(./assets/018512a459a165a551d190d6ca4b98d3.svg); }
+.ph-retry { --ph: url(./assets/04977d6593de335f5a8428579ff633ed.svg); }
+.ph-edit { --ph: url(./assets/103a367eb80fedd613b7ca5c4d3c0f91.svg); }
+.ph-info { --ph: url(./assets/07e49e2ea3d2498dce5e22f4488fc729.svg); }
+.ph-sun { --ph: url(./assets/e0052fd2eca723629c75684b9f8be727.svg); }
+.ph-drop { --ph: url(./assets/0c7f021a58fa45c9d43c41ae9ec0a964.svg); }
+.ph-cloud { --ph: url(./assets/89fb9476a05e1ff798f09ba4f8cb5967.svg); }
+.ph-tulip { --ph: url(./assets/f7fae18ab869c1e5eafd3f5f2de08123.svg); }
+.ph-thermo { --ph: url(./assets/befb1600e965e41d58bebffaa1ca87d3.svg); }
+.ph-carrot { --ph: url(./assets/a79be98a673eac958281517707070547.svg); }
+.ph-broom { --ph: url(./assets/0862410046e0bd199efa3a14a34ef8b8.svg); }
+.ph-flower { --ph: url(./assets/0fcdedbf32efdeaeed3cd1252fba9da4.svg); }
+</style>
+</helmet>
+<div style="width: 393px; height: {{rootHeight}}; min-height: 852px; box-sizing: border-box; overflow: hidden; position: relative; display: flex; flex-direction: column; background: var(--surface-default); color: var(--text-primary); font-family: var(--font-text);">
+  <div data-scroll-region="true" ref="{{scrollRef}}" style="flex: {{scrollFlex}}; min-height: 0; overflow-y: {{scrollOverflow}}; overflow-x: hidden; position: relative; scrollbar-width: none;">
+
+    <sc-if value="{{showInfo}}" hint-placeholder-val="{{ true }}">
+      <div style="position: relative; height: 340px; overflow: hidden; background: var(--surface-nature);">
+        <img src="./assets/3f5e32b899a267e6f2283c637cc0fdbf.webp" alt="Red shield plant" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block;">
+        <div style="position: absolute; top: calc(var(--space-48) + var(--space-4)); left: var(--space-16); right: var(--space-16); display: flex; justify-content: space-between;">
+          <button type="button" aria-label="Back" onClick="{{on.back}}" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); border: 0; padding: 0; border-radius: var(--radius-full); background: color-mix(in srgb, var(--surface-inverse) 40%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+            <span style="display: flex; transform: scaleX(-1);"><x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-on-inverse)"></x-import></span>
+          </button>
+          <a href="{{hEdit}}" onClick="{{on.edit}}" aria-label="Edit plant identification" data-opens="MOD-04" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); border: 0; padding: 0; border-radius: var(--radius-full); background: color-mix(in srgb, var(--surface-inverse) 40%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none;">
+            <span class="ph-glyph ph-edit" aria-hidden="true" style="width: 20px; height: 20px; color: var(--text-on-inverse);"></span>
+          </a>
+        </div>
+        <div style="position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: var(--space-4); align-items: flex-start; padding: var(--space-40) var(--space-16) calc(var(--space-32) + var(--space-12)); background: linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--surface-inverse) 28%, transparent) 40%, color-mix(in srgb, var(--surface-inverse) 50%, transparent) 100%); color: var(--text-on-inverse);">
+          <span class="text-caption-1" style="display: inline-flex; align-items: center; gap: var(--space-4); padding: var(--space-2) var(--padding-sm); border-radius: var(--radius-full); color: var(--text-primary); background-color: var(--finding-non-toxic-background, #e3fcef)">
+            <x-import component-from-global-scope="Snoof.Icon" name="Check" size="{{n14}}" color="var(--text-accent)"></x-import><span>Identified plant</span>
+          </span>
+          <div style="display: flex; flex-direction: column; gap: 0; margin-top: var(--space-4); text-shadow: 0 0 2px color-mix(in srgb, var(--surface-inverse) 70%, transparent), 0 1px 10px color-mix(in srgb, var(--surface-inverse) 65%, transparent);">
+            <h1 class="display-title-1" style="margin: 0; color: var(--text-on-inverse);">Red shield plant</h1>
+            <span class="text-body" style="font-style: italic; color: var(--text-on-inverse); margin-top: calc(var(--space-2) * -1);">Homalomena rubescens</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="position: relative; margin-top: calc(var(--space-32) * -1); border-radius: var(--radius-xl) var(--radius-xl) 0 0; background: var(--surface-default); padding: var(--space-16) var(--space-16) var(--space-24); display: flex; flex-direction: column; gap: var(--space-16);">
+
+        <x-import component-from-global-scope="Snoof.PrimaryFinding" style="display: block;" classification="Insufficient evidence" insufficient-label="Not enough information" statement="We couldn't find enough reliable information to classify this plant for cats." limitation="This doesn't confirm whether the plant is toxic or non-toxic."></x-import>
+
+<div role="tablist" aria-label="Information gap sections" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); padding: var(--space-4); border-radius: var(--radius-full); background-color: var(--background-primary, #f8f4ee)">
+          <button type="button" role="tab" aria-selected="{{tS.sel}}" onClick="{{on.tabSafety}}" class="{{tS.cls}}" style="min-height: var(--size-touch-target-min); border: 0; border-radius: var(--radius-full); background: {{tS.bg}}; box-shadow: {{tS.sh}}; color: var(--text-primary); cursor: pointer;">Pet safety</button>
+          <button type="button" role="tab" aria-selected="{{tI.sel}}" onClick="{{on.tabInfo}}" class="{{tI.cls}}" style="min-height: var(--size-touch-target-min); border: 0; border-radius: var(--radius-full); background: {{tI.bg}}; box-shadow: {{tI.sh}}; color: var(--text-primary); cursor: pointer;">Plant info</button>
+          <button type="button" role="tab" aria-selected="{{tE.sel}}" onClick="{{on.tabEvidence}}" class="{{tE.cls}}" style="min-height: var(--size-touch-target-min); border: 0; border-radius: var(--radius-full); background: {{tE.bg}}; box-shadow: {{tE.sh}}; color: var(--text-primary); cursor: pointer;">Evidence</button>
+        </div>
+
+        <sc-if value="{{tabSafety}}" hint-placeholder-val="{{ true }}">
+        <div role="tabpanel" style="display: flex; flex-direction: column; gap: var(--space-12);">
+                <div style="display: flex; align-items: center; gap: var(--space-12); padding: var(--padding-md); border-radius: var(--radius-lg); background: var(--surface-nature);">
+          <img src="{{petAvatar}}" alt="" style="width: 56px; height: 56px; flex: none; border-radius: var(--radius-full); object-fit: cover; background: var(--surface-warm);">
+          <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-2);">
+            <span class="text-subheadline-emphasized">{{petLine}}</span>
+            <sc-if value="{{hasPetSub}}" hint-placeholder-val="{{ true }}"><span class="text-footnote" style="color: var(--text-secondary);">{{petSub}}</span></sc-if>
+          </div>
+        </div>
+
+          <sc-if value="{{showSections}}" hint-placeholder-val="{{ true }}">
+          <section style="display: flex; flex-direction: column; gap: var(--space-12); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <h2 class="display-title-3" style="margin: 0;">What is documented</h2>
+            <p class="text-body" style="margin: 0;">Listed as “caution advised” by Cats Protection.</p>
+            <p class="text-callout" style="margin: 0; color: var(--text-secondary);">Cats Protection doesn't explain what this category means; it advises keeping caution-advised plants out of reach, especially if your cat is a nibbler. It doesn't describe effects.</p>
+          </section>
+
+          <section style="display: flex; flex-direction: column; gap: var(--space-12); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <h2 class="display-title-3" style="margin: 0;">What isn't known</h2>
+            <p class="text-callout" style="margin: 0;">For cats, we found no reliable information on:</p>
+            <ul class="text-callout" style="margin: 0; padding-left: var(--space-20); display: flex; flex-direction: column; gap: var(--space-4);">
+              <li>Classification</li>
+              <li>Effects</li>
+              <li>Severity</li>
+              <li>Plant parts</li>
+              <li>Exposure routes</li>
+            </ul>
+            <p class="text-callout" style="margin: 0; color: var(--text-secondary);">{{petContextNote}}</p>
+          </section>
+          </sc-if>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{tabInfo}}" hint-placeholder-val="{{ false }}">
+        <div role="tabpanel" style="display: flex; flex-direction: column; gap: var(--space-12);">
+          <section style="display: flex; flex-direction: column; gap: var(--space-12); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <div style="display: flex; align-items: center; gap: var(--space-8);">
+              <x-import component-from-global-scope="Snoof.Icon" name="Leaf" size="{{n24}}" color="var(--text-accent)"></x-import>
+              <h2 class="display-title-3" style="margin: 0;">About Red shield plant</h2>
+            </div>
+            <p class="text-body" style="margin: 0;">A tropical perennial with heart-shaped foliage and reddish petioles.</p>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2); padding-top: var(--space-12); border-top: var(--border-width-default) solid var(--border-subtle);">
+              <span class="text-subheadline-emphasized">Scientific name</span>
+              <span class="text-body" style="color: var(--text-secondary);"><i>Homalomena rubescens</i> (Roxb.) Kunth</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+              <span class="text-subheadline-emphasized">Family</span>
+              <span class="text-body" style="color: var(--text-secondary);">Araceae</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+              <span class="text-subheadline-emphasized">Common names</span>
+              <span class="text-body" style="color: var(--text-secondary);">Red shield plant, Queen of Hearts</span>
+            </div>
+          </section>
+
+          <section style="display: flex; flex-direction: column; gap: var(--space-12); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+              <h2 class="display-title-3" style="margin: 0;">Plant care</h2>
+              <p class="text-subheadline" style="margin: 0; color: var(--text-secondary);">For growing the plant. Not about pet safety.</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2); padding: var(--padding-md); border-radius: var(--radius-md); background: var(--surface-default);">
+              <span style="display: flex; align-items: center; gap: var(--space-8);"><span class="ph-glyph ph-sun" aria-hidden="true" style="width: 20px; height: 20px;"></span><span class="text-headline">Light</span></span>
+              <span class="text-subheadline" style="color: var(--text-secondary);">Indirect light / partial shade</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2); padding: var(--padding-md); border-radius: var(--radius-md); background: var(--surface-default);">
+              <span style="display: flex; align-items: center; gap: var(--space-8);"><span class="ph-glyph ph-drop" aria-hidden="true" style="width: 20px; height: 20px;"></span><span class="text-headline">Water</span></span>
+              <span class="text-subheadline" style="color: var(--text-secondary);">Keep soil moist, avoid waterlogging</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2); padding: var(--padding-md); border-radius: var(--radius-md); background: var(--surface-default);">
+              <span style="display: flex; align-items: center; gap: var(--space-8);"><span class="ph-glyph ph-cloud" aria-hidden="true" style="width: 20px; height: 20px;"></span><span class="text-headline">Humidity</span></span>
+              <span class="text-subheadline" style="color: var(--text-secondary);">Prefers humid conditions</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2); padding: var(--padding-md); border-radius: var(--radius-md); background: var(--surface-default);">
+              <span style="display: flex; align-items: center; gap: var(--space-8);"><span class="ph-glyph ph-tulip" aria-hidden="true" style="width: 20px; height: 20px;"></span><span class="text-headline">Soil</span></span>
+              <span class="text-subheadline" style="color: var(--text-secondary);">Moist, well-draining mix</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2); padding: var(--padding-md); border-radius: var(--radius-md); background: var(--surface-default);">
+              <span style="display: flex; align-items: center; gap: var(--space-8);"><span class="ph-glyph ph-flower" aria-hidden="true" style="width: 20px; height: 20px;"></span><span class="text-headline">Propagation</span></span>
+              <span class="text-subheadline" style="color: var(--text-secondary);">Division</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+              <span class="text-footnote" style="color: var(--text-secondary);">Botanical and cultivation reference: <a href="https://www.nparks.gov.sg/florafaunaweb/flora/2/1/2106" target="_blank" rel="noopener" style="color: var(--text-accent);">NParks Flora &amp; Fauna Web</a></span>
+              <span class="text-caption-1" style="color: var(--text-secondary);">Based on the sources listed. Not yet reviewed by an expert.</span>
+            </div>
+          </section>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{tabEvidence}}" hint-placeholder-val="{{ false }}">
+        <div role="tabpanel" style="display: flex; flex-direction: column; gap: var(--space-12);">
+          <section style="display: flex; flex-direction: column; gap: var(--space-12); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+              <h2 class="display-title-3" style="margin: 0;">Sources &amp; evidence</h2>
+              <p class="text-subheadline" style="margin: 0; color: var(--text-secondary);">Toxicity evidence for cats.</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-4); align-items: flex-start; padding-top: var(--space-12); border-top: var(--border-width-default) solid var(--border-subtle);">
+              <span class="text-headline">Cats Protection</span>
+              <span class="text-subheadline-emphasized">“Caution advised” listing</span>
+              <x-import component-from-global-scope="Snoof.EvidenceStatus" state="Single source" label="Single source"></x-import>
+              <span class="text-footnote" style="color: var(--text-secondary);">Single source for this listing · <a href="https://www.cats.org.uk/media/9597/cats-and-indoor-plants.pdf" target="_blank" rel="noopener" style="color: var(--text-accent);">Cats and indoor plants (PDF)</a></span>
+            </div>
+            <p class="text-callout" style="margin: 0; padding-top: var(--space-12); border-top: var(--border-width-default) solid var(--border-subtle);">The “caution advised” category isn't defined by the source. No cat-specific effects or exposure routes are documented in the sources checked.</p>
+            <p class="text-subheadline" style="margin: 0;">The other sources consulted don't mention this plant (absence checked only in the pages retrieved).</p>
+            <div style="display: flex; margin-left: calc(var(--space-12) * -1);">
+              <x-import component-from-global-scope="Snoof.Button" hierarchy="Text" label="View details" on-click="{{on.details}}"></x-import>
+            </div>
+          </section>
+
+          <section style="display: flex; flex-direction: column; gap: var(--space-12); padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+              <h2 class="display-title-3" style="margin: 0;">Botanical &amp; horticultural sources</h2>
+              <p class="text-subheadline" style="margin: 0; color: var(--text-secondary);">Not toxicity evidence.</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-4); padding-top: var(--space-12); border-top: var(--border-width-default) solid var(--border-subtle);">
+              <span class="text-headline">NParks Flora &amp; Fauna Web</span>
+              <span class="text-subheadline">Supports: botanical identity and cultivation guidance.</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-4); padding-top: var(--space-12); border-top: var(--border-width-default) solid var(--border-subtle);">
+              <span class="text-headline">NC State Extension</span>
+              <span class="text-subheadline">Supports: botanical reference for the genus <i>Homalomena</i>.</span>
+              <span class="text-footnote" style="color: var(--text-secondary);">Its genus-level toxicity information is pending separate evidence review and isn't used in this result.</span>
+            </div>
+            <span class="text-caption-1" style="color: var(--text-secondary);">Based on the sources listed. Not yet reviewed by an expert.</span>
+          </section>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{showDecide}}" hint-placeholder-val="{{ false }}">
+          <section data-scroll-anchor="decide" role="radiogroup" aria-label="Your decision" style="display: flex; flex-direction: column; gap: var(--space-8);">
+            <h2 class="display-title-3" style="margin: 0;">Your decision</h2>
+            <button type="button" role="radio" aria-checked="{{oKeep.sel}}" onClick="{{on.pickKeep}}" style="display: flex; align-items: center; gap: var(--space-12); min-height: 56px; padding: var(--padding-md) var(--padding-lg); border-radius: var(--radius-md); background: {{oKeep.bg}}; border: {{oKeep.border}}; color: var(--text-primary); font: inherit; text-align: left; cursor: pointer;">
+              <span aria-hidden="true" style="width: var(--size-icon-md); height: var(--size-icon-md); flex: none; box-sizing: border-box; border-radius: var(--radius-full); border: var(--border-width-strong) solid {{oKeep.ring}}; display: flex; align-items: center; justify-content: center;"><sc-if value="{{oKeep.sel}}" hint-placeholder-val="{{ false }}"><span style="width: 12px; height: 12px; border-radius: var(--radius-full); background: var(--border-focus);"></span></sc-if></span>
+              <span class="{{oKeep.text}}">Get or keep it as it is</span>
+            </button>
+            <div role="radio" aria-checked="false" aria-disabled="true" style="display: flex; align-items: flex-start; gap: var(--space-12); padding: var(--padding-md) var(--padding-lg); border-radius: var(--radius-md); background: var(--surface-subtle); border: var(--border-width-default) dashed var(--border-strong); color: var(--text-secondary);">
+              <span aria-hidden="true" style="width: var(--size-icon-md); height: var(--size-icon-md); flex: none; box-sizing: border-box; border-radius: var(--radius-full); border: var(--border-width-strong) dashed var(--border-strong);"></span>
+              <span style="display: flex; flex-direction: column; gap: var(--space-4);">
+                <span class="text-body" style="color: var(--text-secondary);">Get or keep it with a documented precaution</span>
+                <span class="text-subheadline-emphasized" style="color: var(--text-primary);">Not available</span>
+                <span class="text-subheadline" style="color: var(--text-primary);">No evidence-supported precaution is available for this plant.</span>
+              </span>
+            </div>
+            <button type="button" role="radio" aria-checked="{{sel}}" onClick="{{on.pickAvoid}}" style="display: flex; align-items: center; gap: var(--space-12); min-height: 56px; padding: var(--padding-md) var(--padding-lg); border-radius: var(--radius-md); background: {{selBg}}; border: {{selBorder}}; color: var(--text-primary); font: inherit; text-align: left; cursor: pointer;">
+              <span aria-hidden="true" style="width: var(--size-icon-md); height: var(--size-icon-md); flex: none; box-sizing: border-box; border-radius: var(--radius-full); border: var(--border-width-strong) solid {{selRing}}; display: flex; align-items: center; justify-content: center;">
+                <sc-if value="{{sel}}" hint-placeholder-val="{{ false }}">
+                  <span style="width: 12px; height: 12px; border-radius: var(--radius-full); background: var(--border-focus);"></span>
+                </sc-if>
+              </span>
+              <span class="{{selText}}">Don't get it, or give it up</span>
+            </button>
+            <button type="button" role="radio" aria-checked="{{oOther.sel}}" onClick="{{on.pickOther}}" style="display: flex; align-items: center; gap: var(--space-12); min-height: 56px; padding: var(--padding-md) var(--padding-lg); border-radius: var(--radius-md); background: {{oOther.bg}}; border: {{oOther.border}}; color: var(--text-primary); font: inherit; text-align: left; cursor: pointer;">
+              <span aria-hidden="true" style="width: var(--size-icon-md); height: var(--size-icon-md); flex: none; box-sizing: border-box; border-radius: var(--radius-full); border: var(--border-width-strong) solid {{oOther.ring}}; display: flex; align-items: center; justify-content: center;"><sc-if value="{{oOther.sel}}" hint-placeholder-val="{{ false }}"><span style="width: 12px; height: 12px; border-radius: var(--radius-full); background: var(--border-focus);"></span></sc-if></span>
+              <span class="{{oOther.text}}">Choose a different plant</span>
+            </button>
+          </section>
+
+          <section style="display: flex; flex-direction: column; gap: var(--space-12); padding: var(--padding-md) var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <div style="display: flex; align-items: center; gap: var(--space-12); min-height: var(--size-touch-target-min);">
+              <span class="text-body" style="flex: 1;">Save to my collection (optional)</span>
+              <button type="button" role="switch" aria-checked="{{saveOn}}" aria-label="Save to my collection" onClick="{{on.toggleSave}}" style="width: 51px; height: 31px; flex: none; box-sizing: border-box; margin: 0; cursor: pointer; padding: var(--space-2); border-radius: var(--radius-full); background: {{switchBg}}; border: var(--border-width-default) solid var(--border-strong); display: flex; justify-content: {{switchJustify}};">
+                <span style="width: 25px; height: 25px; border-radius: var(--radius-full); background: var(--surface-default); box-shadow: var(--elevation-1-card);"></span>
+              </button>
+            </div>
+            <sc-if value="{{saveOn}}" hint-placeholder-val="{{ false }}">
+<sc-if value="{{reasonLive}}" hint-placeholder-val="{{ false }}">
+              <x-import component-from-global-scope="Snoof.TextField" editable="true" fill="true" label="Reason (optional)" placeholder="Add a note for yourself" max-length="120" value="{{reasonText}}" on-input="{{onReason}}" show-helper="false" style="display: block;"></x-import>
+            </sc-if>
+            <sc-if value="{{reasonStatic}}" hint-placeholder-val="{{ true }}">
+              <x-import component-from-global-scope="Snoof.TextField" label="Reason (optional)" placeholder="Add a note for yourself" value="[Reason entered by the user]" show-helper="{{no}}" state="Filled"></x-import>
+            </sc-if>
+              <span class="text-footnote" style="color: var(--text-secondary);">This record will be marked “insufficient information at the time”.</span>
+            </sc-if>
+            <sc-if value="{{isSaveFail}}" hint-placeholder-val="{{ false }}">
+              <div role="alert" style="display: flex; gap: var(--space-12); align-items: flex-start; padding: var(--padding-md); border-radius: var(--radius-lg); background: var(--feedback-system-background);">
+                <span class="ph-glyph ph-warning" aria-hidden="true" style="width: 20px; height: 20px; flex: none; margin-top: var(--space-2); color: var(--feedback-system-icon);"></span>
+                <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-8); align-items: flex-start;">
+                  <p class="text-callout" style="margin: 0;">Couldn't save. Your decision and reason are kept.</p>
+                  <button type="button" style="display: inline-flex; align-items: center; gap: var(--space-8); min-height: var(--size-touch-target-min); padding: 0; border: 0; background: transparent; color: var(--feedback-system-foreground); font: inherit; cursor: pointer;">
+                    <span class="ph-glyph ph-retry" aria-hidden="true" style="width: 18px; height: 18px; flex: none; color: var(--feedback-system-icon);"></span>
+                    <span class="text-subheadline-emphasized">Try again</span>
+                  </button>
+                </div>
+              </div>
+            </sc-if>
+          </section>
+        </sc-if>
+
+        <sc-if value="{{isNotDeciding}}" hint-placeholder-val="{{ false }}">
+          <section role="status" style="display: flex; flex-direction: column; gap: var(--space-4); padding: var(--padding-md) var(--padding-lg); border-radius: var(--radius-lg); background: var(--background-primary);">
+            <span class="text-headline">Not deciding now.</span>
+            <p class="text-callout" style="margin: 0;">You can save this check as Considering, or leave it without saving.</p>
+          </section>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isClosed}}" hint-placeholder-val="{{ false }}">
+      <div style="height: calc(var(--space-48) + var(--space-12));"></div>
+      <div style="padding: 0 var(--space-8);">
+        <button type="button" aria-label="Back" onClick="{{on.back}}" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); border: 0; padding: 0; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <span style="display: flex; transform: scaleX(-1);"><x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-primary)"></x-import></span>
+        </button>
+      </div>
+      <div role="status" style="display: flex; flex-direction: column; align-items: center; gap: var(--space-12); padding: var(--space-24); text-align: center;">
+        <span aria-hidden="true" style="width: 72px; height: 72px; border-radius: var(--radius-full); background: {{confirmCircle}}; display: flex; align-items: center; justify-content: center;">
+          <x-import component-from-global-scope="Snoof.Icon" name="Check" size="{{n32}}" color="var(--text-primary)"></x-import>
+        </span>
+        <h2 class="display-title-1" style="margin: 0;">{{confirmTitle}}</h2>
+        <p class="text-body" style="margin: 0; color: var(--text-secondary);">{{confirmBody}}</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: var(--space-12); padding: 0 var(--space-16) var(--space-24);">
+        <div style="display: flex; align-items: center; gap: var(--space-12); padding: var(--padding-md); border-radius: var(--radius-lg); background: var(--accent-nature); color: var(--text-on-action);">
+          <img src="./assets/4ac8cee08a0b74e9550743cab3ed1a8f.webp" alt="" style="width: 90px; height: 94px; flex: none; object-fit: contain; display: block;">
+          <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-2);">
+            <span class="display-title-3" style="color: var(--text-on-action);">Red shield plant</span>
+            <span class="text-body" style="font-style: italic; color: var(--text-on-action);">Homalomena rubescens</span>
+            <sc-if value="{{closedSaved}}" hint-placeholder-val="{{ true }}">
+            <span style="display: flex; align-items: flex-start; gap: var(--space-4); margin-top: var(--space-4);">
+              <x-import component-from-global-scope="Snoof.Icon" name="Check" size="{{n16}}" color="var(--text-on-action)"></x-import>
+              <span class="text-footnote" style="font-weight: 600; color: var(--text-on-action);">Saved to your collection, marked “insufficient information at the time”.</span>
+            </span>
+            </sc-if>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-12); padding: var(--padding-md); border-radius: var(--radius-lg); background: var(--surface-nature);">
+          <img src="{{petAvatar}}" alt="" style="width: 56px; height: 56px; flex: none; border-radius: var(--radius-full); object-fit: cover; background: var(--surface-warm);">
+          <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-2);">
+            <span class="text-subheadline-emphasized">{{petLine}}</span>
+            <sc-if value="{{hasPetSub}}" hint-placeholder-val="{{ true }}"><span class="text-footnote" style="color: var(--text-secondary);">{{petSub}}</span></sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <div aria-hidden="true" style="height: {{footerSpacer}};"></div>
+  </div>
+
+  <div data-glass-footer="true" style="position: {{footerPosition}}; left: 0; right: 0; bottom: 0; flex: none; display: flex; flex-direction: column; gap: {{footerGap}}; padding: var(--space-12) var(--space-24) calc(var(--space-32) + var(--space-2)); background: color-mix(in srgb, var(--surface-default) 45%, transparent); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4); border-top: var(--border-width-default) solid color-mix(in srgb, var(--border-subtle) 60%, transparent);">
+    <x-import component-from-global-scope="Snoof.Button" hierarchy="Primary" label="{{primaryLabel}}" fill="{{yes}}" on-click="{{on.primary}}"></x-import>
+    <x-import component-from-global-scope="Snoof.Button" hierarchy="{{secondaryHierarchy}}" label="{{secondaryLabel}}" fill="{{yes}}" on-click="{{on.secondary}}"></x-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["Default","Decide","Closed","NotDeciding","SaveFail","Considering"],"default":"Default"},"capture":{"editor":"boolean","default":false},"$preview":{"width":393,"height":852}}'>
+class Component extends DCLogic {
+  renderVals() {
+
+    const A = this.props.act || null;
+    const PN = (A && this.props.petName) || 'J\u00e4ger';
+
+    const JSUB = (A && typeof this.props.petSub === 'string') ? this.props.petSub : 'Chews plants · Drinks from vases · Lies or sleeps on plants · Sniffs plants' + (A && this.props.petOther ? ' · ' + this.props.petOther : '');
+    const fire = (k) => (e) => { if (!A || !A[k]) return; if (e && e.preventDefault) e.preventDefault(); A[k](); };
+    const lk = (href) => (A ? '#' : href);
+    const on = {back: fire('back'), edit: fire('edit'), tabSafety: fire('tabSafety'), tabInfo: fire('tabInfo'), tabEvidence: fire('tabEvidence'), details: fire('details'),
+      pickKeep: fire('pickKeep'), pickAvoid: fire('pickAvoid'), pickOther: fire('pickOther'), toggleSave: fire('toggleSave'), primary: fire('gapPrimary'), secondary: fire('gapSecondary')};
+    const P = this.props;
+    const ctl = !!A;
+    if (!this._refFn) this._refFn = (el) => { this._scrollEl = el; };
+    const v0 = this.props.variant ?? 'Default';
+
+    if (ctl && v0 === 'Decide' && this._lastV !== 'Decide' && this._lastV !== undefined) setTimeout(() => this.scrollToDecide(true), 60);
+    this._lastV = v0;
+    const v = v0 === 'Considering' ? 'Closed' : v0;
+    const considering = v0 === 'Considering';
+    const tab = ctl && (P.tab === 'info' || P.tab === 'evidence') ? P.tab : 'safety';
+    const tabOf = (k) => ({ sel: tab === k, bg: tab === k ? 'var(--surface-default)' : 'transparent', sh: tab === k ? 'var(--elevation-1-card)' : 'none', cls: tab === k ? 'text-subheadline-emphasized' : 'text-subheadline' });
+    const DEC = { keep: 'Get or keep it as it is', avoid: "Don't get it, or give it up", other: 'Choose a different plant' };
+    const dec = ctl ? (P.decision || null) : (v === 'SaveFail' || v === 'Closed' ? 'avoid' : null);
+    const optOf = (k) => { const s2 = dec === k; return { sel: s2, bg: s2 ? 'var(--surface-nature)' : 'var(--surface-default)', border: s2 ? 'var(--border-width-strong) solid var(--border-focus)' : 'var(--border-width-default) solid var(--border-strong)', ring: s2 ? 'var(--border-focus)' : 'var(--border-strong)', text: s2 ? 'text-body-emphasized' : 'text-body' }; };
+    const pet = ctl ? (P.pet || 'jager') : 'jager';
+    const another = pet === 'another';
+    const tempPet = pet === 'temp' || another, nobeh = pet === 'nobeh';
+    const capture = this.props.capture === true || this.props.capture === 'true';
+    const decide = v === 'Decide' || v === 'SaveFail';
+    const sel = dec === 'avoid';
+    const saveOn = ctl ? !!P.saveOn : v === 'SaveFail';
+    const labels = {
+      Default: ['Decide now', 'Text', 'Not deciding now'],
+      Decide: ['Done', 'Secondary', 'Save as Considering'],
+      SaveFail: ['Done', 'Secondary', 'Save as Considering'],
+      Closed: ['Done', 'Secondary', 'View in collection'],
+      NotDeciding: ['Done', 'Secondary', 'Save as Considering']
+    }[v] || ['Decide now', 'Text', 'Not deciding now'];
+    return {
+      petName: PN,
+      reasonLive: !!A, reasonStatic: !A, reasonText: A ? (this.props.reasonText || '') : '',
+      onReason: (e) => { if (A && A.setCheckReason) A.setCheckReason(e.target.value); },
+      yes: true, no: false, n14: 14, n16: 16, n20: 20, n24: 24, n32: 32,
+      on: on, hEdit: lk('MOD04-SCR07.dc.html'),
+      tabSafety: tab === 'safety', tabInfo: tab === 'info', tabEvidence: tab === 'evidence', tS: tabOf('safety'), tI: tabOf('info'), tE: tabOf('evidence'),
+      oKeep: optOf('keep'), oOther: optOf('other'),
+      petAvatar: (tempPet || nobeh) ? './assets/0d3c5d8c6ff3eda65ae4c2dfdc11d819.webp' : './assets/f5fa5afeba27b05a659116906727db05.webp',
+      petLine: tempPet ? (another ? 'Checking for Another cat · Cat' : 'A cat · for this check only') : (nobeh ? 'A cat · behaviours not provided for this check' : 'Checking for ' + PN + ' · Cat'),
+      hasPetSub: !nobeh && (tempPet || !!JSUB),
+      petSub: tempPet ? (another ? 'Bites, chews or eats plants · Touches or rubs against plants' : 'Bites, chews or eats plants · Touches or rubs against plants · Other') : JSUB,
+      petContextNote: nobeh ? 'No behaviours were added for this check.' : 'The behaviours you told us about are context only; they aren\u2019t used to predict effects.',
+      confirmCircle: considering ? 'var(--surface-warm)' : 'var(--surface-nature)',
+      confirmTitle: considering ? 'Saved as Considering.' : 'Check closed.',
+      confirmBody: considering ? 'You can come back to this check from your collection.' : 'Your decision: ' + (DEC[dec] || DEC.avoid) + '.',
+      closedSaved: ctl ? !!P.saved : true,
+      showSections: v === 'Default' || decide || v === 'NotDeciding',
+      selText: sel ? 'text-body-emphasized' : 'text-body',
+      footerGap: v === 'Default' ? 'var(--space-4)' : 'var(--space-8)',
+      scrollRef: this._refFn,
+      rootHeight: capture ? 'auto' : '852px',
+      scrollFlex: capture ? 'none' : '1 1 0%',
+      scrollOverflow: capture ? 'visible' : 'auto',
+      footerPosition: capture ? 'relative' : 'absolute',
+      footerSpacer: capture ? '0px' : 'calc(var(--space-64) + var(--space-64) + var(--space-16))',
+      showInfo: v === 'Default' || decide || v === 'NotDeciding',
+      showDecide: decide,
+      sel: sel,
+      selBg: sel ? 'var(--surface-nature)' : 'var(--surface-default)',
+      selBorder: sel ? 'var(--border-width-strong) solid var(--border-focus)' : 'var(--border-width-default) solid var(--border-strong)',
+      selRing: sel ? 'var(--border-focus)' : 'var(--border-strong)',
+      saveOn: saveOn,
+      switchBg: saveOn ? 'var(--surface-inverse)' : 'var(--surface-subtle)',
+      switchJustify: saveOn ? 'flex-end' : 'flex-start',
+      isSaveFail: v === 'SaveFail',
+      isClosed: v === 'Closed',
+      isNotDeciding: v === 'NotDeciding',
+      primaryLabel: labels[0], secondaryHierarchy: labels[1], secondaryLabel: labels[2]
+    };
+  }
+  scrollToDecide(smooth) {
+    const el = this._scrollEl;
+    if (!el) return;
+    const a = el.querySelector('[data-scroll-anchor="decide"]');
+    if (!a) return;
+
+    const top = Math.max(0, el.scrollTop + a.getBoundingClientRect().top - el.getBoundingClientRect().top - 72);
+    if (smooth && el.scrollTo) el.scrollTo({ top: top, behavior: 'smooth' }); else el.scrollTop = top;
+  }
+  componentDidMount() {
+
+    const v = this.props.variant ?? 'Default';
+    const capture = this.props.capture === true || this.props.capture === 'true';
+    if (capture) return;
+    const mode = v === 'Decide' ? 'decide' : ((v === 'SaveFail' || v === 'NotDeciding' || v === 'Closed') ? 'end' : null);
+    if (!mode) return;
+    [80, 500, 1500].forEach((t) => setTimeout(() => {
+      const el = this._scrollEl;
+      if (!el) return;
+      if (mode === 'end') { el.scrollTop = el.scrollHeight; return; }
+      const a = el.querySelector('[data-scroll-anchor="decide"]');
+      if (a) el.scrollTop = Math.max(0, el.scrollTop + a.getBoundingClientRect().top - el.getBoundingClientRect().top - 24);
+    }, t));
+  }
+}
+</script>
+</body>
+</html>

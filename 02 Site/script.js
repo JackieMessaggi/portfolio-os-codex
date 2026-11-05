@@ -7,7 +7,18 @@ if (nav) {
   const darkSections = [...document.querySelectorAll('.work, .contact')];
   let ticking = false;
 
+  // Mobile rail clarity: when the active section changes, show its name next to the number for a moment.
+  let lastId = null;
+  let labelTimer = 0;
+  function announce() {
+    if (window.innerWidth > 760) return;
+    nav.classList.add('show-label');
+    clearTimeout(labelTimer);
+    labelTimer = setTimeout(() => nav.classList.remove('show-label'), 1800);
+  }
+
   function setActive(id) {
+    if (id !== lastId) { lastId = id; announce(); }
     links.forEach((link) => {
       if (link.hash === '#' + id) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
@@ -111,6 +122,44 @@ if (caseNav) {
   window.addEventListener('resize', requestUpdate);
   update();
 }
+
+// Snoof case, section 4: before/after comparison. The (invisible) range input drives the divider position;
+// it works with drag, touch, and arrow keys. Without JavaScript the CSS shows both screens side by side.
+document.querySelectorAll('.cs-compare').forEach((figure) => {
+  const range = figure.querySelector('.cs-compare-range');
+  if (!range) return;
+  const sync = () => figure.style.setProperty('--pos', `${range.value}%`);
+  range.addEventListener('input', sync);
+  sync();
+});
+
+// Snoof case, section 7: demo loop. Plays muted and looping only while in view and only with motion allowed; the file
+// loads on first play. Without motion (or JavaScript) the poster stays. A small toggle pauses and resumes it.
+(() => {
+  const video = document.querySelector('.cs-demo');
+  if (!video || !window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+  const toggle = document.querySelector('.cs-demo-toggle');
+  let paused = false;
+  let visible = false;
+  const sync = () => {
+    if (visible && !paused) {
+      if (!video.src) video.src = video.dataset.src;
+      const p = video.play(); if (p) p.catch(() => {});
+    } else video.pause();
+  };
+  if (toggle) {
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {
+      paused = !paused;
+      toggle.setAttribute('aria-pressed', String(paused));
+      toggle.textContent = paused ? 'Play demo' : 'Pause demo';
+      sync();
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => entries.forEach((e) => { visible = e.isIntersecting; sync(); }), { rootMargin: '200px 0px' }).observe(video);
+  } else { visible = true; sync(); }
+})();
 
 // Snoof case P1 scroll storytelling (sections 4 and 5B). Progressive enhancement: without JavaScript or with
 // prefers-reduced-motion, the static layouts and captions stay as they are. One rAF-throttled scroll check drives

@@ -1,0 +1,401 @@
+<!doctype html>
+<meta charset="utf-8"><style data-dc-design-system-vars>@layer{:root{--color-navy-900:#223e49;--color-navy-700:#4d626a;--color-navy-500:#6d7e83;--color-navy-300:#8d999c;--color-navy-200:#d8d9d5;--color-navy-100:#ebe9e4;--color-teal-700:#437072;--color-teal-500:#4e8080;--color-teal-100:#e4edec;--color-cream-100:#f8f4ee;--color-white:#ffffff;--color-peach-300:#facebb;--color-peach-100:#fce6dd;--color-orange-500:#f08434;--color-terracotta-600:#c24c35;--color-terracotta-700:#a5412d;--color-navy-alpha-06:#223e490f;--color-navy-alpha-10:#223e491a;--color-navy-alpha-14:#223e4924;--color-red-700:#ae2e24;--color-red-100:#fce8e4;--color-green-700:#216e4e;--color-green-100:#e3fcef;--color-amber-700:#946200;--color-amber-100:#fff1d6;--color-purple-700:#6950a1;--color-purple-100:#ede8f7;--background-primary:#f8f4ee;--background-secondary:#ffffff;--surface-default:#ffffff;--surface-subtle:#ebe9e4;--surface-warm:#fce6dd;--surface-nature:#e4edec;--surface-inverse:#223e49;--text-primary:#223e49;--text-secondary:#4d626a;--text-accent:#437072;--text-disabled:#8d999c;--text-on-inverse:#f8f4ee;--text-on-action:#ffffff;--border-subtle:#ebe9e4;--border-default:#d8d9d5;--border-strong:#6d7e83;--border-focus:#437072;--action-primary-background:#223e49;--action-primary-background-pressed:#4d626a;--action-primary-text:#ffffff;--action-secondary-background:#facebb;--action-secondary-text:#223e49;--action-tertiary-text:#437072;--action-disabled-background:#ebe9e4;--action-disabled-text:#8d999c;--accent-intent:#f08434;--accent-emphasis:#c24c35;--accent-nature:#4e8080;--elevation-shadow-low:#223e490f;--elevation-shadow-medium:#223e491a;--elevation-shadow-high:#223e4924;--finding-toxic-background:#fce8e4;--finding-toxic-foreground:#ae2e24;--finding-toxic-border:#ae2e24;--finding-toxic-icon:#ae2e24;--finding-non-toxic-background:#e3fcef;--finding-non-toxic-foreground:#216e4e;--finding-non-toxic-border:#216e4e;--finding-non-toxic-icon:#216e4e;--evidence-insufficient-background:#fff1d6;--evidence-insufficient-foreground:#946200;--evidence-insufficient-border:#946200;--evidence-insufficient-icon:#946200;--evidence-conflicting-background:#ede8f7;--evidence-conflicting-foreground:#6950a1;--evidence-conflicting-border:#6950a1;--evidence-conflicting-icon:#6950a1;--attention-contextual-background:#fce6dd;--attention-contextual-foreground:#223e49;--attention-contextual-accent:#f08434;--attention-contextual-border:#f08434;--attention-contextual-icon:#223e49;--feedback-system-background:#fff1d6;--feedback-system-foreground:#946200;--feedback-system-border:#946200;--feedback-system-icon:#946200;--context-check-background:#fff1d6;--context-check-foreground:#946200;--context-check-border:#946200;--context-check-icon:#946200;--elevation-1-card:0px 2px 8px 0px rgba(34, 62, 73, 0.06);--elevation-2-floating:0px 6px 20px 0px rgba(34, 62, 73, 0.1);--elevation-3-sheet:0px 12px 32px 0px rgba(34, 62, 73, 0.14);--space-0:0px;--space-2:2px;--space-4:4px;--space-8:8px;--space-12:12px;--space-16:16px;--space-20:20px;--space-24:24px;--space-32:32px;--space-40:40px;--space-48:48px;--space-64:64px;--padding-xs:4px;--padding-sm:8px;--padding-md:12px;--padding-lg:16px;--padding-xl:24px;--layout-margin-compact:16px;--layout-margin-regular:20px;--layout-gap-stack:8px;--layout-gap-group:16px;--layout-gap-section:32px;--radius-none:0px;--radius-xs:8px;--radius-sm:12px;--radius-md:16px;--radius-lg:20px;--radius-xl:24px;--radius-full:999px;--border-width-default:1px;--border-width-strong:2px;--size-touch-target-min:44px;--size-icon-sm:16px;--size-icon-md:24px;--size-icon-lg:32px;--font-display:"SF Pro Rounded", ui-rounded, "SF Pro Display", system-ui, sans-serif;--font-text:"DM Sans", system-ui, sans-serif;--text-display-large-title:700 34px/41px var(--font-display);--text-display-title-1:700 28px/34px var(--font-display);--text-display-title-2:700 22px/28px var(--font-display);--text-display-title-3:600 20px/25px var(--font-display);--text-text-headline:600 17px/22px var(--font-text);--text-text-body:400 17px/22px var(--font-text);--text-text-body-emphasized:600 17px/22px var(--font-text);--text-text-callout:400 16px/21px var(--font-text);--text-text-subheadline:400 15px/20px var(--font-text);--text-text-subheadline-emphasized:600 15px/20px var(--font-text);--text-text-footnote:400 13px/18px var(--font-text);--text-text-caption-1:400 12px/16px var(--font-text);--text-text-caption-2:400 11px/13px var(--font-text);}}</style>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Snoof prototype</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/snoof/tokens.css">
+<link rel="stylesheet" href="ds/snoof/components/bundle.css">
+<script src="ds/snoof/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="fonts.css">
+<style>body{margin:0}</style>
+</helmet>
+<div data-prototype="core-plant-check" style="width: 393px; height: 852px; position: relative; overflow: hidden; background: var(--surface-default); font-family: var(--font-text); color: var(--text-primary);">
+  <sc-if value="{{s.welcome}}" hint-placeholder-val="{{ true }}">
+    <dc-import name="Main" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.home}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="SCR02" record-count="{{recordCount}}" pet-name="{{profileName}}" pet-other="{{profileOther}}" pet-sub="{{profileSub}}" variant="{{homeV}}" pet-avatar="{{profileAvatar}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.mod01}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="MOD01" variant="{{mod01V}}" plant="{{plant}}" host="{{mod01Host}}" home-variant="{{homeV}}" confirm-variant="{{confirmHostV}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.pet}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="SCR10" pet-name="{{profileName}}" name-text="{{formName}}" variant="{{petV}}" name-on="{{nameOn}}" species="{{species}}" behaviours="{{formBeh}}" other-text="{{formOther}}" pet-other="{{profileOther}}" pet-sub="{{profileSub}}" form-avatar="{{formAvatar}}" profile-avatar="{{profileAvatar}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.creator}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="SCR10-AvatarCreator" context="{{creatorCtx}}" preset="Start" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.picker}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="MOD03" home-variant="{{homeV}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.photo}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="SCR04" pet-name="{{profileName}}" variant="{{photoV}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.search}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="SCR03" saved="{{savedPlants}}" pet-name="{{profileName}}" variant="{{searchV}}" query="{{searchQ}}" shift="{{searchShift}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.confirm}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="MOD02" pet-name="{{profileName}}" pet-other="{{profileOther}}" pet-sub="{{profileSub}}" variant="{{confirmV}}" pet="{{confirmPet}}" plant="{{plant}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.finding}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="SCR05" pet-name="{{profileName}}" pet-other="{{profileOther}}" pet-sub="{{profileSub}}" pet-beh="{{profileBeh}}" variant="{{findingV}}" plant="{{plant}}" pet="{{pet}}" tab="{{tab}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.gap}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="SCR07" reason-text="{{reasonText}}" pet-name="{{profileName}}" pet-other="{{profileOther}}" pet-sub="{{profileSub}}" variant="{{gapV}}" tab="{{tab}}" decision="{{decision}}" save-on="{{saveOn}}" saved="{{gapSaved}}" pet="{{pet}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.mod05}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="MOD05" plant="{{plant}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.mod04}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="MOD04" pet-name="{{profileName}}" host="{{mod04Host}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.guidance}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="SCR06" reason-text="{{reasonText}}" pet-name="{{profileName}}" pet-other="{{profileOther}}" pet-sub="{{profileSub}}" variant="{{guidanceV}}" plant="{{plant}}" decision="{{decision}}" save-on="{{saveOn}}" saved="{{savedHere}}" pet="{{pet}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.collection}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="SCR08" variant="{{collectionV}}" lily="{{hasRecord}}" lily-decision="{{lilyDecision}}" fern="{{hasFern}}" fern-decision="{{fernDecision}}" shield="{{hasShield}}" shield-decision="{{shieldDecision}}" filter="{{filter}}" removed="{{removed}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+  <sc-if value="{{s.saved}}" hint-placeholder-val="{{ false }}">
+    <dc-import name="SCR09" reason-draft="{{reasonDraft}}" pet-name="{{recordPetName}}" active-name="{{profileName}}" home-ctx="{{homeCtx}}" pet-other="{{recordPetOther}}" pet-sub="{{recordPetSub}}" variant="Default" plant="{{savedPlant}}" tab="{{savedTab}}" entry="{{recordEntry}}" pet="{{recordPet}}" decision="{{recordDecision}}" reason="{{recordReason}}" confirm="{{confirmRemove}}" act="{{act}}" hint-size="393px,852px"></dc-import>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":393,"height":852}}'>
+const DECISION = { keep: 'Get or keep it as it is', avoid: "Don't get it, or give it up", other: 'Choose a different plant' };
+const REASON_FIXTURE = '[Reason entered by the user]';
+
+const BEH_LABELS = { b1: 'Bites, chews or eats plants', b2: 'Sniffs or smells plants', b3: 'Touches or rubs against plants', b4: 'Lies or sleeps on plants or pots', b5: 'Drinks water from pots, saucers or vases', b6: 'Other', x1: "I don't know", x2: "My pet doesn't usually interact with plants" };
+const behSummary = (beh, other) => Object.keys(BEH_LABELS).filter((k) => beh && beh[k]).map((k) => (k === 'b6' && other ? other : BEH_LABELS[k])).join(' · ');
+const JAGER_AVATAR = './assets/f5fa5afeba27b05a659116906727db05.webp';
+
+const CREATED_AVATAR = './assets/a185654144fc8c721af3e7c09fea7881.webp';
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this._session = 0;
+    this.initialState = () => ({
+      screen: 'welcome',
+
+      hasPet: false, tempPet: false, petV: 'SetupDisabled', setupOrigin: 'welcome',
+      nameOn: false, species: 'None', behaviours: {}, otherText: '', profileOther: '', profileBeh: {}, editBeh: {}, editOther: '', nameText: '', profileName: '', editName: '', setupAvatar: null, profileAvatar: JAGER_AVATAR, editAvatar: null, creatorCtx: 'Setup',
+
+      mod01V: 'ADisabled', mod01Host: 'home',
+
+      searchV: 'Input', searchQ: '', searchShift: false, photoV: 'Matches', confirmV: 'A',
+      opener: 'search', entry: 'search', correcting: false, pickerReturn: 'home',
+      reasonDraft: null, reasonText: '',
+      pet: 'jager', tab: 'safety', plant: 'lily', savedPlant: 'lily', gapV: 'Default',
+      decision: null, saveOn: false, ended: null, prevRecord: null,
+      records: {}, filter: 'all', removed: false, savedTab: 'safety', confirmRemove: false
+    });
+    this.state = this.initialState();
+    const go = (patch) => this.setState(patch);
+    const later = (ms, test, patch) => { const sid = this._session; setTimeout(() => { if (sid === this._session && test(this.state)) this.setState(typeof patch === 'function' ? patch() : patch); }, ms); };
+    const openerScreen = () => {
+      const st = this.state;
+      return st.opener === 'photo'
+        ? { screen: 'photo', photoV: st.correcting ? 'Correction' : 'Matches' }
+        : { screen: 'search', searchV: st.correcting ? 'Correction' : 'Results' };
+    };
+
+    const curRec = () => this.state.records[this.state.plant] || null;
+    const setRec = (r) => ({ records: { ...this.state.records, [this.state.plant]: r } });
+    const freshCheck = (plant) => ({ tab: 'safety', decision: null, saveOn: false, ended: null, reasonText: '', prevRecord: this.state.records[plant || this.state.plant] || null })
+    const recordFrom = (decisionLabel, withReason) => ({ decision: decisionLabel, reason: withReason ? (this.state.reasonText.trim() || null) : null, entry: this.state.entry, pet: this.state.pet, petOther: this.state.pet === 'jager' ? this.state.profileOther : '', petSub: this.state.pet === 'jager' ? behSummary(this.state.profileBeh, this.state.profileOther) : null, petName: this.state.profileName });
+
+    const exitHome = () => go({ screen: 'home', tempPet: false, correcting: false });
+
+    const resultScreen = (plant) => ((plant || this.state.plant) === 'shield' ? 'gap' : 'finding');
+    const toS3 = (pet, plant) => ({ screen: resultScreen(plant), gapV: 'Default', pet: pet, entry: this.state.opener, correcting: false, ...freshCheck(plant), ...(plant ? { plant: plant } : {}) });
+    const pick = (k) => () => {
+      const st = this.state;
+      const patch = { decision: k };
+      if (st.saveOn) Object.assign(patch, setRec(recordFrom(DECISION[k], true)));
+      go(patch);
+    };
+    const openSetup = (origin) => go({ screen: 'pet', petV: 'SetupDisabled', setupOrigin: origin, nameOn: false, nameText: '', species: 'None', behaviours: {}, otherText: '', setupAvatar: null });
+    this.act = {
+
+      skip: () => go({ screen: 'home', hasPet: false }),
+      addPet: () => openSetup(this.state.screen === 'welcome' ? 'welcome' : 'home'),
+
+      name: () => {},
+
+      setName: (t) => { const v = String(t || '').slice(0, 30); go(this.state.petV === 'Edit' ? { editName: v } : { nameText: v, nameOn: !!v.trim() }); },
+      setSpecies: (sp) => go({ species: sp }),
+      toggleBehaviour: (k) => {
+        const isEdit = this.state.petV === 'Edit';
+        const cur = (isEdit ? this.state.editBeh : this.state.behaviours) || {};
+        const next = {};
+        if (k === 'x1' || k === 'x2') { if (!cur[k]) next[k] = 1; }
+        else { Object.keys(cur).forEach((x) => { if (x[0] === 'b') next[x] = 1; }); if (cur[k]) delete next[k]; else next[k] = 1; }
+        if (isEdit) return go({ editBeh: next, editOther: next.b6 ? this.state.editOther : '' });
+        go({ behaviours: next, otherText: next.b6 ? this.state.otherText : '' });
+      },
+      setOther: (t) => go(this.state.petV === 'Edit' ? { editOther: String(t || '').slice(0, 80) } : { otherText: String(t || '').slice(0, 80) }),
+      setupBack: () => go(this.state.setupOrigin === 'welcome' ? { screen: 'welcome' } : { screen: 'home' }),
+      primary: () => {
+        const st = this.state;
+        if (st.petV === 'Edit') { if (!st.editName.trim()) return; return go({ screen: 'home', profileName: st.editName.trim(), profileAvatar: st.editAvatar || st.profileAvatar, editAvatar: null, profileBeh: { ...st.editBeh }, profileOther: st.editBeh && st.editBeh.b6 ? st.editOther.trim() : '' }); }
+        if (st.nameText.trim() && st.species !== 'None') go({ petV: 'Profile', hasPet: true, profileName: st.nameText.trim(), profileAvatar: st.setupAvatar || JAGER_AVATAR, profileBeh: { ...(st.behaviours || {}) }, profileOther: st.behaviours && st.behaviours.b6 ? st.otherText.trim() : '' });
+      },
+
+      customise: () => { const v = this.state.petV; go({ screen: 'creator', creatorCtx: v === 'Profile' ? 'Profile' : (v === 'Edit' ? 'Edit' : 'Setup') }); },
+      saveAvatar: () => {
+        const c = this.state.creatorCtx;
+        if (c === 'Setup') return go({ screen: 'pet', petV: 'SetupDisabled', setupAvatar: CREATED_AVATAR });
+        if (c === 'Edit') return go({ screen: 'pet', petV: 'Edit', editAvatar: CREATED_AVATAR });
+        go({ screen: 'pet', petV: 'Profile', profileAvatar: CREATED_AVATAR });
+      },
+      exitCreator: () => { const c = this.state.creatorCtx; go({ screen: 'pet', petV: c === 'Setup' ? 'SetupDisabled' : c }); },
+
+      editDetails: () => go({ screen: 'pet', petV: 'Edit', editAvatar: this.state.profileAvatar, editBeh: { ...this.state.profileBeh }, editOther: this.state.profileOther, editName: this.state.profileName }),
+      deleteProfile: () => go({ screen: 'pet', petV: 'Delete' }),
+      cancelEdit: () => go({ screen: 'pet', petV: 'Profile', editAvatar: null }),
+      cancelDelete: () => go({ screen: 'pet', petV: 'Profile' }),
+      confirmDelete: () => go({ screen: 'home', hasPet: false, tempPet: false, profileAvatar: JAGER_AVATAR, profileOther: '', profileBeh: {}, profileName: '' }),
+
+      navHome: () => go({ screen: 'home' }),
+      navPlants: () => go({ screen: 'collection', removed: false }),
+      navPets: () => (this.state.hasPet ? go({ screen: 'pet', petV: 'Profile' }) : openSetup('home')),
+
+      jager: () => go({ screen: 'pet', petV: 'Edit', editAvatar: this.state.profileAvatar, editBeh: { ...this.state.profileBeh }, editOther: this.state.profileOther, editName: this.state.profileName }),
+      differentPet: () => go({ screen: 'mod01', mod01Host: 'home', mod01V: 'ADisabled' }),
+      backToJager: () => go({ tempPet: false }),
+      search: () => go({ screen: 'search', searchV: 'Input', searchQ: '', searchShift: false, correcting: false }),
+      photo: () => {
+        const st = this.state;
+        go({ screen: 'picker', pickerReturn: st.screen === 'photo' ? 'photo' : (st.screen === 'search' ? 'search' : 'home') });
+      },
+      collection: () => go({ screen: 'collection', removed: false }),
+
+      selectCat: () => { if (this.state.mod01V === 'ADisabled') go({ mod01V: 'A' }); },
+      mod01Continue: () => {
+        const st = this.state;
+        if (st.mod01Host === 'home') { if (st.mod01V === 'A') go({ screen: 'home', tempPet: true }); return; }
+        if (st.mod01V === 'B') { go({ mod01V: 'Loading' }); later(1200, (s) => s.screen === 'mod01' && s.mod01V === 'Loading', () => toS3('nobeh')); }
+
+        if (st.mod01V === 'A') go(toS3('temp'));
+      },
+      mod01Close: () => go(this.state.mod01Host === 'home' ? { screen: 'home' } : { screen: 'confirm' }),
+
+      take: () => { go({ screen: 'photo', photoV: 'Analysing' }); later(1800, (s) => s.screen === 'photo' && s.photoV === 'Analysing', () => ({ photoV: this.state.correcting ? 'Correction' : 'Matches' })); },
+      library: () => this.act.take(),
+      cancel: () => {
+        const st = this.state;
+        if (st.screen === 'mod04') return go({ screen: resultScreen() });
+        go({ screen: st.pickerReturn, searchV: st.pickerReturn === 'search' ? (st.correcting ? 'Correction' : st.searchV) : st.searchV });
+      },
+
+      back: () => {
+        const st = this.state;
+        switch (st.screen) {
+          case 'search': case 'photo': return go(st.correcting ? { screen: resultScreen(), correcting: false } : { screen: 'home' });
+          case 'gap': return (st.gapV === 'Decide' || st.gapV === 'NotDeciding') ? go({ gapV: 'Default' }) : exitHome();
+          case 'finding': return exitHome();
+          case 'guidance': return st.ended ? exitHome() : go({ screen: 'finding' });
+          case 'saved': return go({ screen: 'collection', confirmRemove: false, reasonDraft: null });
+          default: return go({ screen: 'home' });
+        }
+      },
+      close: () => {
+        const st = this.state;
+        if (st.screen === 'confirm') return go(openerScreen());
+        if (st.screen === 'mod04') return go({ screen: resultScreen() });
+        if (st.screen === 'mod05') return go({ screen: 'gap' });
+        return this.act.back();
+      },
+
+      searchKey: (c) => {
+        const st = this.state;
+        if (st.searchV !== 'Input') return;
+        if (c === 'shift') return go({ searchShift: !st.searchShift });
+        if (c === 'del') return go({ searchQ: st.searchQ.slice(0, -1) });
+        if (c === 'none') return;
+        if (c === 'enter') {
+          const q = st.searchQ.trim();
+          if (!q) return;
+          const NAMES = { lily: ['easter lily', 'lilium longiflorum', 'peace lily', 'spathiphyllum', 'calla lily', 'zantedeschia aethiopica'], fern: ['boston fern', "nephrolepis exaltata 'bostoniensis'"], shield: ['red shield plant', 'homalomena rubescens', 'queen of hearts'] };
+        const matchOf = (query) => { const t = String(query || '').trim().toLowerCase().replace(/\s+/g, ' '); const m = {}; if (!t) return m; Object.keys(NAMES).forEach((k) => { m[k] = NAMES[k].some((n) => n.includes(t)); }); return m; };
+        const m = matchOf(q);
+        const hit = !!(m.lily || m.fern || m.shield);
+          return go({ searchQ: q, searchShift: false, searchV: hit ? (st.correcting ? 'Correction' : 'Results') : 'NoResults' });
+        }
+        if (st.searchQ.length >= 40) return;
+        go({ searchQ: st.searchQ + (c === 'space' ? ' ' : (st.searchShift ? c.toUpperCase() : c)), searchShift: false });
+      },
+      focusSearch: () => go({ searchV: 'Input' }),
+      clear: () => go({ searchV: 'Input', searchQ: '' }),
+      home: () => exitHome(),
+      retry: () => go({ searchV: 'Results' }),
+      searchName: () => go({ screen: 'search', searchV: 'Input', searchQ: '', searchShift: false }),
+      tryAnother: () => this.act.photo(),
+      pickLily: () => {
+        const st = this.state;
+        go({ screen: 'confirm', plant: 'lily', opener: st.screen === 'photo' ? 'photo' : 'search', confirmV: st.correcting ? 'Correction' : (st.hasPet || st.tempPet ? 'A' : 'B') });
+      },
+      pickShield: () => {
+        const st = this.state;
+        go({ screen: 'confirm', plant: 'shield', opener: 'search', confirmV: st.correcting ? 'Correction' : (st.hasPet || st.tempPet ? 'A' : 'B') });
+      },
+      pickFern: () => {
+        const st = this.state;
+        go({ screen: 'confirm', plant: 'fern', opener: 'search', confirmV: st.correcting ? 'Correction' : (st.hasPet || st.tempPet ? 'A' : 'B') });
+      },
+
+      continue: () => {
+        const st = this.state;
+        if (st.confirmV === 'B' || st.confirmV === 'Loading') return;
+        if (st.confirmV === 'Correction') return go(toS3(st.pet));
+
+        const petCtx = st.tempPet ? 'another' : 'jager';
+        go({ confirmV: 'Loading' });
+        later(1200, (s) => s.screen === 'confirm' && s.confirmV === 'Loading', () => toS3(petCtx));
+      },
+      notMine: () => go(openerScreen()),
+      petJager: () => {},
+      mod02Different: () => go({ screen: 'mod01', mod01Host: 'confirm', mod01V: 'ADisabled' }),
+      mod02NoBeh: () => go({ screen: 'mod01', mod01Host: 'confirm', mod01V: 'B' }),
+
+      edit: () => go({ screen: 'mod04' }),
+      tabSafety: () => go(this.state.screen === 'saved' ? { savedTab: 'safety' } : { tab: 'safety' }),
+      tabInfo: () => go(this.state.screen === 'saved' ? { savedTab: 'info' } : { tab: 'info' }),
+      tabEvidence: () => go(this.state.screen === 'saved' ? { savedTab: 'evidence' } : { tab: 'evidence' }),
+      guidance: () => go({ screen: 'guidance' }),
+      notDeciding: () => exitHome(),
+
+      details: () => go({ screen: 'mod05' }),
+      gapPrimary: () => {
+        const st = this.state;
+        if (st.gapV === 'Default') return go({ gapV: 'Decide' });
+        if (st.gapV === 'Decide') { if (st.decision) go({ gapV: 'Closed' }); return; }
+        exitHome();
+      },
+      gapSecondary: () => {
+        const st = this.state;
+        if (st.gapV === 'Default') return go({ gapV: 'NotDeciding' });
+        if (st.gapV === 'Closed' || st.gapV === 'Considering') return go({ screen: 'collection', removed: false, filter: 'all', tempPet: false });
+        go({ gapV: 'Considering', ...setRec(recordFrom('Considering', st.saveOn)) });
+      },
+
+      pickKeep: pick('keep'), pickAvoid: pick('avoid'), pickOther: pick('other'),
+      toggleSave: () => {
+        const st = this.state;
+        if (st.saveOn) go({ saveOn: false, ...setRec(st.prevRecord) });
+        else go({ saveOn: true, ...setRec(recordFrom(st.decision ? DECISION[st.decision] : 'Considering', true)) });
+      },
+      done: () => {
+        const st = this.state;
+        if (st.ended) return exitHome();
+        if (!st.decision) return;
+        go({ ended: 'Closed' });
+      },
+      secondary: () => {
+        const st = this.state;
+        if (st.ended) return go({ screen: 'collection', removed: false, filter: 'all', tempPet: false });
+        go({ ended: 'Considering', ...setRec(recordFrom('Considering', st.saveOn)) });
+      },
+
+      openLily: () => go({ screen: 'saved', savedPlant: 'lily', savedTab: 'safety', confirmRemove: false, reasonDraft: null }),
+      openShield: () => go({ screen: 'saved', savedPlant: 'shield', savedTab: 'safety', confirmRemove: false, reasonDraft: null }),
+      openFern: () => go({ screen: 'saved', savedPlant: 'fern', savedTab: 'safety', confirmRemove: false, reasonDraft: null }),
+
+      setCheckReason: (t) => { const v = String(t || '').slice(0, 120); const st = this.state; const cr = curRec(); go({ reasonText: v, ...(st.saveOn && cr ? setRec({ ...cr, reason: v.trim() || null }) : {}) }); },
+      editReason: () => { const r = this.state.records[this.state.savedPlant]; go({ reasonDraft: r && r.reason ? r.reason : '' }); },
+      setReason: (t) => go({ reasonDraft: String(t || '').slice(0, 120) }),
+      cancelReason: () => go({ reasonDraft: null }),
+      saveReason: () => { const st = this.state; const r = st.records[st.savedPlant]; if (!r) return go({ reasonDraft: null }); const v = (st.reasonDraft || '').trim(); go({ reasonDraft: null, records: { ...st.records, [st.savedPlant]: { ...r, reason: v || null } } }); },
+      fAll: () => go({ filter: 'all' }), fToxic: () => go({ filter: 'toxic' }), fNonToxic: () => go({ filter: 'nontoxic' }), fUnclear: () => go({ filter: 'unclear' }),
+      checkPlant: () => go({ screen: 'home' }),
+
+      checkAgain: () => {
+        const st = this.state;
+        const r = st.records[st.savedPlant];
+        const opener = r ? r.entry : st.opener;
+        if (st.hasPet && !st.tempPet) return go({ opener: opener, ...toS3('jager', st.savedPlant), entry: opener });
+        go({ screen: 'confirm', plant: st.savedPlant, opener: opener, correcting: false, confirmV: st.tempPet ? 'A' : 'B' });
+      },
+      remove: () => go({ confirmRemove: true }),
+      cancelRemove: () => go({ confirmRemove: false }),
+      confirmRemove: () => go({ confirmRemove: false, records: { ...this.state.records, [this.state.savedPlant]: null }, removed: true, screen: 'collection', filter: 'all' })
+    };
+
+    const baseSearch = this.act.search, basePhoto = this.act.photo;
+    this.act.search = () => (this.state.screen === 'mod04' ? go({ screen: 'search', searchV: 'Correction', searchQ: this.state.plant === 'fern' ? 'fern' : (this.state.plant === 'shield' ? 'red shield' : 'lily'), correcting: true }) : baseSearch());
+    this.act.photo = () => (this.state.screen === 'mod04' ? go({ correcting: true, pickerReturn: resultScreen(), screen: 'picker' }) : basePhoto());
+  }
+
+  resetSession() {
+    this._session += 1;
+    this.setState(this.initialState());
+  }
+  componentDidMount() {
+
+    const hook = () => {
+      const p = window.__dcEditorPicker;
+      if (!p || typeof p.setHostPanZoom !== 'function' || p.__snoofPlayHook) return;
+      const orig = p.setHostPanZoom;
+      let prev = null;
+      const self = this;
+      p.setHostPanZoom = function (mode) {
+        const r = orig.apply(this, arguments);
+        const playing = mode === 'play';
+        if (playing !== prev) { if (prev !== null || playing) self.resetSession(); prev = playing; }
+        return r;
+      };
+      p.__snoofPlayHook = true;
+    };
+    hook();
+    this._hookTimer = setInterval(hook, 400);
+  }
+  componentWillUnmount() {
+    clearInterval(this._hookTimer);
+    this._session += 1;
+  }
+  renderVals() {
+    const st = this.state;
+    const s = {}; ['welcome', 'pet', 'creator', 'mod01', 'home', 'picker', 'photo', 'search', 'confirm', 'finding', 'gap', 'mod05', 'mod04', 'guidance', 'collection', 'saved'].forEach((k) => { s[k] = st.screen === k; });
+    const r = st.records.lily || null;
+    const fr = st.records.fern || null;
+    const shr = st.records.shield || null;
+    const sr = st.records[st.savedPlant] || null;
+    const cr = st.records[st.plant] || null;
+    const formAvatar = st.petV === 'Edit' ? (st.editAvatar || st.profileAvatar) : (st.petV === 'SetupDisabled' || st.petV === 'SetupEnabled' ? st.setupAvatar : null);
+    return {
+      s: s, act: this.act,
+      homeV: !st.hasPet ? (st.tempPet ? 'PS2' : 'PS0') : (st.tempPet ? 'PS2' : 'PS1'),
+      petV: st.petV, nameOn: st.nameOn, species: st.species, behaviours: st.behaviours, formOther: st.petV === 'Edit' ? st.editOther : st.otherText, formName: st.petV === 'Edit' ? st.editName : st.nameText, profileName: st.profileName, formBeh: st.petV === 'Edit' ? st.editBeh : st.behaviours,
+      profileSub: behSummary(st.profileBeh, st.profileOther), profileBeh: st.profileBeh, profileOther: st.profileOther, formAvatar: formAvatar, profileAvatar: st.profileAvatar,
+      creatorCtx: st.creatorCtx, mod01V: st.mod01V, mod01Host: st.mod01Host,
+      confirmHostV: st.hasPet || st.tempPet ? 'A' : 'B',
+      collectionV: (!r && !fr && !shr) ? 'Empty' : 'List',
+      searchV: st.searchV, searchQ: st.searchQ, searchShift: st.searchShift, photoV: st.photoV,
+      confirmV: st.confirmV, pet: st.pet, confirmPet: st.tempPet ? 'temp' : 'jager',
+      plant: st.plant, savedPlant: st.savedPlant,
+      findingV: st.plant === 'fern' ? 'I5' : (st.pet === 'nobeh' ? 'B4' : 'Default'), tab: st.tab,
+      guidanceV: st.ended || 'Default', decision: st.decision, saveOn: st.saveOn, savedHere: !!cr && st.saveOn,
+      hasRecord: !!r, recordDecision: sr ? sr.decision : 'Considering', recordReason: sr ? sr.reason : null,
+      hasFern: !!fr, fernDecision: fr ? fr.decision : 'Considering',
+      hasShield: !!shr, shieldDecision: shr ? shr.decision : 'Considering',
+      recordCount: [r, fr, shr].filter(Boolean).length, reasonDraft: st.reasonDraft,
+      savedPlants: { lily: !!r, fern: !!fr, shield: !!shr },
+      homeCtx: st.tempPet ? 'ps2' : (st.hasPet ? 'ps1' : 'ps0'),
+      gapV: st.gapV, gapSaved: st.gapV === 'Considering' ? !!cr : (!!cr && st.saveOn), mod04Host: st.plant === 'shield' ? 'SCR07' : 'SCR05',
+      lilyDecision: r ? r.decision : 'Considering',
+      recordEntry: sr ? sr.entry : 'photo', recordPet: sr ? sr.pet : 'jager', recordPetOther: sr ? (sr.petOther || '') : '', recordPetSub: sr && typeof sr.petSub === 'string' ? sr.petSub : null, recordPetName: sr && sr.petName ? sr.petName : st.profileName, reasonText: st.reasonText,
+      filter: st.filter, removed: st.removed, savedTab: st.savedTab, confirmRemove: st.confirmRemove
+    };
+  }
+}
+</script>
+</body>
+</html>

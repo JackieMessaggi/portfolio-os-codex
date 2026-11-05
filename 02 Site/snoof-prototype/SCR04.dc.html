@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Snoof · Photo Identification</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/snoof/tokens.css">
+<link rel="stylesheet" href="ds/snoof/components/bundle.css">
+<script src="ds/snoof/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="fonts.css">
+<style>
+body{margin:0}
+
+[data-scr04] .snoof-plant-card { background: var(--background-primary); box-shadow: none; max-width: none; }
+[data-scr04] [data-carousel]::-webkit-scrollbar { display: none; }
+[data-scr04] .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+svg.snoof-icon { background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+svg.snoof-icon > path { display: none; }
+svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/5a17696d64aada300e3862b0fdf0c2d7.svg); }
+svg.snoof-icon:has(> path[d^="M6 9.5L12 15.5"]) { --ph: url(./assets/89e1454b27752d22ac58a3f3220a3a72.svg); }
+svg.snoof-icon:has(> path[d^="M6 14.5L12 8.5"]) { --ph: url(./assets/fd076a444125da00f2bce56cbee04db1.svg); }
+svg.snoof-icon:has(> path[d^="M6 6L18 18"]) { --ph: url(./assets/14bef5553e71350a3032d97f3a186146.svg); }
+svg.snoof-icon:has(> path[d^="M5.5 12.5L10 17"]) { --ph: url(./assets/f4dc0311a65d7c61f8058e7e193c8bd5.svg); }
+svg.snoof-icon:has(> path[d^="M17.5 11C17.5"]) { --ph: url(./assets/9049b921979416ee2b11521ad75a308c.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5C4 7.67"]) { --ph: url(./assets/36e4efd505e7191b15d20080f71906a1.svg); }
+svg.snoof-icon:has(> path[d^="M5 19C5 11"]) { --ph: url(./assets/3cab38dfd7960290960118f9d2e6c9c2.svg); }
+svg.snoof-icon:has(> path[d^="M16.2 15.5"]) { --ph: url(./assets/b91b45286903793f5d8bcf2c10337565.svg); }
+svg.snoof-icon:has(> path[d^="M4 11L12 4"]) { --ph: url(./assets/af168cf055a6ac6c9900d94ad8bb2377.svg); }
+svg.snoof-icon:has(> path[d^="M6.5 5L17.5 5"]) { --ph: url(./assets/71d92769e689d60afa493b3213470154.svg); }
+svg.snoof-icon:has(> path[d^="M21 12A9"]) { --ph: url(./assets/4308e2cfbb785e3c639ab18dbd4aeeec.svg); }
+svg.snoof-icon:has(> path[d^="M12 7.5L12 13"]) { --ph: url(./assets/5b81970de0340b150014be09c812c8da.svg); }
+svg.snoof-icon:has(> path[d^="M8 12.3L10.8 15"]) { --ph: url(./assets/8a26ed102bb510bbb0c3b34114c49aaa.svg); }
+svg.snoof-icon:has(> path[d^="M9.6 9.6C"]) { --ph: url(./assets/9bccaa1e974c420416ef47405eb19238.svg); }
+svg.snoof-icon:has(> path[d^="M4 8.5L17 8.5"]) { --ph: url(./assets/68a2006d1445269654c7077a1050bfa2.svg); }
+svg.snoof-icon:has(> path[d^="M14.5 12C14.5"]) { --ph: url(./assets/f7dfd99cca32ad53925996515d81b49e.svg); }
+svg.snoof-icon:has(> path[d^="M18 12C18 15.314"]) { --ph: url(./assets/19ddc5ed85133b4330fc607905e0eee0.svg); }
+[style*="scaleX(-1)"] > svg.snoof-icon:has(> path[d^="M9.5 6L15.5 12"]) { --ph: url(./assets/6b2b7faf67d973c6ba75a8f759c3f89e.svg); transform: scaleX(-1); }
+.ph-glyph { display: inline-block; flex: none; background-color: currentColor; -webkit-mask: var(--ph) center / contain no-repeat; mask: var(--ph) center / contain no-repeat; }
+.ph-warning { --ph: url(./assets/018512a459a165a551d190d6ca4b98d3.svg); }
+.ph-retry { --ph: url(./assets/04977d6593de335f5a8428579ff633ed.svg); }
+.ph-edit { --ph: url(./assets/103a367eb80fedd613b7ca5c4d3c0f91.svg); }
+.ph-info { --ph: url(./assets/07e49e2ea3d2498dce5e22f4488fc729.svg); }
+</style>
+</helmet>
+<div data-scr04="true" style="width: 393px; height: 852px; box-sizing: border-box; overflow: hidden; position: relative; display: flex; flex-direction: column; background: var(--surface-default); color: var(--text-primary); font-family: var(--font-text);">
+  <h1 class="sr-only">Identify from photo</h1>
+
+  <sc-if value="{{isAnalysing}}" hint-placeholder-val="{{ false }}">
+    <img src="./assets/d3b7042829f983af4e0c06b2e946359c.webp" alt="Your photo of the plant" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;">
+    <button type="button" aria-label="Close" onClick="{{on.close}}" style="position: absolute; top: calc(var(--space-48) + var(--space-4)); right: var(--space-16); width: var(--size-touch-target-min); height: var(--size-touch-target-min); border: 0; padding: 0; border-radius: var(--radius-full); background: color-mix(in srgb, var(--surface-inverse) 40%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+      <x-import component-from-global-scope="Snoof.Icon" name="Close" size="{{n20}}" color="var(--text-on-inverse)"></x-import>
+    </button>
+    <div style="position: absolute; left: var(--space-16); right: var(--space-16); bottom: calc(var(--space-32) + var(--space-12)); display: flex; flex-direction: column; gap: var(--space-4); padding: var(--padding-md); border-radius: var(--radius-lg); background: var(--surface-default); box-shadow: var(--elevation-2-floating);">
+      <div role="status" style="display: flex; align-items: center; gap: var(--space-12); min-height: var(--size-touch-target-min);">
+        <x-import component-from-global-scope="Snoof.Icon" name="Spinner"></x-import>
+        <span class="text-headline">Looking at your photo…</span>
+      </div>
+      <x-import component-from-global-scope="Snoof.Button" hierarchy="Secondary" label="Search by name instead" fill="{{yes}}" on-click="{{on.searchName}}"></x-import>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{notAnalysing}}" hint-placeholder-val="{{ true }}">
+    <div data-scroll-region="true" style="flex: 1 1 0%; min-height: 0; overflow-y: auto; overflow-x: hidden; position: relative; scrollbar-width: none;">
+
+      <sc-if value="{{heroLayout}}" hint-placeholder-val="{{ true }}">
+        <div style="position: relative; height: 420px; overflow: hidden; background: var(--surface-nature);">
+          <img src="./assets/d3b7042829f983af4e0c06b2e946359c.webp" alt="Your photo of the plant" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          <button type="button" aria-label="Back" onClick="{{on.back}}" style="position: absolute; top: calc(var(--space-48) + var(--space-4)); left: var(--space-16); width: var(--size-touch-target-min); height: var(--size-touch-target-min); border: 0; padding: 0; border-radius: var(--radius-full); background: color-mix(in srgb, var(--surface-inverse) 40%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+            <span style="display: flex; transform: scaleX(-1);"><x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-on-inverse)"></x-import></span>
+          </button>
+          <sc-if value="{{showClose}}" hint-placeholder-val="{{ false }}">
+            <button type="button" aria-label="Close" onClick="{{on.close}}" style="position: absolute; top: calc(var(--space-48) + var(--space-4)); right: var(--space-16); width: var(--size-touch-target-min); height: var(--size-touch-target-min); border: 0; padding: 0; border-radius: var(--radius-full); background: color-mix(in srgb, var(--surface-inverse) 40%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+              <x-import component-from-global-scope="Snoof.Icon" name="Close" size="{{n20}}" color="var(--text-on-inverse)"></x-import>
+            </button>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{navLayout}}" hint-placeholder-val="{{ false }}">
+        <div style="height: calc(var(--space-48) + var(--space-12));"></div>
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 var(--space-8);">
+          <button type="button" aria-label="Back" onClick="{{on.back}}" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); border: 0; padding: 0; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+            <span style="display: flex; transform: scaleX(-1);"><x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-primary)"></x-import></span>
+          </button>
+          <sc-if value="{{showClose}}" hint-placeholder-val="{{ false }}">
+            <button type="button" aria-label="Close" onClick="{{on.close}}" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); border: 0; padding: 0; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+              <x-import component-from-global-scope="Snoof.Icon" name="Close" size="{{n24}}" color="var(--text-primary)"></x-import>
+            </button>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <div style="position: relative; margin-top: {{contentOverlap}}; border-radius: var(--radius-xl) var(--radius-xl) 0 0; background: var(--surface-default); display: flex; flex-direction: column; gap: var(--space-16); padding: var(--space-16) var(--space-24) calc(var(--space-32) + var(--space-2));">
+
+        <sc-if value="{{isCorrection}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: var(--space-8);">
+            <span role="status" style="align-self: flex-start; display: inline-flex; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-12); border-radius: var(--radius-full); background: var(--feedback-system-background); color: var(--feedback-system-foreground); border: var(--border-width-default) solid var(--feedback-system-border);">
+              <x-import component-from-global-scope="Snoof.Icon" name="Leaf" size="{{n16}}" color="var(--feedback-system-icon)"></x-import>
+              <span class="text-footnote" style="font-weight: 600;">Correcting the plant</span>
+            </span>
+            <div role="status" style="display: flex; align-items: center; gap: var(--space-12); min-height: var(--size-touch-target-min); padding: var(--padding-sm) var(--padding-md); border-radius: var(--radius-lg); background: var(--surface-nature);">
+              <img src="./assets/f5fa5afeba27b05a659116906727db05.webp" alt="" style="width: 32px; height: 32px; flex: none; border-radius: var(--radius-full); object-fit: cover; background: var(--surface-warm);">
+              <span class="text-subheadline-emphasized" style="flex: 1;">Checking for {{petName}} · Cat</span>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{showInsetPhoto}}" hint-placeholder-val="{{ false }}">
+          <div style="height: {{photoH}}px; border-radius: var(--radius-lg); overflow: hidden; background: var(--surface-nature);">
+            <img src="./assets/d3b7042829f983af4e0c06b2e946359c.webp" alt="Your photo of the plant" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+        </sc-if>
+
+        <sc-if value="{{matchLayout}}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{isLookalikes}}" hint-placeholder-val="{{ false }}">
+            <p class="text-subheadline-emphasized" style="margin: 0; color: var(--text-secondary);">These plants look alike. The exact plant isn't confirmed.</p>
+          </sc-if>
+          <section style="display: flex; flex-direction: column; gap: var(--space-12);">
+            <h2 class="display-title-3" style="margin: 0;">Likely match</h2>
+            <a href="{{hConfirm}}" onClick="{{on.pickLily}}" data-opens="MOD-02" aria-label="Easter lily, Lilium longiflorum. Select to confirm" style="display: flex; align-items: center; gap: var(--space-16); padding: var(--padding-md); border-radius: var(--radius-lg); color: var(--text-primary); text-decoration: none; background-color: var(--surface-nature, #e4edec); border-style: solid; border-width: 2px; border-color: var(--border-focus, #437072)">
+              <img src="./assets/8e7686951eee93b967400333c6be835a.webp" alt="" style="width: 96px; height: 96px; flex: none; border-radius: var(--radius-md); object-fit: cover; background: var(--surface-nature);">
+              <span style="flex: 1; display: flex; flex-direction: column; gap: var(--space-4); min-width: 0;">
+                <span class="display-title-3">Easter lily</span>
+                <span class="text-subheadline" style="font-style: italic; color: var(--text-secondary);">Lilium longiflorum</span>
+              </span>
+              <span style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); flex: none; border-radius: var(--radius-full); background: var(--surface-default); display: flex; align-items: center; justify-content: center;">
+                <x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-primary)"></x-import>
+              </span>
+            </a>
+          </section>
+          <section style="display: flex; flex-direction: column; gap: var(--space-8);">
+            <h2 class="text-subheadline-emphasized" style="margin: 0; color: var(--text-secondary);">Other possible matches</h2>
+            <div style="display: flex; flex-direction: column; gap: var(--space-8);">
+              <a href="{{hConfirm}}" data-opens="MOD-02" style="display: flex; align-items: center; gap: var(--space-16); padding: var(--padding-md); border-radius: var(--radius-lg); color: var(--text-primary); text-decoration: none; background: var(--background-primary); border: 2px solid transparent">
+              <img src="./assets/7dbd385583397568bbddc71035e2827e.jpg" alt="" style="width: 96px; height: 96px; flex: none; border-radius: var(--radius-md); object-fit: cover; background: var(--surface-nature);">
+              <span style="flex: 1; display: flex; flex-direction: column; gap: var(--space-4); min-width: 0;">
+                <span class="display-title-3">Calla lily</span>
+                <span class="text-subheadline" style="font-style: italic; color: var(--text-secondary);">Zantedeschia aethiopica</span>
+              </span>
+              <span aria-hidden="true" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); flex: none; border-radius: var(--radius-full); background: var(--surface-default); display: flex; align-items: center; justify-content: center;">
+                <x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-primary)"></x-import>
+              </span>
+            </a>
+              <sc-if value="{{twoOthers}}" hint-placeholder-val="{{ true }}">
+                <a href="{{hConfirm}}" data-opens="MOD-02" style="display: flex; align-items: center; gap: var(--space-16); padding: var(--padding-md); border-radius: var(--radius-lg); color: var(--text-primary); text-decoration: none; background: var(--background-primary); border: 2px solid transparent">
+              <img src="./assets/8bf5c35f966fd73ac9f6c65a1ccb5633.jpg" alt="" style="width: 96px; height: 96px; flex: none; border-radius: var(--radius-md); object-fit: cover; background: var(--surface-nature);">
+              <span style="flex: 1; display: flex; flex-direction: column; gap: var(--space-4); min-width: 0;">
+                <span class="display-title-3">Peace lily</span>
+                <span class="text-subheadline" style="color: var(--text-secondary);"><i>Spathiphyllum</i> spp.</span>
+              </span>
+              <span aria-hidden="true" style="width: var(--size-touch-target-min); height: var(--size-touch-target-min); flex: none; border-radius: var(--radius-full); background: var(--surface-default); display: flex; align-items: center; justify-content: center;">
+                <x-import component-from-global-scope="Snoof.Icon" name="Chevron Right" size="{{n24}}" color="var(--text-primary)"></x-import>
+              </span>
+            </a>
+              </sc-if>
+            </div>
+          </section>
+          <sc-if value="{{isLookalikes}}" hint-placeholder-val="{{ false }}">
+            <section style="display: flex; flex-direction: column; gap: var(--space-8); padding: var(--padding-md); border-radius: var(--radius-lg); background: var(--background-primary);">
+              <h2 class="text-headline" style="margin: 0;">How to tell them apart</h2>
+              <p class="text-subheadline" style="margin: 0;">Distinguishing characteristics: not included yet. A verified botanical source is still needed.</p>
+              <p class="text-subheadline" style="margin: 0; color: var(--text-secondary);">Check the plant's label to tell them apart.</p>
+            </section>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{isNotIdentified}}" hint-placeholder-val="{{ false }}">
+          <img src="./assets/7b6f139cd26eb212507c9f33fa0f569c.webp" alt="" style="width: 184px; height: 184px; align-self: center; object-fit: contain; display: block; margin-top: var(--space-8);">
+        </sc-if>
+
+        <sc-if value="{{showFeedback}}" hint-placeholder-val="{{ false }}">
+          <div role="{{feedbackRole}}" style="display: flex; gap: var(--space-12); align-items: flex-start; padding: var(--padding-md); border-radius: var(--radius-lg); background: var(--feedback-system-background);">
+            <span class="ph-glyph ph-warning" aria-hidden="true" style="width: 20px; height: 20px; flex: none; margin-top: var(--space-2); color: var(--feedback-system-icon);"></span>
+            <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-4);">
+              <sc-if value="{{isInconclusive}}" hint-placeholder-val="{{ false }}">
+                <p class="text-callout" style="margin: 0; font-weight: 600;">Looks like a <em>Lilium</em> plant, but the exact species can't be determined.</p>
+                <p class="text-subheadline" style="margin: 0;">You can also check the name on the plant's label.</p>
+              </sc-if>
+              <sc-if value="{{hasFeedbackText}}" hint-placeholder-val="{{ false }}">
+                <p class="text-callout" style="margin: 0;">{{feedbackText}}</p>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <div aria-hidden="true" style="height: {{footerSpacer}}; flex: none;"></div>
+      </div>
+    </div>
+    <div data-glass-footer="true" style="position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: {{footerGap}}; padding: var(--space-12) var(--space-24) calc(var(--space-32) + var(--space-2)); background: color-mix(in srgb, var(--surface-default) 45%, transparent); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4); border-top: var(--border-width-default) solid color-mix(in srgb, var(--border-subtle) 60%, transparent);">
+      <sc-if value="{{showTryAnother}}" hint-placeholder-val="{{ true }}">
+        <x-import component-from-global-scope="Snoof.Button" hierarchy="Secondary" label="Try another image" fill="{{yes}}" on-click="{{on.tryAnother}}"></x-import>
+      </sc-if>
+      <sc-if value="{{matchLayout}}" hint-placeholder-val="{{ true }}">
+        <x-import component-from-global-scope="Snoof.Button" hierarchy="Text" label="Search by name" fill="{{yes}}" on-click="{{on.searchName}}"></x-import>
+      </sc-if>
+          <sc-if value="{{isAnother}}" hint-placeholder-val="{{ false }}">
+              <x-import component-from-global-scope="Snoof.Button" hierarchy="Primary" label="Retake photo" fill="{{yes}}"></x-import>
+              <x-import component-from-global-scope="Snoof.Button" hierarchy="Secondary" label="Add another photo" fill="{{yes}}"></x-import>
+          </sc-if>
+          <sc-if value="{{isInconclusive}}" hint-placeholder-val="{{ false }}">
+              <x-import component-from-global-scope="Snoof.Button" hierarchy="Secondary" label="Add more photos" fill="{{yes}}"></x-import>
+              <x-import component-from-global-scope="Snoof.Button" hierarchy="Text" label="Search by name" fill="{{yes}}" on-click="{{on.searchName}}"></x-import>
+          </sc-if>
+          <sc-if value="{{isNoMatch}}" hint-placeholder-val="{{ false }}">
+              <x-import component-from-global-scope="Snoof.Button" hierarchy="Primary" label="Try another photo" fill="{{yes}}"></x-import>
+              <x-import component-from-global-scope="Snoof.Button" hierarchy="Text" label="Search by name" fill="{{yes}}" on-click="{{on.searchName}}"></x-import>
+          </sc-if>
+          <sc-if value="{{isFailure}}" hint-placeholder-val="{{ false }}">
+              <x-import component-from-global-scope="Snoof.Button" hierarchy="Primary" label="Try again" fill="{{yes}}"></x-import>
+              <x-import component-from-global-scope="Snoof.Button" hierarchy="Text" label="Search by name" fill="{{yes}}" on-click="{{on.searchName}}"></x-import>
+          </sc-if>
+          <sc-if value="{{isNotIdentified}}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="Snoof.Button" hierarchy="Primary" label="Back to Home" fill="{{yes}}" on-click="{{on.home}}"></x-import>
+          </sc-if>
+
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["Matches","Analysing","Lookalikes","AnotherImage","Inconclusive","NoMatch","NotIdentified","Failure","Correction"],"default":"Matches"},"$preview":{"width":393,"height":852}}'>
+class Component extends DCLogic {
+  renderVals() {
+
+    const A = this.props.act || null;
+    const PN = (A && this.props.petName) || 'J\u00e4ger';
+    const fire = (k) => (e) => { if (!A || !A[k]) return; if (e && e.preventDefault) e.preventDefault(); A[k](); };
+    const lk = (href) => (A ? '#' : href);
+    const on = {back: fire('back'), close: fire('close'), pickLily: fire('pickLily'), searchName: fire('searchName'), tryAnother: fire('tryAnother'), home: fire('home')};
+    const v = this.props.variant ?? 'Matches';
+    const hero = ['Matches','Lookalikes','AnotherImage','Inconclusive','NoMatch','Failure','Correction'].includes(v);
+    const match = v === 'Matches' || v === 'Lookalikes' || v === 'Correction';
+    const feedback = {
+      AnotherImage: 'Add a photo of another part of the plant.',
+      NoMatch: 'No match found for this photo.',
+      NotIdentified: "We couldn't identify this plant, so we can't show plant-specific information. This doesn't tell you whether it's toxic or not.",
+      Failure: "We couldn't analyse this photo. This isn't a result about the plant."
+    }[v];
+    const photoH = 0;
+    return {
+      petName: PN,
+      yes: true,
+      on: on, hConfirm: lk('MOD02.dc.html'),
+      n16: 16, n20: 20, n24: 24,
+      isAnalysing: v === 'Analysing',
+      notAnalysing: v !== 'Analysing',
+      heroLayout: hero,
+      navLayout: !hero && v !== 'Analysing',
+      contentOverlap: hero ? 'calc(var(--space-24) * -1)' : '0px',
+      showClose: v === 'Inconclusive' || v === 'NoMatch',
+      isCorrection: v === 'Correction',
+      showInsetPhoto: photoH > 0,
+      photoH: photoH,
+      matchLayout: match,
+      isLookalikes: v === 'Lookalikes',
+      twoOthers: v !== 'Lookalikes',
+      showTryAnother: v === 'Matches' || v === 'Correction',
+      isAnother: v === 'AnotherImage',
+      footerGap: (v === 'AnotherImage') ? 'var(--space-8)' : 'var(--space-4)',
+      footerSpacer: v === 'NotIdentified' || v === 'Lookalikes' ? 'calc(var(--space-64) + var(--space-24))' : 'calc(var(--space-64) + var(--space-64) + var(--space-16))',
+      isInconclusive: v === 'Inconclusive',
+      isNoMatch: v === 'NoMatch',
+      isFailure: v === 'Failure',
+      isNotIdentified: v === 'NotIdentified',
+      showFeedback: !!feedback || v === 'Inconclusive',
+      hasFeedbackText: !!feedback,
+      feedbackText: feedback || '',
+      feedbackRole: v === 'Failure' ? 'alert' : 'status'
+    };
+  }
+}
+</script>
+</body>
+</html>
