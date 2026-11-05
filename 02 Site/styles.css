@@ -107,13 +107,64 @@ h3 { font-size: 1.2rem; line-height: 1.4; }
 .work-index { grid-area: index; color: var(--beige); }
 .work-disciplines { grid-area: disciplines; margin: 0; color: var(--beige); text-transform: uppercase; }
 .work-contribution { grid-area: contribution; margin: .75rem 0 0; max-width: 34em; font-family: "DM Sans", system-ui, sans-serif; font-size: 1.125rem; line-height: 1.5; color: var(--ivory); }
-.about { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
-.large-copy { font-size: clamp(1.3rem, 2.3vw, 2rem); line-height: 1.5; }
-.contact { padding-block: 5rem 6rem; }
-.contact h2 { max-width: 40rem; font-size: clamp(2.5rem, 5vw, 4.5rem); }
-.contact > p:last-child { max-width: 35rem; }
+/* About: asymmetric editorial layout on the 12-column grid. Portrait 1-5 (dropped below the title line),
+   copy 7-12. Fraunces B title at a smaller scale than Contact, DM Sans for the text. */
+.about { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; align-items: start; padding-block: 8rem 9rem; scroll-margin-top: 1.5rem; font-family: "DM Sans", system-ui, sans-serif; }
+.about-photo { grid-column: 1 / 6; margin: 7.5rem 0 0; }
+.about-photo-placeholder { display: flex; flex-direction: column; justify-content: space-between; aspect-ratio: 4 / 5; padding: 1.25rem; background: var(--beige); border-radius: 1.2rem; }
+.about-photo-placeholder span { font-size: .8125rem; font-weight: 500; letter-spacing: .08em; line-height: 1.4; text-transform: uppercase; }
+.about-photo-placeholder span:last-child { align-self: flex-end; }
+.about-copy { grid-column: 7 / 13; }
+.about-eyebrow { display: flex; align-items: center; gap: .625rem; margin: 0 0 1.5rem; font-size: .8125rem; font-weight: 500; letter-spacing: .08em; line-height: 1.4; text-transform: uppercase; }
+.about-eyebrow::before { content: ""; width: .5rem; height: .5rem; background: var(--orange); }
+.about h2 {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 900;
+  font-optical-sizing: none;
+  font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1;
+  font-size: clamp(2.5rem, 4.6vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -.025em;
+  max-width: 8em;
+  margin: 0 0 2.5rem;
+}
+.about-copy p:not(.about-eyebrow) { max-width: 34em; margin: 0 0 1.25rem; font-size: 1.125rem; line-height: 1.6; }
+.about-copy .about-lead { max-width: 24em; margin-bottom: 2rem; font-size: clamp(1.375rem, 1.9vw, 1.625rem); font-weight: 500; line-height: 1.4; letter-spacing: -.01em; }
+.about-copy p:last-child { margin-bottom: 0; }
+
+/* Contact: eggplant closing section with generous negative space. Ivory text, beige for secondary details,
+   no orange (not contrast-checked on eggplant). */
+.contact { background: var(--eggplant); color: var(--ivory); padding-block: 9rem 8rem; scroll-margin-top: 0; font-family: "DM Sans", system-ui, sans-serif; }
+.contact a:focus-visible { outline-color: var(--ivory); }
+.contact h2 {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 900;
+  font-optical-sizing: none;
+  font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1;
+  font-size: clamp(3rem, 7.8vw, 7.5rem);
+  line-height: .98;
+  letter-spacing: -.025em;
+  max-width: 9.5em;
+  margin: 0 0 6rem;
+}
+.contact h2 span { display: block; text-wrap: balance; }
+.contact-body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; align-items: end; }
+.contact-text { grid-column: 1 / 7; }
+.contact-text p { max-width: 30em; margin: 0 0 1rem; font-size: 1.1875rem; line-height: 1.55; }
+/* Email sits first in the professional links list; the address keeps its natural lowercase. */
+.contact-links .contact-email { text-transform: none; letter-spacing: .01em; font-size: .9375rem; }
+.contact-links { grid-column: 9 / 13; display: grid; margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(232, 210, 181, .35); }
+.contact-links li { border-bottom: 1px solid rgba(232, 210, 181, .35); }
+.contact-links a, .contact-location { display: flex; align-items: center; gap: .75rem; min-height: 3.25rem; color: var(--beige); font-size: .875rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; }
+.contact-links a:hover { color: var(--ivory); text-decoration: underline; text-underline-offset: .3em; }
+.contact-links svg { flex-shrink: 0; }
 .site-footer { display: flex; justify-content: space-between; gap: 1.5rem; border-top: 1px solid var(--eggplant); padding-block: 1.5rem; font-size: .75rem; }
 .site-footer p { margin: 0; }
+/* Homepage footer: minimal sign-off below the eggplant Contact section (no rule line, no repeated contact links). */
+.site-footer-home { align-items: baseline; border-top: 0; padding-block: 2rem; font-family: "DM Sans", system-ui, sans-serif; font-size: .8125rem; font-weight: 500; letter-spacing: .02em; }
+.site-footer-home .site-footer-note { margin-right: auto; margin-left: 2.5rem; }
+.site-footer-home a { text-decoration: none; }
+.site-footer-home a:hover { text-decoration: underline; }
 /* Fixed section navigation (interaction-spec.md). Desktop: centered bottom bar. */
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body { padding-bottom: 5.5rem; }
@@ -147,8 +198,23 @@ body { padding-bottom: 5.5rem; }
   .section { padding-block: 3rem; }
   .section-heading { display: block; }
   .section-heading > p { margin-top: 1rem; }
-  .project-grid, .about { grid-template-columns: 1fr; gap: 2rem; }
+  .project-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .about { display: flex; flex-direction: column; padding-block: 4.5rem 5rem; padding-right: 1.75rem; }
+  .about-copy { order: 1; }
+  .about-photo { order: 2; width: 82%; margin: 3rem 0 0 auto; }
+  .about h2 { margin-bottom: 1.75rem; }
+  .about-copy p:not(.about-eyebrow) { font-size: 1.0625rem; }
+  .about-copy .about-lead { font-size: 1.3125rem; margin-bottom: 1.5rem; }
+  .contact { padding-block: 5rem 5.5rem; }
+  .contact-inner { padding-right: 1.75rem; }
+  .contact h2 { font-size: 3rem; margin-bottom: 2.5rem; }
+  .contact-body { display: block; }
+  .contact-text p { font-size: 1.0625rem; }
+  .contact-links { margin-top: 3.5rem; }
   .site-footer { flex-direction: column; gap: .5rem; }
+  .site-footer-home { gap: .375rem; padding-block: 1.75rem 2rem; padding-right: 1.75rem; }
+  .site-footer-home .site-footer-note { margin: 0; }
+  .site-footer-home a { margin-top: .75rem; }
 }
 /* Mobile Selected Work: functional vertical stack. The right padding keeps cards clear of the 44 px nav rail;
    the gallery counter is hidden because it only describes the desktop horizontal track. */

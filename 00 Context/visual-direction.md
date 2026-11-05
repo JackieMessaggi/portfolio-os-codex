@@ -24,12 +24,12 @@ Do not introduce other interface colors. Muted Sage Grey and Deep Burgundy were 
 Approved November 3, 2026: Fraunces B, Expressive, is the direction for display headings. This supersedes Dakota Rough for headings and the temporary PNG-title plan. Fraunces A, Editorial, remains a future alternative, not a discarded direction. Preserve all private exploration files.
 
 - Display: Fraunces variable, exact B axes `"wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1`. Use `font-optical-sizing: none` to retain the approved optical setting. Desktop reference: 96 px, line-height 1.04, letter-spacing -0.025em. Do not substitute a generic Black configuration.
-- Role (refined November 3, 2026): Fraunces B is a selective graphic highlight, not the default face for every heading. Planned uses: the Hero headline, the Selected Work title, and the Contact title, each with a different scale and composition. Exception: the Hero headline uses line-height 0.96. Keep Fraunces at 40 px or larger.
+- Role (refined November 3, 2026): Fraunces B is a selective graphic highlight, not the default face for every heading. Planned uses: the Hero headline, the Selected Work title, the About title (added November 4 at the owner's request), and the Contact title, each with a different scale and composition. Exception: the Hero headline uses line-height 0.96. Keep Fraunces at 40 px or larger.
 - Body, navigation, About, functional elements, disciplines, contributions, and captions: DM Sans.
 - Dakota Rough: reserved exclusively for the existing logo. Do not redesign the logo, embed Dakota as a webfont, or add its font files to the site or Git. Its Desktop license limitations still apply.
 - Big Shoulders remains excluded. Dakota Rough Outline and Inter are not approved.
 - Local delivery: `02 Site/assets/fonts/Fraunces-variable.woff2`, converted on November 4, 2026 from the official Google Fonts variable TTF without subsetting or renaming (all four axes, 698 glyphs, and the embedded OFL notice kept; only the DSIG signature table is dropped by WOFF2), with `Fraunces-OFL.txt` (SIL Open Font License 1.1). The source TTF is preserved privately in `01 Projects/Portfolio OS/font-sources/`. Source: https://github.com/google/fonts/tree/main/ofl/fraunces. DM Sans remains locally hosted under its OFL license. No remote font runtime dependency.
-- Implemented: the Selected Work title (`clamp(2.5rem, 6.6666667vw, 6rem)`) and the Hero headline (November 4, 2026), both with fixed B axes and `font-display: swap`. Contact is an approved use, not yet implemented.
+- Implemented: the Selected Work title (`clamp(2.5rem, 6.6666667vw, 6rem)`) and the Hero headline (November 4, 2026), both with fixed B axes and `font-display: swap`. About and Contact titles implemented November 4, 2026 (pending Jackie's review).
 
 ## Local Logo Assets
 
@@ -95,7 +95,7 @@ Approved by the portfolio owner on November 3, 2026 as the basis for a static co
 - Show the entire body with balanced proportions. Avoid exaggerated legs or feet.
 - Give clothing, hair, and accessories deliberate visual detail. Preserve a consistent identity through every professional evolution.
 - Place a soft ground shadow beneath the avatar to establish contact with the floor. Keep the surrounding hero background smooth and light. This shadow is approved specifically for the avatar; it does not establish a general UI drop-shadow style.
-- Personal likeness references and final avatar designs remain to be defined. No avatar asset has been created or approved.
+- Character Master v1.2 and the Modeling Reference were approved as the identity references on November 4, 2026. The details and the tattoo map are in `character-bible.md`. No production model, rig, animation, or final avatar asset exists yet.
 
 ## Tattoo progression
 

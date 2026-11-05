@@ -1,10 +1,10 @@
-// Fixed section navigation: active section (aria-current), scroll progress, and mobile contrast over the eggplant section.
+// Fixed section navigation: active section (aria-current), scroll progress, and mobile contrast over the eggplant sections.
 // Anchor links work without JavaScript; smooth scrolling is CSS-only and respects prefers-reduced-motion.
 const nav = document.querySelector('.section-nav');
 if (nav) {
   const links = [...nav.querySelectorAll('a[href^="#"]')];
   const sections = links.map((link) => document.querySelector(link.hash)).filter(Boolean);
-  const work = document.querySelector('#work');
+  const darkSections = [...document.querySelectorAll('.work, .contact')];
   let ticking = false;
 
   function setActive(id) {
@@ -29,12 +29,11 @@ if (nav) {
     if (max > 0 && window.scrollY >= max - 2) current = sections[sections.length - 1];
     if (current) setActive(current.id);
 
-    // Mobile rail has no background, so its numbers switch to ivory over the eggplant Selected Work section.
-    if (work) {
+    // Mobile rail has no background, so its numbers switch to ivory over the eggplant sections (Selected Work, Contact).
+    if (darkSections.length) {
       const navBox = nav.getBoundingClientRect();
-      const workBox = work.getBoundingClientRect();
       const center = navBox.top + navBox.height / 2;
-      nav.classList.toggle('on-dark', center > workBox.top && center < workBox.bottom);
+      nav.classList.toggle('on-dark', darkSections.some((s) => { const b = s.getBoundingClientRect(); return center > b.top && center < b.bottom; }));
     }
   }
 
