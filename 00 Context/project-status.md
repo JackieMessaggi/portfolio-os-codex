@@ -15,7 +15,7 @@ Local Hero scroll-story review version refined after Jackie’s feedback. No act
 
 - Idle playback diagnosed separately: direct file:// opening blocks WebGL video textures in Chrome and shows the still fallback. All three skins play and advance frames correctly over local HTTP; use a local server for visual review. Evidence: private `Site Validation/idle-diagnostic.json`. No site-code changes needed.
 
-- Hero story now has seven career stages: Senior Designer, Design Team Lead, Digital Designer, Entrepreneur, Graphic Designer, Art Director, Advertising Student. Each has an idle avatar loop, thumbnail, six icons, and a chapter; all six past stages have Jackie’s final copy, experience duration, and four skill pills. Jackie approved the sequence on November 5, 2026; committed locally, not pushed or deployed. Details in `interaction-spec.md`.
+- Hero story now has seven career stages: Senior Designer, Design Team Lead, Digital Designer, Entrepreneur, Graphic Designer, Art Director, Advertising Student. Each has an idle avatar loop, thumbnail, six icons, and a chapter; all six past stages have Jackie’s final copy, experience duration, and four skill pills. Jackie approved the sequence on November 5, 2026; committed and pushed to GitHub (`152d44a`), not deployed. Details in `interaction-spec.md`.
 
 ## What is missing
 
@@ -26,4 +26,4 @@ Local Hero scroll-story review version refined after Jackie’s feedback. No act
 
 ## Next step
 
-Hero sequence approved and committed locally. Push and GitHub Pages deploy each need separate approval. Open backlog: mobile rail overlap, nav near short-viewport content, project-card art direction.
+Hero sequence, Senior Designer copy, and scroll refinements approved and pushed to GitHub. GitHub Pages deploy needs separate approval. Open backlog: mobile rail overlap, nav near short-viewport content, project-card art direction.

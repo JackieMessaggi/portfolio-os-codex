@@ -942,9 +942,13 @@ html:not(.js) .case-menu a::before, html:not(.js) .case-menu .nav-num { display:
   .hero-story .chapter-exp { margin: -.625rem 0 .75rem; }
   .hero-story .chapter-summary { font-size: .9375rem; line-height: 1.5; }
   .hero-story .chapter-skills { margin-top: .75rem; }
+  .hero-story .chapter[data-skin="current"] .chapter-title { font-size: 1.5rem; }
+  .hero-story .chapter[data-skin="current"] .chapter-summary { font-size: .875rem; }
 }
 .hero-story .chapter-title { margin: 0 0 1.25rem; padding-left: 0; font-family: "DM Sans", system-ui, sans-serif; font-variation-settings: normal; font-weight: 700; font-size: clamp(2rem, 2.5vw, 2.25rem); line-height: 1.12; letter-spacing: -.025em; }
 .hero-story .chapter-summary { max-width: 26em; font-size: 1.0625rem; line-height: 1.6; }
+.hero-story .chapter[data-skin="current"] { max-width: 37rem; } /* longer opening chapter: wider measure keeps it within one screen */
+.hero-story .chapter[data-skin="current"] .chapter-summary { max-width: 34em; }
 .story-line { position: absolute; z-index: 1; left: 0; top: 0; width: 100%; pointer-events: none; overflow: visible; will-change: transform; }
 .story-line path { fill: none; stroke: var(--eggplant); stroke-width: 1.75; stroke-linecap: round; }
 .story-dot { position: absolute; z-index: 3; width: .875rem; height: .875rem; margin: -.4375rem 0 0 -.4375rem; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px var(--ivory); opacity: 0; pointer-events: none; }

@@ -707,49 +707,69 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
   const onHash = () => { if (location.hash === '#hero') goHome(); };
   window.addEventListener('hashchange', onHash);
   // Lock points: one scroll gesture glides to the next chapter (or back) and stops there, so no chapter is skipped.
-  // Steps are s = 0 (intro), 1, 2, 3 (chapters). From the last chapter the page scrolls on normally to Selected Work.
+  // Steps are s = 0 (intro), 1..N (chapters), then N + 1 (start of Selected Work). Past that the page scrolls normally.
   const SPAN = N + 0.4;
   const stepY = (k) => pin.getBoundingClientRect().top + window.scrollY + (pin.offsetHeight - sticky.offsetHeight) * (k / SPAN);
   const range = () => { const top = stepY(0); return [top, top + (pin.offsetHeight - sticky.offsetHeight)]; };
   let animating = false; let lockedUntilQuiet = false; let lastWheel = 0; let settleTimer = 0;
+  let glideTarget = 0; let raf = 0; let lastAbs = 0; let lastDir = 0;
+  // Exit lock point (N + 1): the start of Selected Work, so leaving the last chapter is one gesture, not a long scroll.
+  const work = document.getElementById('work');
+  const exitY = () => (work ? work.getBoundingClientRect().top + window.scrollY : range()[1] + sticky.offsetHeight);
+  const posY = (k) => (k > N ? exitY() : stepY(k));
   const nearestStep = () => {
     let best = 0; let bestD = Infinity;
-    for (let k = 0; k <= N; k += 1) { const d = Math.abs(window.scrollY - stepY(k)); if (d < bestD) { bestD = d; best = k; } }
+    for (let k = 0; k <= N + 1; k += 1) { const d = Math.abs(window.scrollY - posY(k)); if (d < bestD) { bestD = d; best = k; } }
     return best;
   };
-  const glideTo = (y, ms = 750) => {
+  // Ease-out: the page responds on the first frame and decelerates into the lock point. A new glide can
+  // interrupt one in progress and continues from the current position, so quick swipes chain smoothly.
+  const glideTo = (y, ms = 520) => {
+    cancelAnimationFrame(raf);
     const from = window.scrollY; const t0 = performance.now(); animating = true;
-    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+    const ease = (t) => 1 - (1 - t) ** 4;
     const tick = (now) => {
       const t = Math.min(1, (now - t0) / ms);
       window.scrollTo({ top: from + (y - from) * ease(t), behavior: 'instant' });
-      if (t < 1) requestAnimationFrame(tick); else { animating = false; lockedUntilQuiet = true; }
+      update(); // render in the same frame as the scroll, not one frame later
+      if (t < 1) raf = requestAnimationFrame(tick); else { animating = false; lockedUntilQuiet = true; }
     };
-    requestAnimationFrame(tick);
-  };
-  const step = (dir) => {
-    const k = nearestStep();
-    const offStep = Math.abs(window.scrollY - stepY(k)) > 4;
-    let target = offStep ? (dir > 0 ? Math.ceil(currentS()) : Math.floor(currentS())) : k + dir;
-    if (target < 0 || target > N) return false; // leave the story: let the page scroll normally
-    glideTo(stepY(target));
-    return true;
+    raf = requestAnimationFrame(tick);
   };
   const currentS = () => { const [top, end] = range(); return ((window.scrollY - top) / Math.max(1, end - top)) * SPAN; };
+  const step = (dir) => {
+    const base = animating ? glideTarget : null;
+    let target;
+    if (base !== null) target = base + dir;
+    else {
+      const k = nearestStep();
+      const offStep = Math.abs(window.scrollY - posY(k)) > 4;
+      const sNow = window.scrollY > stepY(N) ? N + 0.5 : currentS();
+      target = offStep ? (dir > 0 ? Math.ceil(sNow) : Math.floor(sNow)) : k + dir;
+    }
+    if (target < 0 || target > N + 1) return false; // leave the story: let the page scroll normally
+    glideTarget = target;
+    glideTo(posY(target), target > N ? 700 : 520);
+    return true;
+  };
   const inStory = (dir) => {
     const [top, end] = range(); const y = window.scrollY;
-    if (dir > 0) return y >= top - 2 && y < stepY(N) - 2;
-    return y > top + 2 && y <= end + 2;
+    if (dir > 0) return y >= top - 2 && y < exitY() - 2;
+    return y > top + 2 && y <= exitY() + 2;
   };
   const onWheel = (e) => {
-    const now = performance.now(); const quiet = now - lastWheel > 180; lastWheel = now;
-    if (Math.abs(e.deltaY) < 1) return;
+    const now = performance.now(); const quiet = now - lastWheel > 160; lastWheel = now;
+    const abs = Math.abs(e.deltaY);
+    if (abs < 1) return;
     const dir = e.deltaY > 0 ? 1 : -1;
-    if (animating) { e.preventDefault(); return; }
-    if (lockedUntilQuiet) {
-      // Swallow the rest of the gesture (trackpad inertia) so one swipe moves exactly one step.
-      if (!quiet) { const [top, end] = range(); if (window.scrollY >= top - 2 && window.scrollY <= end + 2) e.preventDefault(); return; }
+    // Trackpad inertia decays steadily. A pause, a direction change, or a clear rise in speed means a new swipe.
+    const fresh = quiet || dir !== lastDir || abs > lastAbs * 1.4 + 4;
+    lastAbs = abs; lastDir = dir;
+    if (animating || lockedUntilQuiet) {
+      const [top] = range(); const inside = window.scrollY >= top - 2 && window.scrollY <= exitY() + 2;
+      if (!fresh) { if (inside) e.preventDefault(); return; } // same gesture: one swipe moves one step
       lockedUntilQuiet = false;
+      if (animating) { step(dir); e.preventDefault(); return; } // chain to the next step, or let the current glide finish
     }
     if (!inStory(dir)) return;
     if (step(dir)) e.preventDefault();
@@ -759,7 +779,7 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
     const down = ['ArrowDown', 'PageDown', ' '].includes(e.key) && !e.shiftKey; const up = ['ArrowUp', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey);
     if (!down && !up) return;
     const dir = down ? 1 : -1;
-    if (animating) { e.preventDefault(); return; }
+    if (animating) { if (step(dir)) e.preventDefault(); return; }
     if (!inStory(dir)) return;
     if (step(dir)) e.preventDefault();
   };
@@ -770,7 +790,7 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
       if (animating) return;
       const [top] = range(); const y = window.scrollY;
       if (y <= top + 2 || y >= stepY(N) + 2) return;
-      const k = nearestStep(); if (Math.abs(y - stepY(k)) > 3) glideTo(stepY(k), 450);
+      const k = nearestStep(); if (Math.abs(y - stepY(k)) > 3) { glideTarget = k; glideTo(stepY(k), 420); }
     }, 220);
   };
   window.addEventListener('wheel', onWheel, { passive: false });
@@ -787,7 +807,7 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('wheel', onWheel);
     window.removeEventListener('keydown', onKey);
-    clearTimeout(settleTimer);
+    clearTimeout(settleTimer); cancelAnimationFrame(raf);
     window.removeEventListener('resize', measure);
     window.removeEventListener('load', measure);
     headerAnchor.replaceWith(header);
