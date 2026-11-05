@@ -23,7 +23,7 @@ Status: documented interaction intent; detailed choreography and implementation 
 
 - Desktop: a horizontal gallery of large cards, with part of the next project visible, driven by continued vertical scrolling. A separate horizontal gesture must not be required. Normal vertical flow resumes after the gallery.
 - Mobile: projects stack vertically, with entrance animations. Implemented November 4, 2026 as a functional stack without animations (up to 760 px): full card content, gallery counter hidden, 48 px right padding so cards clear the nav rail. Entrance animations are visual backlog.
-- The exact horizontal mechanic must be validated in an isolated technical proof before it is approved.
+- Implemented November 5, 2026 at Jackie's request (local, not committed): on desktop (wider than 760 px) with motion allowed, the Selected Work section pins and the cards move sideways with vertical scroll (same technique as the Snoof Origin strip); the counter follows the visible card; cards scale with viewport height so image and text fit while pinned. Mobile keeps the vertical stack; reduced motion keeps the manual horizontal scroll. Selected Work title reduced to the About title scale (up to 68 px).
 
 ### Skin selector (planned November 3, 2026; optional P1; not implemented)
 

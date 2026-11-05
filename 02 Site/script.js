@@ -450,3 +450,46 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
     }, 280);
   }));
 })();
+
+// Selected Work: on desktop with motion allowed, pin the section and move the cards sideways with vertical scroll.
+(() => {
+  const section = document.querySelector('.work');
+  const heading = section && section.querySelector('.work-heading');
+  const track = section && section.querySelector('.work-track');
+  if (!track || !window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+  const desktop = window.matchMedia('(min-width: 761px)');
+  const counter = section.querySelector('.work-counter-current');
+  const cards = [...track.querySelectorAll('.work-card')];
+  let pin = null; let sticky = null; let distance = 0; let ticking = false;
+  const setX = (x) => cards.forEach((c) => { c.style.transform = x ? `translate3d(${x}px, 0, 0)` : ''; });
+  const build = () => {
+    if (pin) return;
+    pin = document.createElement('div'); pin.className = 'work-pin';
+    sticky = document.createElement('div'); sticky.className = 'work-sticky';
+    heading.before(pin); pin.append(sticky); sticky.append(heading, track);
+    track.classList.add('is-pinned'); track.removeAttribute('tabindex'); track.scrollLeft = 0;
+  };
+  const teardown = () => {
+    if (!pin) return;
+    pin.before(heading, track); pin.remove(); pin = sticky = null;
+    track.classList.remove('is-pinned'); track.setAttribute('tabindex', '0'); setX(0);
+  };
+  const measure = () => {
+    if (!desktop.matches) { teardown(); return; }
+    build(); setX(0);
+    distance = Math.max(0, track.scrollWidth - track.clientWidth);
+    pin.style.height = `${sticky.offsetHeight + distance}px`;
+    update();
+  };
+  const update = () => {
+    ticking = false;
+    if (!pin) return;
+    const p = distance > 0 ? Math.min(1, Math.max(0, -pin.getBoundingClientRect().top / distance)) : 0;
+    setX(-p * distance);
+    if (counter) counter.textContent = String(Math.round(p * (cards.length - 1)) + 1).padStart(2, '0');
+  };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+  measure();
+})();

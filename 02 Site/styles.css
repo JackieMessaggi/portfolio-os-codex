@@ -145,13 +145,14 @@ h3 { font-size: 1.2rem; line-height: 1.4; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 /* Selected Work v02 with approved Fraunces B typography (visual-direction.md). */
 .work { background: var(--eggplant); color: var(--ivory); padding-block: 3.3125rem 5rem; scroll-margin-top: 1.5rem; }
+.work:has(.work-pin) { padding-block: 0; }
 .work-heading { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 4.82375rem; }
 .work-heading h2 {
   font-family: "Fraunces", Georgia, serif;
   font-weight: 900;
   font-optical-sizing: none;
   font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1;
-  font-size: clamp(2.5rem, 6.6666667vw, 6rem);
+  font-size: clamp(2.5rem, 4.6vw, 4.25rem);
   letter-spacing: -.025em;
   line-height: 1.04;
   margin: 0;
@@ -177,6 +178,14 @@ h3 { font-size: 1.2rem; line-height: 1.4; }
 .work-contribution { grid-area: contribution; margin: .75rem 0 0; max-width: 34em; font-family: "DM Sans", system-ui, sans-serif; font-size: 1.125rem; line-height: 1.5; color: var(--ivory); }
 /* "View case study" text link: mobile only (desktop keeps the image link and horizontal card interaction as they are). */
 .work-cta { display: none; }
+/* Desktop gallery driven by vertical scroll (html.motion, wider than 760 px): the section pins while the cards
+   move sideways, then normal scrolling resumes. Set up by script.js; otherwise the track scrolls manually. */
+.work-sticky { position: sticky; top: 0; display: flex; flex-direction: column; justify-content: center; height: 100vh; padding-block: 2rem 5.5rem; box-sizing: border-box; overflow: hidden; }
+.work-sticky .work-heading { margin-bottom: 2rem; }
+.work-track.is-pinned { overflow: hidden; padding-bottom: 0; }
+/* Cards scale down with the viewport height so the image and its text fit while pinned. */
+.work-track.is-pinned .work-card { flex-basis: min(60rem, calc((100vh - 21rem) * 1.6)); }
+.work-track.is-pinned .work-card { will-change: transform; }
 /* About: asymmetric editorial layout on the 12-column grid. Large portrait 1-7, copy 9-12, vertically centered.
    Fraunces B title at a smaller scale than Contact, DM Sans for the text. */
 .about { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; align-items: center; padding-block: 8rem 9rem; scroll-margin-top: 1.5rem; font-family: "DM Sans", system-ui, sans-serif; }
