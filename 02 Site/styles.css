@@ -488,6 +488,85 @@ body { padding-bottom: 5.5rem; }
 .cs-end-link { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; font-size: clamp(1.25rem, 2vw, 1.75rem); font-weight: 700; letter-spacing: -.01em; text-decoration: none; }
 .cs-end-link:hover { text-decoration: underline; }
 
+/* 5B static captions (also the reduced-motion and no-JavaScript fallback). */
+.cs-step-caption { max-width: 17rem; margin: 1.25rem auto 0; text-align: center; font-size: .9375rem; line-height: 1.45; color: var(--ivory); }
+
+/* ==========================================================================
+   P1 scroll storytelling. Only active with html.motion, which script.js adds
+   when JavaScript runs and prefers-reduced-motion is "no-preference".
+   ========================================================================== */
+/* Section 4: one verdict splits into three ideas. */
+.motion .cs-layers-wrap { position: relative; margin: 4rem 0 6rem; }
+.motion .cs-layers-wrap .cs-layers3 { margin: 0; }
+.motion .cs-layers3 li { position: relative; }
+/* Paced so the verdict is read first (about 0.3 s), then the split (1.2 s), then the text fades in. */
+.motion .cs-layers3 li > *, .motion .cs-layers3 li::before { transition: opacity .55s ease 1.1s; }
+.motion .cs-layers-wrap:not(.is-split) .cs-layers3 li:nth-child(1) { transform: translateX(calc(100% + 2rem)); }
+.motion .cs-layers-wrap:not(.is-split) .cs-layers3 li:nth-child(3) { transform: translateX(calc(-100% - 2rem)); }
+.motion .cs-layers-wrap:not(.is-split) .cs-layers3 li > *, .motion .cs-layers-wrap:not(.is-split) .cs-layers3 li::before { opacity: 0; transition-delay: 0s; }
+.motion .cs-layers3 li { transition: transform 1.2s cubic-bezier(.45, 0, .2, 1) .3s, border-color .4s ease .75s; }
+.motion .cs-layers-wrap:not(.is-split) .cs-layers3 li:not(:nth-child(2)) { border-top-color: transparent; transition-delay: 0s; }
+.cs-verdict-chip { position: absolute; left: 50%; top: 50%; z-index: 1; display: flex; align-items: center; gap: .625rem; margin: 0; padding: .75rem 1.25rem; background: var(--eggplant); color: var(--ivory); border-radius: 999px; font-size: 1.25rem; font-weight: 700; white-space: nowrap; transform: translate(-50%, -50%); transition: opacity .45s ease .25s, transform .7s ease .25s; }
+.cs-verdict-chip span { padding: .125rem .5rem; border: 1px solid var(--beige); color: var(--beige); font-size: .75rem; font-weight: 600; letter-spacing: .08em; }
+.motion .cs-layers-wrap.is-split .cs-verdict-chip { opacity: 0; transform: translate(-50%, -50%) scale(.85); pointer-events: none; }
+
+/* Section 5B: pinned phone with three synced steps. */
+.motion .cs-scrolly { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; margin: 3rem 0 6rem; }
+.motion .cs-stage { grid-column: 2 / 6; position: sticky; top: max(2rem, calc(50vh - 20rem)); align-self: start; display: grid; justify-items: center; }
+.motion .cs-stage figure { grid-area: 1 / 1; width: 100%; max-width: 18rem; opacity: 0; transform: scale(.97); transition: opacity .6s ease, transform .6s ease; }
+.motion .cs-stage figure.is-active { opacity: 1; transform: none; }
+.motion .cs-triptych.is-scrolly { grid-column: 7 / 12; display: block; margin: 0; }
+.motion .cs-triptych.is-scrolly li { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; min-height: 75vh; opacity: .3; transition: opacity .5s ease; }
+.motion .cs-triptych.is-scrolly li.is-active { opacity: 1; }
+.motion .cs-triptych.is-scrolly .cs-step-caption { max-width: 14em; margin: 1rem 0 0; text-align: left; font-family: "Fraunces", Georgia, serif; font-weight: 900; font-optical-sizing: none; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; font-size: clamp(2.5rem, 3vw, 2.875rem); line-height: 1.08; letter-spacing: -.02em; }
+
+/* 5B, after the sequence: the layers start stacked as one card and fan out. */
+.motion .cs-exploded-layers li { position: relative; transition: transform .8s cubic-bezier(.2, .7, .2, 1), opacity .6s ease; }
+.motion .cs-exploded-layers li:nth-child(1) { z-index: 3; }
+.motion .cs-exploded-layers li:nth-child(2) { z-index: 2; }
+.motion .cs-exploded-layers:not(.is-in) li:nth-child(2) { transform: translate(calc(-100% - 2rem), .75rem); }
+.motion .cs-exploded-layers:not(.is-in) li:nth-child(3) { transform: translate(calc(-200% - 4rem), 1.5rem); }
+.motion .cs-exploded-layers:not(.is-in) li:nth-child(n+2) .cs-layer-num, .motion .cs-exploded-layers:not(.is-in) li:nth-child(n+2) .cs-layer-text { opacity: 0; }
+.motion .cs-exploded-layers .cs-layer-num, .motion .cs-exploded-layers .cs-layer-text { transition: opacity .4s ease .5s; }
+
+/* Section 6 (html.motion only): idle pet animation (tail sway and breathing). The background is the original
+   image with only the tail area filled in, so the body layer sits exactly on top of itself. Layers share the source image's 3:4 frame, centered and
+   cropped like the 4:5 card, so the transform origins below are in image coordinates. */
+.cs-pets-hero { position: relative; }
+.cs-pet-anim { display: none; }
+.motion .cs-pet-anim { display: block; position: absolute; inset: 0; overflow: hidden; border-radius: 1.2rem; }
+.cs-pet-stage { position: absolute; left: 0; top: 50%; width: 100%; aspect-ratio: 3 / 4; transform: translateY(-50%); }
+.cs-pet-stage img, .cs-pet-cat { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; }
+.cs-pet-tail { transform-origin: 31.25% 53.2%; animation: cs-tail 3.8s ease-in-out infinite; }
+.cs-pet-body { transform-origin: 47.8% 79.6%; animation: cs-breathe 3.4s ease-in-out infinite; }
+.cs-pet-anim:not(.is-live) img { animation-play-state: paused; }
+@keyframes cs-tail { 0%, 100% { transform: rotate(-2.5deg); } 40% { transform: rotate(3deg); } 52% { transform: rotate(2deg); } 60% { transform: rotate(3.4deg); } }
+@keyframes cs-breathe { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.005, 1.012); } }
+
+/* Section 2 (html.motion only): pinned strip driven by vertical scroll. */
+.motion .cs-strip-sticky { position: sticky; }
+.motion .cs-strip.is-pinned { overflow: hidden; scroll-snap-type: none; }
+.motion .cs-strip.is-pinned .cs-strip-track { will-change: transform; }
+
+/* P1 entrances (html.motion only). */
+.motion .rv { opacity: 0; transform: translateY(1.25rem); transition: opacity .7s ease var(--rv-d, 0s), transform .8s cubic-bezier(.2, .7, .2, 1) var(--rv-d, 0s); }
+.motion .rv.rv-side { transform: translateX(-1rem); }
+.motion .rv.rv-scale { transform: scale(.96); }
+.motion .rv.rv-pop { transform: scale(.92); }
+.motion .rv.is-in { opacity: 1; transform: none; }
+/* 5A: the chosen direction gets a subtle emphasis once it is in view. */
+.motion .cs-criteria li.rv::before { transform: scale(0); transition: transform .4s cubic-bezier(.3, 1.4, .5, 1) calc(var(--rv-d, 0s) + .3s); }
+.motion .cs-criteria li.rv.is-in::before { transform: none; }
+/* Hero: plays on load from the first paint (no wait for scrolling); short, so the page is readable at once. */
+@keyframes cs-rise { from { opacity: 0; transform: translateY(1.25rem); } to { opacity: 1; transform: none; } }
+@keyframes cs-settle { from { transform: scale(1.06); } to { transform: none; } }
+.motion .cs-project { animation: cs-rise .6s cubic-bezier(.2, .7, .2, 1) both; }
+.motion .cs-display { animation: cs-rise .7s cubic-bezier(.2, .7, .2, 1) .08s both; }
+.motion .cs-hero-copy { animation: cs-rise .7s cubic-bezier(.2, .7, .2, 1) .2s both; }
+.motion .cs-meta { animation: cs-rise .7s cubic-bezier(.2, .7, .2, 1) .3s both; }
+.motion .cs-hero-figure { overflow: hidden; }
+.motion .cs-hero-figure img { animation: cs-settle 1.4s cubic-bezier(.2, .7, .2, 1) both; }
+
 /* Case navigation (snoof.html only). Desktop: compact bottom pill with a section menu. */
 .case-nav { position: fixed; z-index: 10; left: 50%; bottom: 1.5rem; transform: translateX(-50%); transition: transform .25s ease, opacity .25s ease; display: flex; align-items: stretch; background: var(--ivory); border: 1px solid var(--eggplant); font-family: "DM Sans", system-ui, sans-serif; font-size: .8125rem; font-weight: 500; letter-spacing: .08em; line-height: 1; text-transform: uppercase; }
 .case-progress { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--beige); overflow: hidden; }
@@ -604,6 +683,20 @@ html:not(.js) .case-menu a::before, html:not(.js) .case-menu .nav-num { display:
   .cs-phone-video { max-width: 16rem; }
   .cs-next-grid { gap: 2.5rem; }
   .cs-end { flex-direction: column; gap: .5rem; }
+
+  /* P1 on mobile: vertical split, compact pinned phone, and a simple fade-up for the layers. */
+  .motion .cs-layers-wrap { margin: 2.5rem 0 4rem; }
+  .motion .cs-layers-wrap:not(.is-split) .cs-layers3 li:nth-child(1) { transform: translateY(calc(100% + 2rem)); }
+  .motion .cs-layers-wrap:not(.is-split) .cs-layers3 li:nth-child(3) { transform: translateY(calc(-100% - 2rem)); }
+  .cs-verdict-chip { font-size: 1.0625rem; padding: .625rem 1rem; }
+  .motion .cs-scrolly { display: block; margin: 2.5rem 0 4rem; }
+  .motion .cs-stage { position: sticky; top: 0; z-index: 2; margin: 0 -1.25rem; padding: 1rem 0 .75rem; background: var(--eggplant); }
+  .motion .cs-stage figure { max-width: 10.5rem; }
+  .motion .cs-triptych.is-scrolly li { min-height: 46vh; justify-content: center; }
+  .motion .cs-triptych.is-scrolly .cs-step-caption { font-size: 2.5rem; }
+  .motion .cs-exploded-layers:not(.is-in) li:nth-child(n) { transform: translateY(1.5rem); opacity: 0; }
+  .motion .cs-exploded-layers li:nth-child(2) { transition-delay: .12s; }
+  .motion .cs-exploded-layers li:nth-child(3) { transition-delay: .24s; }
 
   /* Mobile case nav: thin top progress line and a small bottom-right button that opens the section menu. */
   .case-nav { left: auto; right: 1rem; bottom: 1rem; transform: none; }

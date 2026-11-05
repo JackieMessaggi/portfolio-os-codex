@@ -111,3 +111,180 @@ if (caseNav) {
   window.addEventListener('resize', requestUpdate);
   update();
 }
+
+// Snoof case P1 scroll storytelling (sections 4 and 5B). Progressive enhancement: without JavaScript or with
+// prefers-reduced-motion, the static layouts and captions stay as they are. One rAF-throttled scroll check drives
+// all three effects; the reveals run once.
+(() => {
+  if (!document.querySelector('.case-nav')) return;
+  const motionOK = window.matchMedia && window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  if (!motionOK) return;
+  document.documentElement.classList.add('motion');
+  const checks = [];
+
+  // Section 4: the three ideas start folded into one v1.0-style verdict, then split apart.
+  const layers = document.querySelector('.cs-layers3');
+  if (layers) {
+    const wrap = document.createElement('div');
+    wrap.className = 'cs-layers-wrap';
+    layers.before(wrap);
+    wrap.append(layers);
+    const chip = document.createElement('p');
+    chip.className = 'cs-verdict-chip';
+    chip.setAttribute('aria-hidden', 'true');
+    chip.innerHTML = '<span>v1.0</span> Good Match';
+    wrap.append(chip);
+    checks.push(() => {
+      if (wrap.classList.contains('is-split')) return;
+      const r = wrap.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.65 && r.bottom > 0) wrap.classList.add('is-split');
+    });
+  }
+
+  // Section 5B: one phone stays pinned while three steps scroll past; the phone crossfades in sync.
+  const trip = document.querySelector('.cs-triptych');
+  if (trip) {
+    const steps = [...trip.children];
+    const scrolly = document.createElement('div');
+    scrolly.className = 'cs-scrolly';
+    const stage = document.createElement('div');
+    stage.className = 'cs-stage';
+    trip.before(scrolly);
+    scrolly.append(stage, trip);
+    trip.classList.add('is-scrolly');
+    steps.forEach((step, i) => {
+      const fig = step.querySelector('figure');
+      if (fig) { fig.dataset.step = String(i); stage.append(fig); }
+      step.dataset.step = String(i);
+    });
+    let current = -1;
+    const setStep = (i) => {
+      if (i === current) return;
+      current = i;
+      stage.dataset.active = String(i);
+      stage.querySelectorAll('figure').forEach((fig) => fig.classList.toggle('is-active', fig.dataset.step === String(i)));
+      steps.forEach((step) => step.classList.toggle('is-active', step.dataset.step === String(i)));
+    };
+    setStep(0);
+    // Active step: the one whose center is closest to the viewport center (only while the sequence is near).
+    checks.push(() => {
+      const box = scrolly.getBoundingClientRect();
+      if (box.bottom < 0 || box.top > window.innerHeight) return;
+      // On mobile the phone is pinned at the top, so the reading area is the space below it.
+      const sb = stage.getBoundingClientRect();
+      const pinnedTop = window.innerWidth <= 760 && sb.top <= 1;
+      const mid = pinnedTop ? sb.bottom + (window.innerHeight - sb.bottom) / 2 : window.innerHeight / 2;
+      let best = 0;
+      let bestDist = Infinity;
+      steps.forEach((step, i) => {
+        const r = step.getBoundingClientRect();
+        const d = Math.abs(r.top + r.height / 2 - mid);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      setStep(best);
+    });
+  }
+
+  // Section 5B, after the sequence: the three layers start stacked as one card and fan out.
+  const exploded = document.querySelector('.cs-exploded-layers');
+  if (exploded) {
+    checks.push(() => {
+      if (exploded.classList.contains('is-in')) return;
+      const r = exploded.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.75 && r.bottom > 0) exploded.classList.add('is-in');
+    });
+  }
+
+  // Section 2: the Origin strip is pinned and moves sideways with the vertical scroll (no manual horizontal scroll).
+  const strip = document.querySelector('.cs-strip');
+  const track = strip && strip.querySelector('.cs-strip-track');
+  if (strip && track) {
+    const pin = document.createElement('div');
+    pin.className = 'cs-strip-pin';
+    const sticky = document.createElement('div');
+    sticky.className = 'cs-strip-sticky';
+    strip.before(pin);
+    pin.append(sticky);
+    sticky.append(strip);
+    strip.classList.add('is-pinned');
+    strip.removeAttribute('tabindex');
+    const hint = document.querySelector('.cs-strip-hint');
+    if (hint) hint.textContent = 'Keep scrolling ↓';
+    let distance = 0;
+    let stickyTop = 0;
+    const measure = () => {
+      track.style.transform = '';
+      distance = Math.max(0, track.scrollWidth - strip.clientWidth);
+      const h = sticky.offsetHeight;
+      stickyTop = Math.max(16, (window.innerHeight - h) / 2);
+      sticky.style.top = `${stickyTop}px`;
+      pin.style.height = `${h + distance}px`;
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    window.addEventListener('load', measure);
+    checks.push(() => {
+      const top = pin.getBoundingClientRect().top;
+      const p = distance > 0 ? Math.min(1, Math.max(0, (stickyTop - top) / distance)) : 0;
+      track.style.transform = `translate3d(${(-p * distance).toFixed(1)}px, 0, 0)`;
+    });
+  }
+
+  // Section 6: idle pet. The loop only runs while the card is on screen.
+  const pet = document.querySelector('.cs-pet-anim');
+  if (pet) {
+    checks.push(() => {
+      const r = pet.getBoundingClientRect();
+      pet.classList.toggle('is-live', r.bottom > 0 && r.top < window.innerHeight);
+    });
+  }
+
+  // Remaining P1 entrances: short fade-ups that run once. Elements that enter together are staggered.
+  // Only applied with motion allowed; without it (or without JavaScript) everything is visible as is.
+  const groups = [
+    ['.cs-origin .cs-split > *', ''], ['.cs-tile', ''],
+    ['#research > .cs-eyebrow, #research > .cs-h2, #research > .cs-copy', ''], ['.cs-toxic-label', 'rv-pop'], ['.cs-toxic-question', ''],
+    ['.cs-finding > div, .cs-quote', ''], ['.cs-behaviors li', ''], ['.cs-research-foot > *', ''],
+    ['.cs-dots > .cs-eyebrow, .cs-dots > .cs-h2, .cs-dots > .cs-copy', ''], ['.cs-alts li', ''],
+    ['.cs-choice-copy > .cs-label, .cs-choice-title', ''], ['.cs-criteria li', 'rv-side'], ['.cs-choice-copy > p:not(.cs-label):not(.cs-rule)', ''],
+    ['.cs-rule', 'rv-pop'], ['.cs-choice-visual .cs-phone', ''], ['.cs-callout', 'rv-side'],
+    ['.cs-brand-intro > *', ''], ['.cs-brand-hero img', 'rv-scale'], ['.cs-brand-hero p', ''],
+    ['.cs-group-label', ''], ['.cs-palette li', ''], ['.cs-palette figcaption', ''], ['.cs-pets figure', ''], ['.cs-brand-v2', ''],
+    ['.cs-bento > *', ''], ['.cs-tone-lede', ''], ['.cs-tone figure', ''],
+    ['.cs-proto-copy > *:not(.cs-steps)', ''], ['.cs-steps li', 'rv-side'], ['.cs-video', 'rv-scale'],
+    ['#next > .cs-eyebrow, #next > .cs-h2', ''], ['.cs-next-grid > div', ''], ['.cs-takeaways li', ''], ['.cs-later', ''], ['.cs-end', ''],
+  ];
+  const revealEls = [];
+  groups.forEach(([selector, variant]) => {
+    document.querySelectorAll(selector).forEach((el) => {
+      if (el.classList.contains('rv')) return;
+      el.classList.add('rv');
+      if (variant) el.classList.add(variant);
+      revealEls.push(el);
+    });
+  });
+  // Checked on the shared rAF-throttled scroll pass (and on the Origin strip's own scroll); revealed items drop out.
+  let waiting = revealEls.slice();
+  checks.push(() => {
+    if (!waiting.length) return;
+    const vh = window.innerHeight;
+    const vw = window.innerWidth;
+    let batch = 0;
+    waiting = waiting.filter((el) => {
+      const r = el.getBoundingClientRect();
+      const visible = r.top < vh * 0.92 && r.bottom > 0 && r.left < vw && r.right > 0;
+      if (!visible) return true;
+      el.style.setProperty('--rv-d', `${Math.min(batch, 5) * 0.09}s`);
+      el.classList.add('is-in');
+      batch += 1;
+      return false;
+    });
+  });
+
+  let pending = false;
+  const run = () => { pending = false; checks.forEach((check) => check()); };
+  const request = () => { if (!pending) { pending = true; window.requestAnimationFrame(run); } };
+  window.addEventListener('scroll', request, { passive: true });
+  window.addEventListener('resize', request);
+  run();
+})();

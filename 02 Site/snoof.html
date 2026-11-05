@@ -8,7 +8,7 @@
   <meta name="author" content="Jackie Messaggi">
   <title>Snoof, From Concept to Clarity | Jackie Messaggi</title>
   <link rel="stylesheet" href="styles.css">
-  <script>document.documentElement.classList.add('js');</script>
+  <script>document.documentElement.classList.add('js');if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.classList.add('motion');</script>
   <script src="script.js" defer></script>
 </head>
 <body class="case">
@@ -267,18 +267,22 @@
             <p>One source lists the Red shield plant as “caution advised,” without explaining what that means for cats. It would have been easy to force it into Toxic or Non-toxic, just to give people an answer.</p>
           </div>
 
+          <!-- Static by default. With motion allowed, script.js turns this into a pinned phone with three synced steps. -->
           <ol class="cs-triptych">
             <li>
               <p class="cs-label">v1.0 · A verdict</p>
               <figure class="cs-phone cs-phone-wire"><img src="assets/snoof/v1-wireframe-good-match.webp" width="393" height="852" loading="lazy" alt="v1.0 wireframe declaring the plant a nice match for the pet"></figure>
+              <p class="cs-step-caption">A pet’s habits turned into a verdict.</p>
             </li>
             <li>
               <p class="cs-label">v2.0 · Toxic to cats</p>
               <figure class="cs-phone"><img src="assets/snoof/scr-finding-easter-lily.webp" width="786" height="1704" loading="lazy" alt="v2.0 prototype: Easter lily, “Toxic to cats,” classified by ASPCA, Pet Poison Helpline, and Cats Protection"></figure>
+              <p class="cs-step-caption">The finding comes from sources, not from the pet.</p>
             </li>
             <li class="cs-triptych-focus">
               <p class="cs-label">v2.0 · Not enough information</p>
               <figure class="cs-phone"><img src="assets/snoof/scr-information-gap.webp" width="786" height="1704" loading="lazy" alt="v2.0 prototype: Red shield plant, “Not enough information. We couldn’t find enough reliable information to classify this plant for cats.”"></figure>
+              <p class="cs-step-caption">When the sources don’t say enough, Snoof says so.</p>
             </li>
           </ol>
 
@@ -341,6 +345,16 @@
         <div class="cs-pets">
           <figure class="cs-pets-hero">
             <img src="assets/snoof/pet-cat-curious.webp" width="1200" height="1600" loading="lazy" alt="Snoof 3D tabby cat looking up curiously in a sunlit living room">
+            <!-- Idle animation (html.motion only): the same image split into background, tail, and body layers. -->
+            <div class="cs-pet-anim" aria-hidden="true">
+              <div class="cs-pet-stage">
+                <img class="cs-pet-bg" src="assets/snoof/pet-cat-curious-bg.webp" width="1200" height="1600" loading="lazy" alt="">
+                <div class="cs-pet-cat">
+                  <img class="cs-pet-tail" src="assets/snoof/pet-cat-curious-tail.webp" width="1200" height="1600" loading="lazy" alt="">
+                  <img class="cs-pet-body" src="assets/snoof/pet-cat-curious-body.webp" width="1200" height="1600" loading="lazy" alt="">
+                </div>
+              </div>
+            </div>
           </figure>
           <figure class="cs-pets-sheet">
             <img src="assets/snoof/pet-cat-character-sheet.webp" width="1536" height="1024" loading="lazy" alt="Character sheet of the stylized 3D tabby cat in several views and expressions">
