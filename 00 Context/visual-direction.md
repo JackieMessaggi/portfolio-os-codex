@@ -15,7 +15,7 @@ Occasional decorative detail: Pastel Orchid Pink `#E7B0DE`.
 
 Restricted token, approved November 3, 2026: Deep Orange `#CC4808`, only as a background behind white text (white on `#CC4808` is 4.67:1, WCAG AA for all text sizes). Its first and currently only approved use is the Hero positioning band. `#FF5A0A` remains the original Signal Orange for indicators and small highlights. White `#FFFFFF` is approved only as text on Deep Orange.
 
-Keep the main avatar area light ivory. Use orange sparingly for selection, progress, and small highlights. The Hero positioning band is an intentional exception to this rule; do not extend large orange areas elsewhere without approval. Use dark text on colored controls and verify contrast before implementation; orange is not approved as small text on ivory. Beige and pink should remain subordinate to the avatar and project imagery.
+Keep the main avatar area light ivory. Use orange sparingly for selection, progress, and small highlights. The Hero positioning band is an intentional exception to this rule; do not extend large orange areas elsewhere without approval. Use dark text on colored controls and verify contrast before implementation; orange is not approved as small text on ivory (one owner-approved exception: the "Where AI helped" labels in the Snoof case, November 5, 2026). Beige and pink should remain subordinate to the avatar and project imagery.
 
 Do not introduce other interface colors. Muted Sage Grey and Deep Burgundy were considered but are not part of the selected direction. Avatar clothing, rendered materials, photographs, and project assets may contain their own colors.
 

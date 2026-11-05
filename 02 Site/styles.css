@@ -272,7 +272,9 @@ body { padding-bottom: 5.5rem; }
 .cs-note, .cs-caption { font-size: .875rem; line-height: 1.5; opacity: .82; }
 .cs-note { font-style: italic; }
 .cs-note-center { text-align: center; max-width: 40em; margin-inline: auto; }
-.cs-ai { font-size: .875rem; line-height: 1.55; max-width: 40em; padding-left: 1rem; border-left: 2px solid currentColor; }
+.cs-ai { font-size: .875rem; line-height: 1.55; max-width: 40em; padding-left: 1rem; border-left: 2px solid var(--orange); }
+/* Owner-approved exception (November 5): the label is Signal Orange on both backgrounds. On ivory it is 2.87:1, below WCAG AA. */
+.cs-ai strong { color: var(--orange); }
 .cs-ui { display: block; width: 100%; height: auto; background: #fff; border-radius: 1.25rem; }
 .cs-split { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; }
 .cs-split > :first-child { grid-column: 1 / 6; }
@@ -437,7 +439,9 @@ body { padding-bottom: 5.5rem; }
 .cs-pets-hero { grid-column: 1 / 6; }
 .cs-pets-hero img { height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
 .cs-pets-sheet { grid-column: 6 / 13; }
-.cs-pets-sheet figcaption { margin-top: 1rem; font-size: .9375rem; line-height: 1.5; max-width: 34em; opacity: .82; }
+/* AI credit: same orange side rule as the "Where AI helped" notes, without the label. Text keeps the softer tone
+   through its color (not opacity) so the rule stays full orange. */
+.cs-pets-sheet figcaption { margin-top: 1rem; padding-left: 1rem; border-left: 2px solid var(--orange); font-size: .9375rem; line-height: 1.5; max-width: 34em; color: rgba(64, 8, 73, .82); }
 .cs-brand-v2 { margin-block: 5rem 0; font-size: 1.25rem; }
 .cs-bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; align-items: start; }
 .cs-bento { row-gap: 5rem; }
@@ -512,10 +516,12 @@ body { padding-bottom: 5.5rem; }
 
 /* Section 5B: pinned phone with three synced steps. */
 .motion .cs-scrolly { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; margin: 3rem 0 6rem; }
-.motion .cs-stage { grid-column: 2 / 6; position: sticky; top: max(2rem, calc(50vh - 20rem)); align-self: start; display: grid; justify-items: center; }
-.motion .cs-stage figure { grid-area: 1 / 1; width: 100%; max-width: 18rem; opacity: 0; transform: scale(.97); transition: opacity .6s ease, transform .6s ease; }
+/* The phone takes most of the viewport height (up to 24rem wide) and stays vertically centered while pinned. */
+.motion .cs-scrolly { --phone-w: min(24rem, calc((100vh - 5rem) / 2.2)); }
+.motion .cs-stage { grid-column: 1 / 7; position: sticky; top: max(1.5rem, calc(50vh - var(--phone-w) * 1.1)); align-self: start; display: grid; justify-items: center; }
+.motion .cs-stage figure { grid-area: 1 / 1; width: 100%; max-width: var(--phone-w); opacity: 0; transform: scale(.97); transition: opacity .6s ease, transform .6s ease; }
 .motion .cs-stage figure.is-active { opacity: 1; transform: none; }
-.motion .cs-triptych.is-scrolly { grid-column: 7 / 12; display: block; margin: 0; }
+.motion .cs-triptych.is-scrolly { grid-column: 7 / 12; display: block; margin: 0; padding-bottom: 25vh; }
 .motion .cs-triptych.is-scrolly li { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; min-height: 75vh; opacity: .3; transition: opacity .5s ease; }
 .motion .cs-triptych.is-scrolly li.is-active { opacity: 1; }
 .motion .cs-triptych.is-scrolly .cs-step-caption { max-width: 14em; margin: 1rem 0 0; text-align: left; font-family: "Fraunces", Georgia, serif; font-weight: 900; font-optical-sizing: none; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; font-size: clamp(2.5rem, 3vw, 2.875rem); line-height: 1.08; letter-spacing: -.02em; }
@@ -547,6 +553,13 @@ body { padding-bottom: 5.5rem; }
 .motion .cs-strip-sticky { position: sticky; }
 .motion .cs-strip.is-pinned { overflow: hidden; scroll-snap-type: none; }
 .motion .cs-strip.is-pinned .cs-strip-track { will-change: transform; }
+/* Pinned Origin strip: tiles grow with the viewport, and one tile at a time (following scroll progress) is
+   enlarged while the others step back, so the sequence reads card by card. */
+.motion .cs-strip.is-pinned .cs-strip-track { gap: 2.75rem; padding-block: 3.5rem; }
+.motion .cs-strip.is-pinned .cs-tile { width: clamp(18rem, 23vw, 25rem); opacity: .6; transform: scale(.96); transition: transform .5s cubic-bezier(.2, .7, .2, 1), opacity .5s ease; }
+.motion .cs-strip.is-pinned .cs-tile.is-focus { opacity: 1; transform: scale(1.12); }
+.motion .cs-strip.is-pinned .cs-tile-visual { height: clamp(17rem, 34vh, 23rem); }
+.motion .cs-strip.is-pinned .cs-tile-caption { font-size: 1rem; }
 
 /* P1 entrances (html.motion only). */
 .motion .rv { opacity: 0; transform: translateY(1.25rem); transition: opacity .7s ease var(--rv-d, 0s), transform .8s cubic-bezier(.2, .7, .2, 1) var(--rv-d, 0s); }
@@ -629,6 +642,11 @@ html:not(.js) .case-menu a::before, html:not(.js) .case-menu .nav-num { display:
   .cs-strip-track { gap: 1rem; }
   .cs-tile { width: 16rem; }
   .cs-tile-visual { height: 15rem; }
+  .motion .cs-strip.is-pinned .cs-strip-track { gap: 1rem; padding-block: 1.5rem; }
+  .motion .cs-strip.is-pinned .cs-tile { width: 16rem; }
+  .motion .cs-strip.is-pinned .cs-tile.is-focus { transform: scale(1.03); }
+  .motion .cs-strip.is-pinned .cs-tile-visual { height: 15rem; }
+  .motion .cs-strip.is-pinned .cs-tile-caption { font-size: .9375rem; }
   .cs-split > .cs-copy { padding-top: 0; margin-top: 1.75rem; }
   .cs-lede-intro { max-width: none; }
   .cs-toxic { margin-block: 3rem 4rem; }
@@ -690,8 +708,11 @@ html:not(.js) .case-menu a::before, html:not(.js) .case-menu .nav-num { display:
   .motion .cs-layers-wrap:not(.is-split) .cs-layers3 li:nth-child(3) { transform: translateY(calc(-100% - 2rem)); }
   .cs-verdict-chip { font-size: 1.0625rem; padding: .625rem 1rem; }
   .motion .cs-scrolly { display: block; margin: 2.5rem 0 4rem; }
+  .motion .cs-triptych.is-scrolly { padding-bottom: 0; }
   .motion .cs-stage { position: sticky; top: 0; z-index: 2; margin: 0 -1.25rem; padding: 1rem 0 .75rem; background: var(--eggplant); }
-  .motion .cs-stage figure { max-width: 10.5rem; }
+  /* Phone as large as the screen allows (up to 15rem), leaving about 14rem below for the step caption. */
+  .motion .cs-stage figure { max-width: min(15rem, calc((100vh - 14rem) / 2.2)); }
+  @supports (height: 100svh) { .motion .cs-stage figure { max-width: min(15rem, calc((100svh - 14rem) / 2.2)); } }
   .motion .cs-triptych.is-scrolly li { min-height: 46vh; justify-content: center; }
   .motion .cs-triptych.is-scrolly .cs-step-caption { font-size: 2.5rem; }
   .motion .cs-exploded-layers:not(.is-in) li:nth-child(n) { transform: translateY(1.5rem); opacity: 0; }

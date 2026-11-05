@@ -210,6 +210,7 @@ if (caseNav) {
     strip.removeAttribute('tabindex');
     const hint = document.querySelector('.cs-strip-hint');
     if (hint) hint.textContent = 'Keep scrolling ↓';
+    const tiles = [...track.querySelectorAll('.cs-tile')];
     let distance = 0;
     let stickyTop = 0;
     const measure = () => {
@@ -227,6 +228,9 @@ if (caseNav) {
       const top = pin.getBoundingClientRect().top;
       const p = distance > 0 ? Math.min(1, Math.max(0, (stickyTop - top) / distance)) : 0;
       track.style.transform = `translate3d(${(-p * distance).toFixed(1)}px, 0, 0)`;
+      // One tile in focus at a time, stepping through all of them across the pinned scroll.
+      const focus = Math.min(tiles.length - 1, Math.round(p * (tiles.length - 1)));
+      tiles.forEach((tile, i) => tile.classList.toggle('is-focus', i === focus));
     });
   }
 
