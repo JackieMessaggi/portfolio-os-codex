@@ -292,3 +292,60 @@ if (caseNav) {
   window.addEventListener('resize', request);
   run();
 })();
+
+// Hero idle avatar: a stacked-alpha H.264 loop (color on top, alpha matte below) composited by WebGL into a
+// transparent canvas, so objects can sit behind and in front of the avatar. Only with motion allowed; otherwise, or
+// without WebGL, the transparent still stays. The video is fetched only when it will play.
+(() => {
+  const box = document.querySelector('.hero-avatar');
+  const video = box && box.querySelector('video');
+  if (!video || !window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+  const canvas = document.createElement('canvas');
+  canvas.width = 576; canvas.height = 1024;
+  const gl = canvas.getContext('webgl', { premultipliedAlpha: true, alpha: true });
+  if (!gl) return;
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+  const prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, 'attribute vec2 p; varying vec2 uv; void main(){ uv = vec2((p.x + 1.0) * 0.5, (1.0 - p.y) * 0.5); gl_Position = vec4(p, 0.0, 1.0); }'));
+  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, 'precision mediump float; varying vec2 uv; uniform sampler2D t; void main(){ vec3 c = texture2D(t, vec2(uv.x, uv.y * 0.5)).rgb; float a = smoothstep(0.05, 0.95, texture2D(t, vec2(uv.x, 0.5 + uv.y * 0.5)).r); gl_FragColor = vec4(c * a, a); }'));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
+  [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T].forEach((k) => gl.texParameteri(gl.TEXTURE_2D, k, gl.CLAMP_TO_EDGE));
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.clearColor(0, 0, 0, 0);
+  box.append(canvas);
+  const draw = () => {
+    if (video.readyState >= 2) {
+      // Browsers block video textures on file:// pages (opaque origin); keep the still instead of failing.
+      try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, video); } catch (err) { video.pause(); canvas.remove(); return; }
+      gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      box.classList.add('is-live');
+    }
+    if (!video.paused) {
+      if (video.requestVideoFrameCallback) video.requestVideoFrameCallback(draw); else requestAnimationFrame(draw);
+    }
+  };
+  video.muted = true;
+  video.src = video.dataset.src;
+  const play = () => { const p = video.play(); if (p) p.then(draw).catch(() => {}); else draw(); };
+  video.addEventListener('playing', draw);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => entries.forEach((e) => (e.isIntersecting ? play() : video.pause()))).observe(box);
+  } else { play(); }
+
+  // Gentle pointer parallax for the object planes (desktop pointers only).
+  const fig = box.closest('.hero-figure');
+  if (fig && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const hero = fig.closest('.hero') || fig;
+    hero.addEventListener('pointermove', (e) => {
+      const r = hero.getBoundingClientRect();
+      fig.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(3));
+      fig.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
+    });
+    hero.addEventListener('pointerleave', () => { fig.style.setProperty('--mx', '0'); fig.style.setProperty('--my', '0'); });
+  }
+})();

@@ -34,9 +34,25 @@
         <p class="hero-role">Senior Designer <span class="hero-role-sep" aria-hidden="true">| </span><span class="hero-role-spec">Brand, Product &amp; Creative Systems</span></p>
         <p class="hero-support">18 years of shaping brands, interfaces, and the visual systems that keep them consistent, still very hands-on.</p>
       </div>
-      <!-- Avatar slot. A future skin selector swaps the img src and alt and updates data-skin; no interaction is implemented yet. -->
+      <!-- Avatar slot in depth layers: back objects, the avatar (transparent idle loop drawn to a canvas; transparent still as
+           fallback), then front objects. A future skin selector swaps the sources and updates data-skin. -->
       <figure class="hero-figure" data-skin="current">
-        <img class="hero-avatar" src="assets/avatar/avatar-dummy-clay.webp" width="585" height="695" alt="Temporary 3D clay figure with glasses, holding an orange cup and a laptop, surrounded by floating shapes (placeholder avatar)">
+        <div class="hero-objects hero-objects-back" aria-hidden="true">
+          <img class="hero-obj obj-palette" src="assets/hero/obj-palette.webp" width="460" height="342" alt="">
+          <img class="hero-obj obj-toggle" src="assets/hero/obj-toggle.webp" width="405" height="399" alt="">
+          <img class="hero-obj obj-sparkle-p" src="assets/hero/obj-sparkle-p.webp" width="193" height="200" alt="">
+        </div>
+        <div class="hero-avatar" role="img" aria-label="3D illustrated avatar of Jackie: dark asymmetric hair with an undercut, black tank top, tattooed arms, wide black trousers, and platform boots, holding a laptop">
+          <img class="hero-avatar-still" src="assets/avatar/avatar-jackie-idle-poster.webp" width="576" height="1024" fetchpriority="high" alt="">
+          <video class="hero-avatar-video" muted loop playsinline preload="none" data-src="assets/avatar/avatar-jackie-idle-alpha.mp4" aria-hidden="true"></video>
+        </div>
+        <div class="hero-objects hero-objects-front" aria-hidden="true">
+          <img class="hero-obj obj-robot" src="assets/hero/obj-robot.webp" width="350" height="460" alt="">
+          <img class="hero-obj obj-pen" src="assets/hero/obj-pen.webp" width="460" height="323" alt="">
+          <img class="hero-obj obj-sparkle-y" src="assets/hero/obj-sparkle-y.webp" width="193" height="200" alt="">
+          <img class="hero-obj obj-cursor" src="assets/hero/obj-cursor.webp" width="391" height="395" alt="">
+          <img class="hero-obj obj-type" src="assets/hero/obj-type.webp" width="391" height="396" alt="">
+        </div>
       </figure>
     </section>
 
@@ -94,10 +110,8 @@
     <!-- About: asymmetric editorial layout. The portrait is a placeholder until the final photo is chosen. -->
     <section class="about wrap" id="about" aria-labelledby="about-title">
       <figure class="about-photo">
-        <div class="about-photo-placeholder" role="img" aria-label="Portrait of Jackie Messaggi (placeholder, final photo pending)">
-          <span aria-hidden="true">Portrait</span>
-          <span aria-hidden="true">Photo pending</span>
-        </div>
+        <img src="assets/about/jackie-portrait.webp" width="1400" height="1750" loading="lazy" alt="Jackie Messaggi, with blue hair and tattooed arms, sitting on a carousel horse among giant paper roses and disco balls">
+        <figcaption class="about-credit">Photo: <a href="https://www.silviopelegrin.com" target="_blank" rel="noopener">Silvio Pelegrin</a></figcaption>
       </figure>
       <div class="about-copy">
         <p class="about-eyebrow">About</p>

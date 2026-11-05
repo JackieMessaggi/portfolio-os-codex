@@ -59,8 +59,40 @@ h3 { font-size: 1.2rem; line-height: 1.4; }
 .hero-role { display: inline-block; margin: 0 0 1.5rem; padding: .5rem .75rem .5625rem; background: var(--orange-deep); color: #fff; font-size: 1.375rem; font-weight: 600; line-height: 1.25; letter-spacing: -.005em; white-space: nowrap; }
 .hero-support { max-width: 26em; margin: 0; font-size: 1.1875rem; line-height: 1.5; }
 .hero-figure { grid-column: 7 / 13; margin: 0; }
-/* Avatar asset has a transparent background (temporary clay dummy). Skins swap the src in place. */
-.hero-avatar { display: block; width: 100%; height: auto; }
+/* Hero avatar in depth layers (visual-direction.md, Hero). Back objects (z 1), the avatar (z 2), front objects (z 3).
+   The avatar is a transparent idle loop drawn to a canvas by script.js; the transparent still is the fallback. */
+.hero-figure { position: relative; display: flex; justify-content: center; --mx: 0; --my: 0; }
+.hero-avatar { position: relative; z-index: 2; height: min(46rem, calc(100vh - 6rem)); aspect-ratio: 576 / 1024; max-width: 100%; }
+.hero-avatar-still, .hero-avatar canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.hero-avatar canvas { opacity: 0; transition: opacity .3s ease; }
+.hero-avatar.is-live canvas { opacity: 1; }
+.hero-avatar.is-live .hero-avatar-still { visibility: hidden; }
+.hero-avatar-video { display: none; }
+/* Floating objects. Size, blur, and parallax depth (--z) separate the planes. */
+.hero-objects { position: absolute; inset: 0; pointer-events: none; }
+.hero-objects-back { z-index: 1; }
+.hero-objects-front { z-index: 3; }
+.hero-obj { position: absolute; display: block; height: auto; transform: rotate(var(--r, 0deg)); translate: calc(var(--mx) * var(--z, 10) * 1px) calc(var(--my) * var(--z, 10) * 1px); transition: translate .6s cubic-bezier(.2, .7, .2, 1); }
+.hero-objects-back .hero-obj { filter: blur(1.5px) saturate(.85) drop-shadow(0 .4rem .6rem rgba(64, 8, 73, .08)); opacity: .92; --z: 6; }
+.hero-objects-front .hero-obj { filter: drop-shadow(0 1rem 1.25rem rgba(64, 8, 73, .18)); --z: 22; }
+/* Back plane: smaller, softer, partly hidden by the avatar. */
+.obj-palette { width: 9rem; left: 16%; top: 62%; --r: 8deg; }
+.obj-toggle { width: 5.5rem; right: 22%; top: 3%; --r: 6deg; }
+.obj-sparkle-p { width: 1.5rem; right: 30%; top: 66%; }
+/* Front plane: larger, crisp, overlapping the silhouette edges. */
+.obj-robot { width: 7.5rem; left: 0; top: 6%; --r: -6deg; }
+.obj-pen { width: 8.5rem; left: -5%; top: 38%; --r: -5deg; }
+.obj-sparkle-y { width: 2.25rem; left: 20%; top: 30%; --z: 30; }
+.obj-cursor { width: 5.75rem; right: 14%; top: 39%; --r: 8deg; --z: 28; }
+.obj-type { width: 7rem; right: -3%; top: 56%; --r: -6deg; }
+@keyframes hero-float { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-.75rem) rotate(calc(var(--r, 0deg) + 3deg)); } }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-obj { animation: hero-float var(--t, 6s) ease-in-out var(--d, 0s) infinite; }
+  .obj-robot { --t: 5.4s; } .obj-pen { --t: 6.8s; --d: -2s; } .obj-palette { --t: 7.6s; --d: -4s; } .obj-toggle { --t: 6.6s; --d: -1s; }
+  .obj-cursor { --t: 5s; --d: -3s; } .obj-type { --t: 6.2s; --d: -2.5s; } .obj-sparkle-y { --t: 3.6s; } .obj-sparkle-p { --t: 4.4s; --d: -1.2s; }
+}
+@media (prefers-reduced-motion: reduce) { .hero-obj { translate: none; transition: none; } }
+.hero-figure::after { content: ""; position: absolute; z-index: 1; bottom: .25rem; left: 50%; width: 52%; height: 2.25rem; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(64, 8, 73, .22), rgba(64, 8, 73, 0)); }
 .section { padding-block: 5rem; border-top: 1px solid var(--eggplant); scroll-margin-top: 1.5rem; }
 .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 2rem; }
 .section-heading h2 { margin-bottom: 0; }
@@ -107,14 +139,14 @@ h3 { font-size: 1.2rem; line-height: 1.4; }
 .work-index { grid-area: index; color: var(--beige); }
 .work-disciplines { grid-area: disciplines; margin: 0; color: var(--beige); text-transform: uppercase; }
 .work-contribution { grid-area: contribution; margin: .75rem 0 0; max-width: 34em; font-family: "DM Sans", system-ui, sans-serif; font-size: 1.125rem; line-height: 1.5; color: var(--ivory); }
-/* About: asymmetric editorial layout on the 12-column grid. Portrait 1-5 (dropped below the title line),
-   copy 7-12. Fraunces B title at a smaller scale than Contact, DM Sans for the text. */
-.about { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; align-items: start; padding-block: 8rem 9rem; scroll-margin-top: 1.5rem; font-family: "DM Sans", system-ui, sans-serif; }
-.about-photo { grid-column: 1 / 6; margin: 7.5rem 0 0; }
-.about-photo-placeholder { display: flex; flex-direction: column; justify-content: space-between; aspect-ratio: 4 / 5; padding: 1.25rem; background: var(--beige); border-radius: 1.2rem; }
-.about-photo-placeholder span { font-size: .8125rem; font-weight: 500; letter-spacing: .08em; line-height: 1.4; text-transform: uppercase; }
-.about-photo-placeholder span:last-child { align-self: flex-end; }
-.about-copy { grid-column: 7 / 13; }
+/* About: asymmetric editorial layout on the 12-column grid. Large portrait 1-7, copy 9-12, vertically centered.
+   Fraunces B title at a smaller scale than Contact, DM Sans for the text. */
+.about { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; align-items: center; padding-block: 8rem 9rem; scroll-margin-top: 1.5rem; font-family: "DM Sans", system-ui, sans-serif; }
+.about-photo { grid-column: 1 / 8; margin: 0; }
+.about-photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 45% 40%; border-radius: 1.2rem; }
+.about-credit { margin-top: .75rem; font-size: .8125rem; line-height: 1.4; }
+.about-credit a { text-underline-offset: .2em; }
+.about-copy { grid-column: 9 / 13; }
 .about-eyebrow { display: flex; align-items: center; gap: .625rem; margin: 0 0 1.5rem; font-size: .8125rem; font-weight: 500; letter-spacing: .08em; line-height: 1.4; text-transform: uppercase; }
 .about-eyebrow::before { content: ""; width: .5rem; height: .5rem; background: var(--orange); }
 .about h2 {
@@ -195,13 +227,17 @@ body { padding-bottom: 5.5rem; }
   .hero-role-spec { display: block; white-space: nowrap; }
   .hero-support { font-size: 1.0625rem; }
   .hero-figure { margin-top: 1.5rem; }
+  .hero-avatar { height: auto; width: min(100%, 20rem); }
+  .obj-robot { width: 4.5rem; left: 0; top: 4%; } .obj-pen { width: 5rem; left: -2%; top: 40%; } .obj-cursor { width: 3.25rem; right: 18%; top: 42%; }
+  .obj-palette { width: 5.5rem; left: 14%; top: 64%; } .obj-toggle { width: 3.25rem; right: 20%; top: 2%; }
+  .obj-type { width: 4.25rem; right: 14%; top: 60%; } .obj-sparkle-y, .obj-sparkle-p { display: none; }
   .section { padding-block: 3rem; }
   .section-heading { display: block; }
   .section-heading > p { margin-top: 1rem; }
   .project-grid { grid-template-columns: 1fr; gap: 2rem; }
   .about { display: flex; flex-direction: column; padding-block: 4.5rem 5rem; padding-right: 1.75rem; }
   .about-copy { order: 1; }
-  .about-photo { order: 2; width: 82%; margin: 3rem 0 0 auto; }
+  .about-photo { order: 2; width: 100%; margin: 3rem 0 0; }
   .about h2 { margin-bottom: 1.75rem; }
   .about-copy p:not(.about-eyebrow) { font-size: 1.0625rem; }
   .about-copy .about-lead { font-size: 1.3125rem; margin-bottom: 1.5rem; }
