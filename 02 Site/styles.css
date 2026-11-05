@@ -99,6 +99,31 @@ h3 { font-size: 1.2rem; line-height: 1.4; }
 .dd-cards { width: 6rem; left: 1%; top: 47%; --r: 5deg; }
 .dd-cursor { width: 4.75rem; right: 13%; top: 38%; --r: 8deg; --z: 28; }
 .dd-pen { width: 6.5rem; left: 4%; top: 70%; --r: -6deg; }
+/* Entrepreneur skin icons. Back: spreadsheet. Front: churros truck, growth chart, card terminal, checklist, boxes. */
+.ent-sheet { width: 6.5rem; right: 18%; top: 2%; --r: 5deg; }
+.ent-truck { width: 8rem; left: -4%; top: 8%; --r: -4deg; }
+.ent-growth { width: 6rem; left: -2%; top: 44%; --r: 5deg; }
+.ent-terminal { width: 5.25rem; right: 12%; top: 38%; --r: 8deg; --z: 28; }
+.ent-checklist { width: 5.5rem; right: -3%; top: 60%; --r: -6deg; }
+.ent-boxes { width: 6rem; left: 4%; top: 72%; --r: 6deg; }
+.gd-poster { width: 6.5rem; right: 18%; top: 1%; --r: 6deg; }
+.gd-swatch { width: 7.5rem; left: -4%; top: 8%; --r: -6deg; }
+.gd-type { width: 6rem; left: -2%; top: 44%; --r: 5deg; }
+.gd-cmyk { width: 5.75rem; right: 10%; top: 38%; --r: 7deg; --z: 28; }
+.gd-cutter { width: 6.25rem; right: -4%; top: 60%; --r: -8deg; }
+.gd-zine { width: 6.5rem; left: 3%; top: 72%; --r: 5deg; }
+.ad-moodboard { width: 6.25rem; right: 18%; top: 1%; --r: 6deg; }
+.ad-camera { width: 7.5rem; left: -4%; top: 8%; --r: -6deg; }
+.ad-contact { width: 6.5rem; left: -3%; top: 44%; --r: 4deg; }
+.ad-monitor { width: 6rem; right: 10%; top: 38%; --r: 7deg; --z: 28; }
+.ad-grading { width: 6.25rem; right: -4%; top: 60%; --r: -6deg; }
+.ad-fabric { width: 6rem; left: 4%; top: 72%; --r: 6deg; }
+.as-storyboard { width: 7rem; right: 16%; top: 1%; --r: 5deg; }
+.as-campaign { width: 6.5rem; left: -3%; top: 8%; --r: -6deg; }
+.as-brand { width: 6.25rem; left: -3%; top: 44%; --r: 5deg; }
+.as-player { width: 5rem; right: 11%; top: 37%; --r: 8deg; --z: 28; }
+.as-megaphone { width: 6.5rem; right: -4%; top: 60%; --r: -5deg; }
+.as-product { width: 5.25rem; left: 5%; top: 72%; --r: 5deg; }
 .hero-objects[hidden] { display: none; }
 /* Skin switch: quick fade of the avatar and its objects (motion only). */
 .hero-figure.is-switching .hero-avatar, .hero-figure.is-switching .hero-objects { opacity: 0; }
@@ -106,6 +131,10 @@ h3 { font-size: 1.2rem; line-height: 1.4; }
   .hero-avatar, .hero-objects { transition: opacity .28s ease; }
   .lead-team { --t: 5.6s; } .lead-chat { --t: 6.4s; --d: -2s; } .lead-brief { --t: 5.2s; --d: -3s; } .lead-browser { --t: 6.8s; --d: -1s; }
   .lead-puzzle { --t: 5.8s; --d: -2.5s; } .lead-kanban { --t: 7.4s; --d: -4s; } .lead-notes { --t: 6.2s; --d: -1.5s; }
+  .ent-sheet { --t: 7s; --d: -2s; } .ent-truck { --t: 6.2s; } .ent-growth { --t: 5.6s; --d: -3s; } .ent-terminal { --t: 5s; --d: -1.5s; } .ent-checklist { --t: 6.6s; --d: -2.5s; } .ent-boxes { --t: 7.4s; --d: -4s; }
+  .gd-poster { --t: 7.2s; --d: -2s; } .gd-swatch { --t: 6s; } .gd-type { --t: 5.8s; --d: -3s; } .gd-cmyk { --t: 5.2s; --d: -1.5s; } .gd-cutter { --t: 6.8s; --d: -2.5s; } .gd-zine { --t: 7.6s; --d: -4s; }
+  .ad-moodboard { --t: 7s; --d: -2.5s; } .ad-camera { --t: 6.2s; } .ad-contact { --t: 5.6s; --d: -3s; } .ad-monitor { --t: 5.2s; --d: -1.5s; } .ad-grading { --t: 6.6s; --d: -2s; } .ad-fabric { --t: 7.4s; --d: -4s; }
+  .as-storyboard { --t: 7.2s; --d: -2s; } .as-campaign { --t: 6s; } .as-brand { --t: 5.8s; --d: -3s; } .as-player { --t: 5s; --d: -1.5s; } .as-megaphone { --t: 6.4s; --d: -2.5s; } .as-product { --t: 7.6s; --d: -4s; }
   .dd-cloud { --t: 7.2s; --d: -2s; } .dd-phone { --t: 5.6s; } .dd-cards { --t: 6.6s; --d: -3s; } .dd-cursor { --t: 5s; --d: -1.5s; } .dd-pen { --t: 6.2s; --d: -4s; }
 }
 /* Skin picker. */
@@ -288,6 +317,14 @@ body { padding-bottom: 5.5rem; }
   .lead-puzzle { display: none; }
   .dd-cloud { width: 4.25rem; right: 20%; top: 2%; } .dd-phone { width: 3.25rem; left: 0; top: 6%; } .dd-cards { width: 4.25rem; left: -2%; top: 42%; }
   .dd-cursor { width: 3rem; right: 16%; top: 40%; } .dd-pen { width: 4rem; left: 0; top: 72%; }
+  .ent-sheet { width: 4rem; right: 20%; top: 2%; } .ent-truck { width: 4.75rem; left: 0; top: 6%; } .ent-growth { width: 3.75rem; left: -2%; top: 44%; }
+  .ent-terminal { width: 3.25rem; right: 16%; top: 40%; } .ent-checklist { width: 3.5rem; right: 12%; top: 62%; } .ent-boxes { display: none; }
+  .gd-poster { width: 4rem; right: 20%; top: 2%; } .gd-swatch { width: 4.5rem; left: 0; top: 6%; } .gd-type { width: 3.75rem; left: -2%; top: 44%; }
+  .gd-cmyk { width: 3.5rem; right: 16%; top: 40%; } .gd-cutter { width: 3.75rem; right: 12%; top: 62%; } .gd-zine { display: none; }
+  .ad-moodboard { width: 4rem; right: 20%; top: 2%; } .ad-camera { width: 4.5rem; left: 0; top: 6%; } .ad-contact { width: 3.75rem; left: -2%; top: 44%; }
+  .ad-monitor { width: 3.5rem; right: 16%; top: 40%; } .ad-grading { width: 3.75rem; right: 12%; top: 62%; } .ad-fabric { display: none; }
+  .as-storyboard { width: 4.25rem; right: 18%; top: 2%; } .as-campaign { width: 4rem; left: 0; top: 6%; } .as-brand { width: 3.75rem; left: -2%; top: 44%; }
+  .as-player { width: 3rem; right: 16%; top: 40%; } .as-megaphone { width: 3.75rem; right: 12%; top: 62%; } .as-product { display: none; }
   .skin-picker { margin-top: 1.5rem; } .skin-btn { font-size: .875rem; }
   .section { padding-block: 3rem; }
   .section-heading { display: block; }
@@ -880,3 +917,35 @@ html:not(.js) .case-menu a::before, html:not(.js) .case-menu .nav-num { display:
   html:not(.js) .case-nav { position: static; transform: none; margin: 0 1.25rem 1rem; }
   html:not(.js) .case-menu { flex-wrap: wrap; }
 }
+
+/* Career chapters. Default (mobile, reduced motion, no JavaScript): a simple static list after the Hero. */
+.hero-chapters { display: grid; gap: 2.5rem; padding-block: 1rem 5rem; font-family: "DM Sans", system-ui, sans-serif; }
+.chapter { max-width: 34rem; padding-top: 1.25rem; border-top: 1px solid var(--eggplant); }
+.chapter-exp { margin: -.25rem 0 .875rem; font-size: .8125rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.chapter-skills { display: flex; flex-wrap: wrap; gap: .375rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+.chapter-skills li { padding: .25rem .625rem; border: 1px solid color-mix(in srgb, var(--eggplant) 35%, transparent); border-radius: 999px; font-size: .75rem; font-weight: 500; line-height: 1.3; }
+.chapter-title { margin: 0 0 .75rem; font-family: "Fraunces", Georgia, serif; font-weight: 900; font-optical-sizing: none; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; font-size: clamp(2.25rem, 4.6vw, 4.25rem); line-height: 1.02; letter-spacing: -.025em; }
+.chapter-summary { margin: 0; max-width: 28em; font-size: 1.125rem; line-height: 1.55; }
+
+/* Story mode v2 (desktop with motion, set up by script.js). */
+.hero-story-pin { position: relative; }
+.hero-story-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+.hero-story-sticky .hero { position: relative; flex: 1; padding-block: 1rem 4rem; align-items: center; }
+.hero-story .hero-copy { position: relative; align-self: stretch; display: flex; flex-direction: column; justify-content: center; z-index: 2; }
+.hero-story .hero-copy h1 { transform-origin: 0 0; will-change: transform; }
+.hero-story .skin-picker { display: none; }
+.story-stage { position: absolute; right: 0; clip-path: inset(0 -1rem 0 -1rem); }
+.hero-story .chapter { position: absolute; left: 0; right: 0; top: 0; max-width: 30rem; border-top: 0; padding-top: 0; opacity: 0; will-change: transform, opacity; }
+.hero-story .chapter-exp { margin: -.75rem 0 1rem; font-size: .75rem; font-weight: 500; }
+@media (max-height: 819px) {
+  .hero-story .chapter-title { margin-bottom: 1rem; font-size: 1.75rem; }
+  .hero-story .chapter-exp { margin: -.625rem 0 .75rem; }
+  .hero-story .chapter-summary { font-size: .9375rem; line-height: 1.5; }
+  .hero-story .chapter-skills { margin-top: .75rem; }
+}
+.hero-story .chapter-title { margin: 0 0 1.25rem; padding-left: 0; font-family: "DM Sans", system-ui, sans-serif; font-variation-settings: normal; font-weight: 700; font-size: clamp(2rem, 2.5vw, 2.25rem); line-height: 1.12; letter-spacing: -.025em; }
+.hero-story .chapter-summary { max-width: 26em; font-size: 1.0625rem; line-height: 1.6; }
+.story-line { position: absolute; z-index: 1; left: 0; top: 0; width: 100%; pointer-events: none; overflow: visible; will-change: transform; }
+.story-line path { fill: none; stroke: var(--eggplant); stroke-width: 1.75; stroke-linecap: round; }
+.story-dot { position: absolute; z-index: 3; width: .875rem; height: .875rem; margin: -.4375rem 0 0 -.4375rem; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px var(--ivory); opacity: 0; pointer-events: none; }
+.hero-story .hero-figure { z-index: 1; }

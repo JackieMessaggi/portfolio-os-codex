@@ -430,6 +430,7 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
   if (!buttons.length || !box) return;
   const still = box.querySelector('.hero-avatar-still');
   const motion = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  let switchTimer = 0; let revealTimer = 0;
   const apply = (btn) => {
     const skin = btn.dataset.skin;
     fig.dataset.skin = skin;
@@ -438,17 +439,22 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
     fig.querySelectorAll('.hero-objects').forEach((g) => { g.hidden = g.dataset.skin !== skin; });
     box.dispatchEvent(new CustomEvent('skin:change', { detail: { src: btn.dataset.video } }));
   };
-  buttons.forEach((btn) => btn.addEventListener('click', () => {
+  const select = (btn) => {
     if (btn.getAttribute('aria-pressed') === 'true') return;
     buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
     if (!motion) { apply(btn); return; }
     fig.classList.add('is-switching');
-    setTimeout(() => {
+    clearTimeout(switchTimer); clearTimeout(revealTimer);
+    switchTimer = setTimeout(() => {
       apply(btn);
-      const show = () => fig.classList.remove('is-switching');
-      if (still.complete) requestAnimationFrame(show); else still.addEventListener('load', show, { once: true });
+      const show = () => { clearTimeout(revealTimer); fig.classList.remove('is-switching'); };
+      if (still.complete) setTimeout(show, 30);
+      else { still.addEventListener('load', show, { once: true }); still.addEventListener('error', show, { once: true }); revealTimer = setTimeout(show, 700); }
     }, 280);
-  }));
+  };
+  buttons.forEach((btn) => btn.addEventListener('click', () => select(btn)));
+  // Lets other scripts (the Hero story) switch skins even when the picker itself is hidden or inert.
+  document.addEventListener('skin:select', (e) => { const btn = buttons.find((b) => b.dataset.skin === e.detail); if (btn) select(btn); });
 })();
 
 // Selected Work: on desktop with motion allowed, pin the section and move the cards sideways with vertical scroll.
@@ -492,4 +498,313 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
   window.addEventListener('resize', measure);
   window.addEventListener('load', measure);
   measure();
+})();
+
+// Hero scroll storytelling (test, v2 after Jackie's draft): on desktop with motion allowed, the header and Hero pin.
+// Scroll first shrinks the headline to the top of the text column, then a timeline line travels through a fixed
+// orange marker: the marker follows the curved path as each career chapter arrives, and the avatar switches in place. Otherwise the chapters
+// stay a static list after the Hero.
+(() => {
+  const hero = document.querySelector('.hero');
+  const list = document.querySelector('.hero-chapters');
+  const header = document.querySelector('.site-header');
+  if (!hero || !list || !header) return;
+  const mode = window.matchMedia('(min-width: 1025px) and (min-height: 700px) and (prefers-reduced-motion: no-preference)');
+  const setup = () => {
+  const copy = hero.querySelector('.hero-copy');
+  const title = copy.querySelector('h1');
+  const rest = [...copy.children].filter((el) => el !== title);
+  const chapters = [...list.querySelectorAll('.chapter')];
+
+  const originals = new Map([title, ...rest, ...chapters].map((el) => [el, el.getAttribute('style')]));
+  const headerAnchor = document.createComment('Header position outside story mode');
+  header.before(headerAnchor);
+  const pin = document.createElement('div'); pin.className = 'hero-story-pin';
+  const sticky = document.createElement('div'); sticky.className = 'hero-story-sticky';
+  hero.before(pin); pin.append(sticky); sticky.append(header, hero);
+  hero.classList.add('hero-story');
+  const stage = document.createElement('div'); stage.className = 'story-stage';
+  chapters.forEach((c) => stage.append(c));
+  copy.append(stage);
+  list.hidden = true;
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg'); svg.classList.add('story-line'); svg.setAttribute('aria-hidden', 'true');
+  const path = document.createElementNS(NS, 'path'); svg.append(path);
+  // Mask: the line shows everywhere except behind the (shrunk) headline, so it can run up to the top of the screen.
+  const maskId = 'story-line-mask';
+  const defs = document.createElementNS(NS, 'defs');
+  const mask = document.createElementNS(NS, 'mask'); mask.setAttribute('id', maskId); mask.setAttribute('maskUnits', 'userSpaceOnUse');
+  const maskAll = document.createElementNS(NS, 'rect'); maskAll.setAttribute('fill', '#fff');
+  const maskTitle = document.createElementNS(NS, 'rect'); maskTitle.setAttribute('fill', '#000'); maskTitle.setAttribute('rx', '8');
+  mask.append(maskAll, maskTitle); defs.append(mask); svg.prepend(defs);
+  path.setAttribute('mask', `url(#${maskId})`);
+  hero.prepend(svg);
+  const dot = document.createElement('span'); dot.className = 'story-dot'; dot.setAttribute('aria-hidden', 'true'); hero.append(dot);
+
+  // Story states: intro (current skin), then one per chapter, in the order of the chapter list.
+  const SKINS = ['current', ...chapters.map((c) => c.dataset.skin)];
+  const N = chapters.length; // chapter k (1..N) is centered at s = k
+  const T0 = 0.75; // headline shrink finishes here
+  let g = {}; let skin = hero.querySelector('.hero-figure').dataset.skin; let ticking = false;
+
+  const measure = () => {
+    [title, ...rest, stage, ...chapters].forEach((el) => { el.style.transform = ''; el.style.opacity = ''; });
+    const H = window.innerHeight;
+    pin.style.height = `${sticky.offsetHeight + H * 0.67 * N}px`; // about two-thirds of a screen per chapter
+    const hr = hero.getBoundingClientRect();
+    const tr = title.getBoundingClientRect();
+    const cr = copy.getBoundingClientRect();
+    const scale = 0.5;
+    const targetTop = hr.top + Math.max(96, H * 0.16);
+    g = { H, scale, dy: targetTop - tr.top, titleBottom: targetTop - hr.top + tr.height * scale };
+    // Separate the career block from the headline; align its text to one shared left edge.
+    const stageTop = g.titleBottom + (H < 820 ? 48 : 72);
+    stage.style.top = `${stageTop - (cr.top - hr.top)}px`;
+    stage.style.left = '0px';
+    stage.style.height = `${Math.max(0, hero.clientHeight - stageTop - 48)}px`;
+    const first = chapters[0].querySelector('.chapter-title');
+    const markerY = stageTop + (first.offsetTop + first.offsetHeight / 2);
+    const markerInset = Math.min(20, Math.max(10, (cr.left - 12) * 0.35));
+    const dotX = cr.left - hr.left - markerInset;
+    // Chapters at rest sit below their marker (role, experience, summary, skill pills). Sweeps into the text column
+    // happen only between the bottom of the tallest chapter and a clear gap above the next role title.
+    const textBelow = Math.max(...chapters.map((c) => {
+      const t = c.querySelector('.chapter-title');
+      return c.offsetHeight - (t.offsetTop + t.offsetHeight / 2);
+    })) + 28;
+    const gapAbove = first.offsetHeight / 2 + 44;
+    g.markerY = markerY; g.dotX = dotX;
+    g.seg = Math.max(H * 0.55, textBelow + gapAbove + 170); // short journey, but always room for the sweep
+    dot.style.left = `${dotX}px`; dot.style.top = `${markerY}px`;
+    // Organic, non-linear career line. Between two chapters the line sweeps out into the free space below the
+    // text, winding through loops (a trochoid on a curved spine), then returns to the marker for the next chapter.
+    // Each segment has its own reach, loop count, and phase so the path never repeats itself.
+    const S = g.seg;
+    const total = markerY + N * S + window.innerHeight + 200;
+    svg.setAttribute('viewBox', `0 0 ${hr.width} ${total}`);
+    svg.style.height = `${total}px`;
+    const gutter = Math.max(0, hr.left + dotX - 20);            // free space left of the marker, keeping 20 px from the screen edge
+    const reach = Math.min(cr.width * 0.62, 420);               // how far a sweep may travel into the text column
+    // Hand-authored gestures, one per chapter-to-chapter segment, built from a few spine points plus round loops.
+    // Spine points are [x, y]: x in px offset from the marker column (positive into the free space below the text,
+    // negative into the page margin), y from 0 (this marker) to 1 (next marker). A loop is { loop: [x, y, r, turns] }.
+    // Near each marker (first and last ~30% of a segment) the line stays left of the text column, so it never crosses
+    // a chapter's copy at rest; the sweeps and loops happen in the middle of the journey.
+    const SEGMENTS = [
+      [[0, 0], [-gutter * 0.25, 0.14], [-gutter * 0.3, 0.28], [reach * 0.12, 0.38], { loop: [reach * 0.24, 0.52, 40, 1] }, [reach * 0.46, 0.56], [reach * 0.2, 0.66], [-gutter * 0.2, 0.76], [-gutter * 0.15, 0.88], [0, 1]],
+      [[0, 0], [-gutter * 0.5, 0.15], [-gutter * 0.45, 0.3], [reach * 0.08, 0.4], { loop: [reach * 0.14, 0.52, 34, 1] }, [reach * 0.34, 0.54], { loop: [reach * 0.34, 0.66, 26, 1] }, [reach * 0.1, 0.72], [-gutter * 0.3, 0.8], [-gutter * 0.1, 0.9], [0, 1]],
+      [[0, 0], [-gutter * 0.3, 0.15], [-gutter * 0.2, 0.3], [reach * 0.16, 0.4], { loop: [reach * 0.26, 0.54, 38, 1] }, [reach * 0.4, 0.6], [reach * 0.12, 0.7], [-gutter * 0.25, 0.8], [0, 1]],
+    ];
+    // Remap each gesture's vertical rhythm: margin-only start down to yA, sweeps and loops between yA and yB,
+    // margin-only approach from yB to the next marker.
+    const yA = Math.max(0.3, textBelow / S);
+    const yB = Math.max(yA + 0.1, 1 - gapAbove / S);
+    const remap = (y) => {
+      if (y <= 0.3) return y * (yA / 0.3);
+      if (y <= 0.72) return yA + (y - 0.3) * ((yB - yA) / 0.42);
+      return yB + (y - 0.72) * ((1 - yB) / 0.28);
+    };
+    const expand = (shape, y0) => {
+      const out = [];
+      shape.forEach((item) => {
+        if (!item.loop) { out.push([dotX + item[0], y0 + remap(item[1]) * S]); return; }
+        // Cursive loop: arrive at the bottom of the loop heading right, curl up and back over the top (counter-
+        // clockwise on screen), and leave from the bottom heading right again, drifting down a little on the way.
+        const [lx, ly, r] = item.loop;
+        const cx = dotX + lx; const cy = Math.max(y0 + remap(ly) * S, y0 + textBelow + 2 * r) - r;
+        for (let i = 0; i <= 14; i += 1) {
+          const t = i / 14;
+          const th = Math.PI / 2 - t * Math.PI * 2;
+          out.push([cx + r * 1.15 * Math.cos(th) + t * r * 0.6, cy + r * Math.sin(th) + t * r * 0.35]);
+        }
+      });
+      return out;
+    };
+    const smooth = (pts) => {
+      let out = '';
+      for (let i = 0; i < pts.length - 1; i += 1) {
+        const p0 = pts[i - 1] || pts[i]; const p1 = pts[i]; const p2 = pts[i + 1]; const p3 = pts[i + 2] || p2;
+        out += ` C ${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(1)} ${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(1)}, ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(1)} ${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(1)}, ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
+      }
+      return out;
+    };
+    // Lead-in from above, arriving vertically at the first marker.
+    // Lead-in from above the top of the screen, winding down the margin to the first marker.
+    const topY = -hr.top - 60;
+    let d = `M ${dotX - gutter * 0.3} ${topY}`;
+    d += smooth([[dotX - gutter * 0.3, topY], [dotX - gutter * 0.7, topY + (markerY - topY) * 0.35], [dotX - gutter * 0.2, topY + (markerY - topY) * 0.7], [dotX, markerY]]);
+    path.setAttribute('d', d);
+    g.nodes = [path.getTotalLength()];
+    for (let k = 0; k < N - 1; k += 1) {
+      const y0 = markerY + k * S;
+      const shape = SEGMENTS[k % SEGMENTS.length];
+      const soft = expand(shape, y0);
+      d += smooth(soft);
+      path.setAttribute('d', d);
+      g.nodes.push(path.getTotalLength());
+    }
+    const yN = markerY + (N - 1) * S;
+    // Tail: keeps winding down past the bottom of the screen, so the story does not end on a loose stub.
+    d += smooth([[dotX, yN - 30], [dotX, yN], [dotX - gutter * 0.25, yN + 120], [dotX + reach * 0.06, yN + Math.max(260, textBelow + 40)], [dotX - gutter * 0.4, yN + Math.max(420, textBelow + 200)], [dotX - gutter * 0.1, yN + window.innerHeight]]).replace(/^ C [^C]*?(?= C)/, '');
+    path.setAttribute('d', d);
+    update();
+  };
+
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  const update = () => {
+    ticking = false;
+    const dist = pin.offsetHeight - sticky.offsetHeight;
+    const p = dist > 0 ? clamp(-pin.getBoundingClientRect().top / dist) : 0;
+    const s = p * (N + 0.4); // a short hold after the last chapter
+    // 1. Headline shrinks and moves up; band and supporting text leave upward.
+    const t = clamp(s / T0); const e = t * t * (3 - 2 * t);
+    title.style.transform = `translateY(${(g.dy * e).toFixed(1)}px) scale(${(1 - (1 - g.scale) * e).toFixed(4)})`;
+    rest.forEach((el) => { el.style.opacity = (1 - clamp(t * 1.6)).toFixed(3); el.style.transform = `translateY(${(-40 * e).toFixed(1)}px)`; el.inert = t > 0.3; });
+    // 2. Timeline: chapter k reaches the marker at s = k; the line scrolls with it.
+    const phase = Math.min(s, N);
+    const lineOn = clamp((s - 0.55) / 0.35);
+    const journey = Math.max(0, phase - 1);
+    const from = Math.min(N - 1, Math.floor(journey));
+    const to = Math.min(N - 1, from + 1);
+    const along = g.nodes[from] + (g.nodes[to] - g.nodes[from]) * (journey - from);
+    const point = path.getPointAtLength(along);
+    // Follow arc length even while the curve turns upward; keep its reading position beside the chapter.
+    const shift = point.y - g.markerY;
+    svg.style.transform = `translateY(${(-shift).toFixed(1)}px)`;
+    // No clipping: the mask hides the line only where it would cross the headline (in line coordinates, so add shift).
+    svg.style.clipPath = '';
+    const hr2 = hero.getBoundingClientRect(); const tb = title.getBoundingClientRect();
+    maskAll.setAttribute('x', -hr2.left - 50); maskAll.setAttribute('y', -2000 + shift);
+    maskAll.setAttribute('width', window.innerWidth + 100); maskAll.setAttribute('height', 99999);
+    maskTitle.setAttribute('x', tb.left - hr2.left - 14); maskTitle.setAttribute('y', tb.top - hr2.top - 10 + shift);
+    maskTitle.setAttribute('width', tb.width + 28); maskTitle.setAttribute('height', tb.height + 20);
+    svg.style.opacity = lineOn.toFixed(3);
+    dot.style.opacity = lineOn.toFixed(3);
+    dot.style.left = `${point.x}px`;
+    dot.style.top = `${g.markerY}px`;
+    chapters.forEach((c, i) => {
+      const k = i + 1; const dd = phase - k;
+      // Text is only on screen near its marker, so the line can sweep through the column without crossing copy.
+      const travel = clamp((Math.abs(dd) - 0.06) / 0.14);
+      const vis = 1 - travel;
+      c.style.opacity = (i === 0 ? Math.min(vis, lineOn) : vis).toFixed(3);
+      c.style.transform = `translateY(${(-Math.sign(dd) * travel * 220).toFixed(1)}px)`;
+      c.style.visibility = vis <= 0 ? 'hidden' : 'visible';
+    });
+    const next = SKINS[Math.min(N, Math.max(0, Math.round(s)))];
+    if (next !== skin) { skin = next; document.dispatchEvent(new CustomEvent('skin:select', { detail: next })); }
+  };
+  // A fragment targeting a sticky Hero can otherwise land at its last pinned position.
+  const homeLinks = [...document.querySelectorAll('a[href="#hero"]')];
+  const goHome = (event) => {
+    if (event && (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)) return;
+    if (event) { event.preventDefault(); history.pushState(null, '', '#hero'); }
+    window.scrollTo({ top: pin.getBoundingClientRect().top + window.scrollY, behavior: 'instant' });
+    update();
+  };
+  homeLinks.forEach((link) => link.addEventListener('click', goHome));
+  const onHash = () => { if (location.hash === '#hero') goHome(); };
+  window.addEventListener('hashchange', onHash);
+  // Lock points: one scroll gesture glides to the next chapter (or back) and stops there, so no chapter is skipped.
+  // Steps are s = 0 (intro), 1, 2, 3 (chapters). From the last chapter the page scrolls on normally to Selected Work.
+  const SPAN = N + 0.4;
+  const stepY = (k) => pin.getBoundingClientRect().top + window.scrollY + (pin.offsetHeight - sticky.offsetHeight) * (k / SPAN);
+  const range = () => { const top = stepY(0); return [top, top + (pin.offsetHeight - sticky.offsetHeight)]; };
+  let animating = false; let lockedUntilQuiet = false; let lastWheel = 0; let settleTimer = 0;
+  const nearestStep = () => {
+    let best = 0; let bestD = Infinity;
+    for (let k = 0; k <= N; k += 1) { const d = Math.abs(window.scrollY - stepY(k)); if (d < bestD) { bestD = d; best = k; } }
+    return best;
+  };
+  const glideTo = (y, ms = 750) => {
+    const from = window.scrollY; const t0 = performance.now(); animating = true;
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+    const tick = (now) => {
+      const t = Math.min(1, (now - t0) / ms);
+      window.scrollTo({ top: from + (y - from) * ease(t), behavior: 'instant' });
+      if (t < 1) requestAnimationFrame(tick); else { animating = false; lockedUntilQuiet = true; }
+    };
+    requestAnimationFrame(tick);
+  };
+  const step = (dir) => {
+    const k = nearestStep();
+    const offStep = Math.abs(window.scrollY - stepY(k)) > 4;
+    let target = offStep ? (dir > 0 ? Math.ceil(currentS()) : Math.floor(currentS())) : k + dir;
+    if (target < 0 || target > N) return false; // leave the story: let the page scroll normally
+    glideTo(stepY(target));
+    return true;
+  };
+  const currentS = () => { const [top, end] = range(); return ((window.scrollY - top) / Math.max(1, end - top)) * SPAN; };
+  const inStory = (dir) => {
+    const [top, end] = range(); const y = window.scrollY;
+    if (dir > 0) return y >= top - 2 && y < stepY(N) - 2;
+    return y > top + 2 && y <= end + 2;
+  };
+  const onWheel = (e) => {
+    const now = performance.now(); const quiet = now - lastWheel > 180; lastWheel = now;
+    if (Math.abs(e.deltaY) < 1) return;
+    const dir = e.deltaY > 0 ? 1 : -1;
+    if (animating) { e.preventDefault(); return; }
+    if (lockedUntilQuiet) {
+      // Swallow the rest of the gesture (trackpad inertia) so one swipe moves exactly one step.
+      if (!quiet) { const [top, end] = range(); if (window.scrollY >= top - 2 && window.scrollY <= end + 2) e.preventDefault(); return; }
+      lockedUntilQuiet = false;
+    }
+    if (!inStory(dir)) return;
+    if (step(dir)) e.preventDefault();
+  };
+  const onKey = (e) => {
+    if (e.target.closest && e.target.closest('input, textarea, select, [contenteditable]')) return;
+    const down = ['ArrowDown', 'PageDown', ' '].includes(e.key) && !e.shiftKey; const up = ['ArrowUp', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey);
+    if (!down && !up) return;
+    const dir = down ? 1 : -1;
+    if (animating) { e.preventDefault(); return; }
+    if (!inStory(dir)) return;
+    if (step(dir)) e.preventDefault();
+  };
+  // Scrollbar drags and other scroll sources settle on the nearest lock point.
+  const settle = () => {
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(() => {
+      if (animating) return;
+      const [top] = range(); const y = window.scrollY;
+      if (y <= top + 2 || y >= stepY(N) + 2) return;
+      const k = nearestStep(); if (Math.abs(y - stepY(k)) > 3) glideTo(stepY(k), 450);
+    }, 220);
+  };
+  window.addEventListener('wheel', onWheel, { passive: false });
+  window.addEventListener('keydown', onKey);
+  const onScroll = () => { settle(); if (!ticking) { ticking = true; requestAnimationFrame(() => { if (pin.isConnected) update(); }); } };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (pin.isConnected) measure(); });
+  measure();
+  return () => {
+    homeLinks.forEach((link) => link.removeEventListener('click', goHome));
+    window.removeEventListener('hashchange', onHash);
+    window.removeEventListener('scroll', onScroll);
+    window.removeEventListener('wheel', onWheel);
+    window.removeEventListener('keydown', onKey);
+    clearTimeout(settleTimer);
+    window.removeEventListener('resize', measure);
+    window.removeEventListener('load', measure);
+    headerAnchor.replaceWith(header);
+    pin.before(hero);
+    chapters.forEach((chapter) => list.append(chapter));
+    list.hidden = false;
+    stage.remove(); svg.remove(); dot.remove(); pin.remove();
+    hero.classList.remove('hero-story');
+    originals.forEach((value, el) => { if (value === null) el.removeAttribute('style'); else el.setAttribute('style', value); });
+    rest.forEach((el) => { el.inert = false; });
+  };
+  };
+  let cleanup = null;
+  const syncMode = () => {
+    if (mode.matches && !cleanup) cleanup = setup();
+    else if (!mode.matches && cleanup) { cleanup(); cleanup = null; }
+  };
+  mode.addEventListener('change', syncMode);
+  syncMode();
 })();

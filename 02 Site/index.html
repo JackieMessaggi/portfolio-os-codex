@@ -37,6 +37,18 @@
         <div class="skin-picker" role="group" aria-labelledby="skin-picker-label">
           <p class="skin-picker-label" id="skin-picker-label">Choose a stage</p>
           <div class="skin-options">
+            <button type="button" class="skin-btn" aria-pressed="false" data-skin="student" data-poster="assets/avatar/avatar-skin7-idle-poster.webp" data-video="assets/avatar/avatar-skin7-idle-alpha.mp4" data-label="3D illustrated avatar of Jackie as an Advertising Student: long dark hair with bangs and purple streaks, off-the-shoulder black T-shirt, black jeans, and boots, with a messenger bag covered in pins, holding an Advertising and Marketing notebook">
+              <img src="assets/avatar/skin-student-thumb.webp" width="160" height="160" alt=""><span>Advertising Student</span>
+            </button>
+            <button type="button" class="skin-btn" aria-pressed="false" data-skin="graphic" data-poster="assets/avatar/avatar-skin5-idle-poster.webp" data-video="assets/avatar/avatar-skin5-idle-alpha.mp4" data-label="3D illustrated avatar of Jackie as a Graphic Designer: long pink and purple hair, black band T-shirt, flared black jeans, and boots, holding a zine">
+              <img src="assets/avatar/skin-graphic-thumb.webp" width="160" height="160" alt=""><span>Graphic Designer</span>
+            </button>
+            <button type="button" class="skin-btn" aria-pressed="false" data-skin="artdirector" data-poster="assets/avatar/avatar-skin6-idle-poster.webp" data-video="assets/avatar/avatar-skin6-idle-alpha.mp4" data-label="3D illustrated avatar of Jackie as an Art Director: long red hair under a black beanie, white graphic T-shirt, black leather trousers with a chain, and boots, holding a stack of fashion magazines">
+              <img src="assets/avatar/skin-artdirector-thumb.webp" width="160" height="160" alt=""><span>Art Director</span>
+            </button>
+            <button type="button" class="skin-btn" aria-pressed="false" data-skin="entrepreneur" data-poster="assets/avatar/avatar-skin4-idle-poster.webp" data-video="assets/avatar/avatar-skin4-idle-alpha.mp4" data-label="3D illustrated avatar of Jackie as an Entrepreneur: dark hair with a bandana, black work apron over a T-shirt, cargo trousers, and boots, holding a cup of churros, with a tea towel tucked in her apron">
+              <img src="assets/avatar/skin-entrepreneur-thumb.webp" width="160" height="160" alt=""><span>Entrepreneur</span>
+            </button>
             <button type="button" class="skin-btn" aria-pressed="false" data-skin="digital" data-poster="assets/avatar/avatar-skin3-idle-poster.webp" data-video="assets/avatar/avatar-skin3-idle-alpha.mp4" data-label="3D illustrated avatar of Jackie as a Digital Designer: wavy copper hair with an undercut, oversized dark hoodie, cargo joggers, and chunky sneakers, holding a sketch tablet, with a tabby cat sitting by her foot">
               <img src="assets/avatar/skin-digital-thumb.webp" width="160" height="160" alt=""><span>Digital Designer</span>
             </button>
@@ -52,6 +64,18 @@
       <!-- Avatar slot in depth layers: back objects, the avatar (transparent idle loop drawn to a canvas; transparent still as
            fallback), then front objects. A future skin selector swaps the sources and updates data-skin. -->
       <figure class="hero-figure" data-skin="current">
+        <div class="hero-objects hero-objects-back" data-skin="student" aria-hidden="true" hidden>
+          <img class="hero-obj as-storyboard" src="assets/hero/as-storyboard.webp" width="460" height="392" alt="" loading="lazy">
+        </div>
+        <div class="hero-objects hero-objects-back" data-skin="artdirector" aria-hidden="true" hidden>
+          <img class="hero-obj ad-moodboard" src="assets/hero/ad-moodboard.webp" width="435" height="456" alt="" loading="lazy">
+        </div>
+        <div class="hero-objects hero-objects-back" data-skin="graphic" aria-hidden="true" hidden>
+          <img class="hero-obj gd-poster" src="assets/hero/gd-poster.webp" width="425" height="460" alt="" loading="lazy">
+        </div>
+        <div class="hero-objects hero-objects-back" data-skin="entrepreneur" aria-hidden="true" hidden>
+          <img class="hero-obj ent-sheet" src="assets/hero/ent-sheet.webp" width="415" height="364" alt="" loading="lazy">
+        </div>
         <div class="hero-objects hero-objects-back" data-skin="digital" aria-hidden="true" hidden>
           <img class="hero-obj dd-cloud" src="assets/hero/dd-cloud.webp" width="452" height="324" alt="" loading="lazy">
         </div>
@@ -88,7 +112,81 @@
           <img class="hero-obj dd-cursor" src="assets/hero/dd-cursor.webp" width="338" height="393" alt="" loading="lazy">
           <img class="hero-obj dd-pen" src="assets/hero/dd-pen.webp" width="384" height="404" alt="" loading="lazy">
         </div>
+        <div class="hero-objects hero-objects-front" data-skin="entrepreneur" aria-hidden="true" hidden>
+          <img class="hero-obj ent-truck" src="assets/hero/ent-truck.webp" width="460" height="393" alt="" loading="lazy">
+          <img class="hero-obj ent-growth" src="assets/hero/ent-growth.webp" width="418" height="409" alt="" loading="lazy">
+          <img class="hero-obj ent-terminal" src="assets/hero/ent-terminal.webp" width="400" height="410" alt="" loading="lazy">
+          <img class="hero-obj ent-checklist" src="assets/hero/ent-checklist.webp" width="388" height="422" alt="" loading="lazy">
+          <img class="hero-obj ent-boxes" src="assets/hero/ent-boxes.webp" width="418" height="392" alt="" loading="lazy">
+        </div>
+        <div class="hero-objects hero-objects-front" data-skin="graphic" aria-hidden="true" hidden>
+          <img class="hero-obj gd-swatch" src="assets/hero/gd-swatch.webp" width="460" height="395" alt="" loading="lazy">
+          <img class="hero-obj gd-type" src="assets/hero/gd-type.webp" width="413" height="379" alt="" loading="lazy">
+          <img class="hero-obj gd-cmyk" src="assets/hero/gd-cmyk.webp" width="446" height="400" alt="" loading="lazy">
+          <img class="hero-obj gd-cutter" src="assets/hero/gd-cutter.webp" width="460" height="355" alt="" loading="lazy">
+          <img class="hero-obj gd-zine" src="assets/hero/gd-zine.webp" width="460" height="347" alt="" loading="lazy">
+        </div>
+        <div class="hero-objects hero-objects-front" data-skin="artdirector" aria-hidden="true" hidden>
+          <img class="hero-obj ad-camera" src="assets/hero/ad-camera.webp" width="454" height="377" alt="" loading="lazy">
+          <img class="hero-obj ad-contact" src="assets/hero/ad-contact.webp" width="451" height="417" alt="" loading="lazy">
+          <img class="hero-obj ad-monitor" src="assets/hero/ad-monitor.webp" width="450" height="419" alt="" loading="lazy">
+          <img class="hero-obj ad-fabric" src="assets/hero/ad-fabric.webp" width="453" height="429" alt="" loading="lazy">
+          <img class="hero-obj ad-grading" src="assets/hero/ad-grading.webp" width="460" height="382" alt="" loading="lazy">
+        </div>
+        <div class="hero-objects hero-objects-front" data-skin="student" aria-hidden="true" hidden>
+          <img class="hero-obj as-campaign" src="assets/hero/as-campaign.webp" width="425" height="449" alt="" loading="lazy">
+          <img class="hero-obj as-brand" src="assets/hero/as-brand.webp" width="451" height="434" alt="" loading="lazy">
+          <img class="hero-obj as-player" src="assets/hero/as-player.webp" width="399" height="453" alt="" loading="lazy">
+          <img class="hero-obj as-megaphone" src="assets/hero/as-megaphone.webp" width="460" height="427" alt="" loading="lazy">
+          <img class="hero-obj as-product" src="assets/hero/as-product.webp" width="357" height="436" alt="" loading="lazy">
+        </div>
       </figure>
+    </section>
+
+    <!-- Career chapters (scroll storytelling test). Static list on mobile, with reduced motion, or without JavaScript;
+         on desktop with motion, script.js pins the Hero and plays these chapters with the scroll. Periods still to confirm. -->
+    <section class="hero-chapters wrap" aria-label="Career chapters">
+      <article class="chapter" data-skin="current">
+        <h2 class="chapter-title">Senior Designer</h2>
+        <p class="chapter-exp">Now</p>
+        <p class="chapter-summary">Hands-on across brand identity, UI systems, and visual direction. These days I’m also exploring AI-assisted workflows and creative coding.</p>
+      </article>
+      <article class="chapter" data-skin="lead">
+        <h2 class="chapter-title">Design Team Lead</h2>
+        <p class="chapter-exp">3 years</p>
+        <p class="chapter-summary">I led designers, supported their growth, and helped turn complex projects into more consistent digital experiences. Working across design, product, engineering, and marketing taught me that leadership is about creating clarity, building trust, and making space for others to do great work.</p>
+        <ul class="chapter-skills" aria-label="Skills"><li>Team Leadership</li><li>Mentoring</li><li>Design Systems</li><li>Cross-functional Collaboration</li></ul>
+      </article>
+      <article class="chapter" data-skin="digital">
+        <h2 class="chapter-title">Digital Designer</h2>
+        <p class="chapter-exp">6 years</p>
+        <p class="chapter-summary">My focus evolved from visual communication to digital experiences. Designing interfaces, prototypes, and scalable components taught me to balance aesthetics with usability and collaborate closely with developers to bring ideas to life.</p>
+        <ul class="chapter-skills" aria-label="Skills"><li>UI Design</li><li>Prototyping</li><li>Design Systems</li><li>Developer Collaboration</li></ul>
+      </article>
+      <article class="chapter" data-skin="entrepreneur">
+        <h2 class="chapter-title">Entrepreneur</h2>
+        <p class="chapter-exp">3 years</p>
+        <p class="chapter-summary">I stepped outside the design world to build and run Hola! Churros. Branding, marketing, customers, finances, and daily operations suddenly became part of the same challenge. It changed how I think about design: great ideas need to work as businesses, too.</p>
+        <ul class="chapter-skills" aria-label="Skills"><li>Entrepreneurship</li><li>Brand Building</li><li>Business Operations</li><li>Problem Solving</li></ul>
+      </article>
+      <article class="chapter" data-skin="artdirector">
+        <h2 class="chapter-title">Art Director</h2>
+        <p class="chapter-exp">9+ years</p>
+        <p class="chapter-summary">From fashion campaigns and editorial projects to brand communication, I moved beyond individual designs to shaping complete creative concepts. I learned to connect strategy, visuals, and execution, and eventually to guide creative work beyond my own.</p>
+        <ul class="chapter-skills" aria-label="Skills"><li>Art Direction</li><li>Campaigns</li><li>Editorial Design</li><li>Creative Leadership</li></ul>
+      </article>
+      <article class="chapter" data-skin="graphic">
+        <h2 class="chapter-title">Graphic Designer</h2>
+        <p class="chapter-exp">4 years</p>
+        <p class="chapter-summary">I turned briefs into visual identities, layouts, and communication materials, working across different clients and formats. This hands-on experience sharpened my eye for typography, composition, and detail, skills that still shape every interface I design today.</p>
+        <ul class="chapter-skills" aria-label="Skills"><li>Visual Identity</li><li>Typography</li><li>Layout Design</li><li>Print &amp; Digital</li></ul>
+      </article>
+      <article class="chapter" data-skin="student">
+        <h2 class="chapter-title">Advertising Student</h2>
+        <p class="chapter-exp">4 years</p>
+        <p class="chapter-summary">I studied Advertising &amp; Marketing, exploring how brands communicate through ideas, visuals, and storytelling. It was where I discovered that creativity isn’t just about making things look interesting. It’s about making people connect with them.</p>
+        <ul class="chapter-skills" aria-label="Skills"><li>Creative Thinking</li><li>Storytelling</li><li>Brand Communication</li><li>Consumer Insights</li></ul>
+      </article>
     </section>
 
     <!-- Selected Work v02 section system. Card images are provisional placeholders. -->
