@@ -33,11 +33,33 @@
         <h1 id="hero-title">One character. Many possibilities.</h1>
         <p class="hero-role">Senior Designer <span class="hero-role-sep" aria-hidden="true">| </span><span class="hero-role-spec">Brand, Product &amp; Creative Systems</span></p>
         <p class="hero-support">18 years of shaping brands, interfaces, and the visual systems that keep them consistent, still very hands-on.</p>
+        <!-- Skin selector (interaction-spec.md): versions of the avatar for real career stages; the band stays fixed. -->
+        <div class="skin-picker" role="group" aria-labelledby="skin-picker-label">
+          <p class="skin-picker-label" id="skin-picker-label">Choose a stage</p>
+          <div class="skin-options">
+            <button type="button" class="skin-btn" aria-pressed="false" data-skin="digital" data-poster="assets/avatar/avatar-skin3-idle-poster.webp" data-video="assets/avatar/avatar-skin3-idle-alpha.mp4" data-label="3D illustrated avatar of Jackie as a Digital Designer: wavy copper hair with an undercut, oversized dark hoodie, cargo joggers, and chunky sneakers, holding a sketch tablet, with a tabby cat sitting by her foot">
+              <img src="assets/avatar/skin-digital-thumb.webp" width="160" height="160" alt=""><span>Digital Designer</span>
+            </button>
+            <button type="button" class="skin-btn" aria-pressed="false" data-skin="lead" data-poster="assets/avatar/avatar-skin2-idle-poster.webp" data-video="assets/avatar/avatar-skin2-idle-alpha.mp4" data-label="3D illustrated avatar of Jackie as a Design Team Lead: blue hair with an undercut, black blazer over a red striped sweater, pleated skirt, and combat boots, holding a mug">
+              <img src="assets/avatar/skin-lead-thumb.webp" width="160" height="160" alt=""><span>Design Team Lead</span>
+            </button>
+            <button type="button" class="skin-btn" aria-pressed="true" data-skin="current" data-poster="assets/avatar/avatar-jackie-idle-poster.webp" data-video="assets/avatar/avatar-jackie-idle-alpha.mp4" data-label="3D illustrated avatar of Jackie: dark asymmetric hair with an undercut, black tank top, tattooed arms, wide black trousers, and platform boots, holding a laptop">
+              <img src="assets/avatar/skin-current-thumb.webp" width="160" height="160" alt=""><span>Senior Designer <small>Now</small></span>
+            </button>
+          </div>
+        </div>
       </div>
       <!-- Avatar slot in depth layers: back objects, the avatar (transparent idle loop drawn to a canvas; transparent still as
            fallback), then front objects. A future skin selector swaps the sources and updates data-skin. -->
       <figure class="hero-figure" data-skin="current">
-        <div class="hero-objects hero-objects-back" aria-hidden="true">
+        <div class="hero-objects hero-objects-back" data-skin="digital" aria-hidden="true" hidden>
+          <img class="hero-obj dd-cloud" src="assets/hero/dd-cloud.webp" width="452" height="324" alt="" loading="lazy">
+        </div>
+        <div class="hero-objects hero-objects-back" data-skin="lead" aria-hidden="true" hidden>
+          <img class="hero-obj lead-kanban" src="assets/hero/lead-kanban.webp" width="369" height="261" alt="" loading="lazy">
+          <img class="hero-obj lead-notes" src="assets/hero/lead-notes.webp" width="410" height="390" alt="" loading="lazy">
+        </div>
+        <div class="hero-objects hero-objects-back" data-skin="current" aria-hidden="true">
           <img class="hero-obj obj-palette" src="assets/hero/obj-palette.webp" width="460" height="342" alt="">
           <img class="hero-obj obj-toggle" src="assets/hero/obj-toggle.webp" width="405" height="399" alt="">
           <img class="hero-obj obj-sparkle-p" src="assets/hero/obj-sparkle-p.webp" width="193" height="200" alt="">
@@ -46,12 +68,25 @@
           <img class="hero-avatar-still" src="assets/avatar/avatar-jackie-idle-poster.webp" width="576" height="1024" fetchpriority="high" alt="">
           <video class="hero-avatar-video" muted loop playsinline preload="none" data-src="assets/avatar/avatar-jackie-idle-alpha.mp4" aria-hidden="true"></video>
         </div>
-        <div class="hero-objects hero-objects-front" aria-hidden="true">
+        <div class="hero-objects hero-objects-front" data-skin="current" aria-hidden="true">
           <img class="hero-obj obj-robot" src="assets/hero/obj-robot.webp" width="350" height="460" alt="">
           <img class="hero-obj obj-pen" src="assets/hero/obj-pen.webp" width="460" height="323" alt="">
           <img class="hero-obj obj-sparkle-y" src="assets/hero/obj-sparkle-y.webp" width="193" height="200" alt="">
           <img class="hero-obj obj-cursor" src="assets/hero/obj-cursor.webp" width="391" height="395" alt="">
           <img class="hero-obj obj-type" src="assets/hero/obj-type.webp" width="391" height="396" alt="">
+        </div>
+        <div class="hero-objects hero-objects-front" data-skin="lead" aria-hidden="true" hidden>
+          <img class="hero-obj lead-team" src="assets/hero/lead-team.webp" width="356" height="319" alt="" loading="lazy">
+          <img class="hero-obj lead-chat" src="assets/hero/lead-chat.webp" width="368" height="342" alt="" loading="lazy">
+          <img class="hero-obj lead-brief" src="assets/hero/lead-brief.webp" width="360" height="314" alt="" loading="lazy">
+          <img class="hero-obj lead-browser" src="assets/hero/lead-browser.webp" width="364" height="346" alt="" loading="lazy">
+          <img class="hero-obj lead-puzzle" src="assets/hero/lead-puzzle.webp" width="336" height="283" alt="" loading="lazy">
+        </div>
+        <div class="hero-objects hero-objects-front" data-skin="digital" aria-hidden="true" hidden>
+          <img class="hero-obj dd-phone" src="assets/hero/dd-phone.webp" width="325" height="460" alt="" loading="lazy">
+          <img class="hero-obj dd-cards" src="assets/hero/dd-cards.webp" width="395" height="390" alt="" loading="lazy">
+          <img class="hero-obj dd-cursor" src="assets/hero/dd-cursor.webp" width="338" height="393" alt="" loading="lazy">
+          <img class="hero-obj dd-pen" src="assets/hero/dd-pen.webp" width="384" height="404" alt="" loading="lazy">
         </div>
       </figure>
     </section>

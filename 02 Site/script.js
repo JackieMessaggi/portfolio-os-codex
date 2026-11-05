@@ -344,11 +344,12 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
 
 // Hero idle avatar: a stacked-alpha H.264 loop (color on top, alpha matte below) composited by WebGL into a
 // transparent canvas, so objects can sit behind and in front of the avatar. Only with motion allowed; otherwise, or
-// without WebGL, the transparent still stays. The video is fetched only when it will play.
+// without WebGL, the transparent still stays. Each skin gets its own video element (created on first use), so
+// switching never reloads a shared element.
 (() => {
   const box = document.querySelector('.hero-avatar');
-  const video = box && box.querySelector('video');
-  if (!video || !window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+  const first = box && box.querySelector('video');
+  if (!first || !window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
   const canvas = document.createElement('canvas');
   canvas.width = 576; canvas.height = 1024;
   const gl = canvas.getContext('webgl', { premultipliedAlpha: true, alpha: true });
@@ -367,24 +368,46 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
   gl.clearColor(0, 0, 0, 0);
   box.append(canvas);
+
+  const videos = {};
+  let video = null;
+  let visible = true;
+  const getVideo = (src) => {
+    if (videos[src]) return videos[src];
+    const v = src === first.dataset.src ? first : first.cloneNode(false);
+    if (v !== first) { v.removeAttribute('data-src'); box.append(v); }
+    v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto'; v.src = src;
+    v.addEventListener('playing', () => { if (v === video) draw(); });
+    videos[src] = v;
+    return v;
+  };
   const draw = () => {
-    if (video.readyState >= 2) {
+    const v = video;
+    if (!v) return;
+    if (v.readyState >= 2) {
       // Browsers block video textures on file:// pages (opaque origin); keep the still instead of failing.
-      try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, video); } catch (err) { video.pause(); canvas.remove(); return; }
+      try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, v); } catch (err) { v.pause(); canvas.remove(); video = null; return; }
       gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       box.classList.add('is-live');
     }
-    if (!video.paused) {
-      if (video.requestVideoFrameCallback) video.requestVideoFrameCallback(draw); else requestAnimationFrame(draw);
+    if (!v.paused && v === video) {
+      if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(draw); else requestAnimationFrame(draw);
     }
   };
-  video.muted = true;
-  video.src = video.dataset.src;
-  const play = () => { const p = video.play(); if (p) p.then(draw).catch(() => {}); else draw(); };
-  video.addEventListener('playing', draw);
+  const play = () => { if (!video || !visible) return; const p = video.play(); if (p) p.then(draw).catch(() => {}); else draw(); };
+  const use = (src) => {
+    Object.values(videos).forEach((v) => v.pause());
+    video = getVideo(src);
+    play();
+  };
+  use(first.dataset.src);
+  box.addEventListener('skin:change', (e) => { box.classList.remove('is-live'); use(e.detail.src); });
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver((entries) => entries.forEach((e) => (e.isIntersecting ? play() : video.pause()))).observe(box);
-  } else { play(); }
+    new IntersectionObserver((entries) => entries.forEach((e) => {
+      visible = e.isIntersecting;
+      if (visible) play(); else if (video) video.pause();
+    })).observe(box);
+  }
 
   // Gentle pointer parallax for the object planes (desktop pointers only).
   const fig = box.closest('.hero-figure');
@@ -397,4 +420,33 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
     });
     hero.addEventListener('pointerleave', () => { fig.style.setProperty('--mx', '0'); fig.style.setProperty('--my', '0'); });
   }
+})();
+
+// Skin selector: swaps the avatar (still, loop, accessible name) and its object set. Works without motion too.
+(() => {
+  const buttons = [...document.querySelectorAll('.skin-btn')];
+  const fig = document.querySelector('.hero-figure');
+  const box = fig && fig.querySelector('.hero-avatar');
+  if (!buttons.length || !box) return;
+  const still = box.querySelector('.hero-avatar-still');
+  const motion = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  const apply = (btn) => {
+    const skin = btn.dataset.skin;
+    fig.dataset.skin = skin;
+    still.src = btn.dataset.poster;
+    box.setAttribute('aria-label', btn.dataset.label);
+    fig.querySelectorAll('.hero-objects').forEach((g) => { g.hidden = g.dataset.skin !== skin; });
+    box.dispatchEvent(new CustomEvent('skin:change', { detail: { src: btn.dataset.video } }));
+  };
+  buttons.forEach((btn) => btn.addEventListener('click', () => {
+    if (btn.getAttribute('aria-pressed') === 'true') return;
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    if (!motion) { apply(btn); return; }
+    fig.classList.add('is-switching');
+    setTimeout(() => {
+      apply(btn);
+      const show = () => fig.classList.remove('is-switching');
+      if (still.complete) requestAnimationFrame(show); else still.addEventListener('load', show, { once: true });
+    }, 280);
+  }));
 })();
