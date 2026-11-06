@@ -72,4 +72,8 @@ This is a concise index of approved decisions, not a replacement for the linked 
 
 | November 6, 2026 | Jackie authorized a local commit of Codex’s mobile Hero/navigation refinements and Claude Code’s mobile Snoof Interface bento refinement together. Exclude the unused untracked avatar and all private project material. This authorizes commit only, not push or deployment. | Owner “commit o que o Claude fez tbm” in this conversation; current tracked changes |
 
+| November 6, 2026 | Jackie reported mobile scroll skipping avatar chapters and requested a fix. Add a one-adjacent-chapter-per-touch-gesture guard while preserving reverse scroll, section navigation and exit after the first/last chapters. Local implementation and validation only; no new commit, push or deploy authorized. | Owner report in this conversation; `02 Site/script.js`, `interaction-spec.md` |
+
+| November 6, 2026 | Jackie approved the current mobile scroll behavior for now and explicitly authorized commit, push, and manual deploy. Release includes passive touch bounds, all-input adjacent-stage sequencing, and a 1100 ms hold so Graphic Designer is visible between Art Director and Student. | Owner “scroll aprovado por hora commit, push e deploy” in this conversation; `02 Site/script.js`, `interaction-spec.md` |
+
 For each new significant approval, add its date, exact scope, owner approval source, and affected files. Link superseded decisions rather than presenting both as active. Agent suggestions and generated previews are not owner approvals.

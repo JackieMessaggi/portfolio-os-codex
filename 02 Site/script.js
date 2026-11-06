@@ -1272,9 +1272,26 @@ void main(){
     document.body.classList.add('has-mobile-story');
     list.append(sticky); sticky.append(figure, stage); chapters.forEach(c => stage.append(c));
     let step = 1; let current = -1; let pending = false;
+    let shownAt = 0; let navigationUntil = 0;
+    const CHAPTER_HOLD = 1100; // Finish the 800 ms orbit and expose the new avatar before advancing.
+    let gestureOrigin = null; let gestureTimer = 0; let touching = false;
+    const releaseGesture = () => { clearTimeout(gestureTimer); gestureOrigin = null; };
+    const onTouchStart = (e) => {
+      releaseGesture();
+      touching = e.touches.length === 1;
+      if (!touching) return;
+      const distance = -list.getBoundingClientRect().top;
+      gestureOrigin = distance < 0 ? 0 : distance >= step * chapters.length ? chapters.length - 1 : Math.max(0, current);
+    };
+    const onTouchEnd = () => {
+      touching = false;
+      clearTimeout(gestureTimer);
+      gestureTimer = setTimeout(releaseGesture, 220);
+    };
     const show = (index) => {
       if (index === current) return;
       current = index;
+      shownAt = performance.now();
       chapters.forEach((chapter, i) => {
         const active = i === index;
         chapter.classList.toggle('is-current', active);
@@ -1286,8 +1303,30 @@ void main(){
     const update = () => {
       pending = false;
       if (!sticky.isConnected) return;
-      const distance = -list.getBoundingClientRect().top;
-      show(Math.max(0, Math.min(chapters.length - 1, Math.floor(Math.max(0, distance) / step))));
+      let distance = -list.getBoundingClientRect().top;
+      if (gestureOrigin !== null) {
+        const first = Math.max(0, gestureOrigin - 1);
+        const last = Math.min(chapters.length - 1, gestureOrigin + 1);
+        let bounded = distance;
+        if (gestureOrigin > 0 && distance < first * step) bounded = (first + .5) * step;
+        if (gestureOrigin < chapters.length - 1 && distance >= (last + 1) * step) bounded = (last + .5) * step;
+        if (bounded !== distance) {
+          window.scrollTo({ top: window.scrollY + bounded - distance, behavior: 'instant' });
+          distance = bounded;
+        }
+        clearTimeout(gestureTimer);
+        if (!touching) gestureTimer = setTimeout(releaseGesture, 220);
+      }
+      const wanted = Math.max(0, Math.min(chapters.length - 1, Math.floor(Math.max(0, distance) / step)));
+      if (current >= 0 && wanted !== current && performance.now() >= navigationUntil) {
+        const next = performance.now() - shownAt < CHAPTER_HOLD ? current : current + Math.sign(wanted - current);
+        const leavingEarly = (distance < 0 && current > 0) || (distance >= chapters.length * step && current < chapters.length - 1);
+        if (next !== wanted || leavingEarly) {
+          const bounded = (next + .5) * step;
+          window.scrollTo({ top: window.scrollY + bounded - distance, behavior: 'instant' });
+        }
+        show(next);
+      } else show(wanted);
     };
     const measure = () => {
       const height = sticky.clientHeight;
@@ -1302,6 +1341,8 @@ void main(){
     };
     const onScroll = () => { if (!pending) { pending = true; requestAnimationFrame(update); } };
     const onHome = (e) => {
+      const sectionLink = e.target.closest('.section-nav a[href^="#"], .monogram[href="#hero"]');
+      if (sectionLink) { releaseGesture(); navigationUntil = performance.now() + 2000; }
       const a = e.target.closest('a[href="#hero"]');
       if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       show(0);
@@ -1310,6 +1351,9 @@ void main(){
     window.addEventListener('resize', measure);
     window.addEventListener('load', measure);
     document.addEventListener('click', onHome);
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', onTouchEnd, { passive: true });
     document.fonts.ready.then(() => { if (sticky.isConnected) measure(); });
     measure();
     return () => {
@@ -1317,6 +1361,10 @@ void main(){
       window.removeEventListener('resize', measure);
       window.removeEventListener('load', measure);
       document.removeEventListener('click', onHome);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchend', onTouchEnd);
+      window.removeEventListener('touchcancel', onTouchEnd);
+      releaseGesture();
       anchor.replaceWith(figure);
       chapters.forEach(c => {
         list.append(c); c.classList.remove('is-current'); c.removeAttribute('aria-hidden'); c.inert = false;

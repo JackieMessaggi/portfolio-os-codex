@@ -1,10 +1,10 @@
 # Project Status
 
-Updated: November 6, 2026, by Codex after the mobile avatar object-clipping correction.
+Updated: November 6, 2026, by Codex after the authorized GitHub Pages deployment.
 
 ## Where we are
 
-Homepage Hero career story, About, header, and Selected Work lettering covers committed after Jackie’s approval; the mobile Hero adaptation, larger avatar, object placement, and bottom navigation were reviewed by Jackie and approved for a local commit together with Claude’s mobile Snoof Interface bento refinement. No active task or reserved files. GitHub Pages runs only through the manual workflow; the live site shows commit `3fadb33` (deployed November 6, 2026, run 42186272985) until the next approved deploy.
+Homepage mobile Hero, larger avatar, closer unclipped objects, bottom navigation, and Claude’s mobile Snoof Interface bento refinement are committed, pushed, and deployed as `737b452` (November 6, 2026, successful run `42211933230`). Live site: https://jackiemessaggi.github.io/portfolio-os-codex/. GitHub Pages remains manual. Mobile chapter-skipping correction now includes an all-input adjacent-stage guard and 1100 ms transition hold, validated locally and approved by Jackie for commit, push and manual deploy. No active task or reserved files.
 
 ## What is ready
 
@@ -31,6 +31,6 @@ Homepage Hero career story, About, header, and Selected Work lettering covers co
 
 ## Next step
 
-Mobile Hero review is complete. Physical mobile Safari/device testing is the next recommended validation. Any push or deployment requires separate approval.
+Check the published mobile scroll correction on a real device, especially iOS/Safari. Chapter sequence and Graphic Designer avatar visibility pass Chrome emulation at both requested sizes. Further refinements need Jackie’s approval.
 
-Claude Code’s mobile Snoof Interface bento refinement is approved for the same local commit: animated avatar creator first/larger, welcome and home side by side below. No push or deployment authorized.
+Claude Code’s mobile Snoof Interface bento refinement is approved for the same local commit: animated avatar creator first/larger, welcome and home side by side below. Deployed with Jackie’s separate approval.
