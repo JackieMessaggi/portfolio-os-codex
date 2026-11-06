@@ -14,10 +14,10 @@ Status: documented interaction intent; detailed choreography and implementation 
 
 - Header: only the small JM monogram, linking back to the start of the home page. Not fixed. No navigation links in the header.
 - Desktop: a horizontal bar fixed at the bottom, with clickable section names, an active-section indicator, and navigation progress. Selecting a section scrolls smoothly to it.
-- Mobile: a compact vertical bar fixed on the right, with section indicators and the current position. Sections are reachable by touch. It must not cover content or interfere with interaction.
+- Mobile, updated November 6, 2026 at Jackie’s request: fixed full-width bottom bar with persistent Home, Work, About, Contact labels, active indicator, and horizontal progress. This supersedes the right rail described in the historical implementation notes below. Targets are 56 px tall; bottom safe-area padding is supported.
 - Implemented November 4, 2026 (`02 Site/index.html`, `styles.css`, `script.js`): sections Home, Work, About, Contact numbered 01 to 04 (About and Contact eyebrows renumbered). Desktop: centered bottom bar, ivory with a 1 px eggplant border and square corners, DM Sans 13 px uppercase, 44 px targets, 2 px progress line (beige track, Signal Orange fill); active link bold with a 6 px Deep Orange `#CC4808` square and `aria-current`. Mobile (up to 760 px): numbers only on the right edge with a vertical progress line; active number white on Deep Orange; numbers turn ivory over the eggplant Selected Work section; 44 × 44 px targets. Plain anchors work without JavaScript; smooth scrolling only without `prefers-reduced-motion`. Active section = last section whose top passed 35% of the viewport; the page end selects Contact.
 - Mobile rail clarity (November 5, 2026): when the active section changes, its name appears for about 1.8 s as a Deep Orange label beside the number, then the rail returns to numbers only. Desktop bar unchanged.
-- Known conflicts: on mobile the 44 px targets extend about 24 px over the 20 px gutter outside Selected Work (Selected Work cards now clear the rail); on desktop the bar covers the bottom 75 px of the viewport, including card metadata at some scroll positions. Desktop nav redesign is in the visual backlog.
+- The previous mobile rail overlap is resolved by the November 6 bottom-bar replacement. On desktop the bar covers the bottom 75 px of the viewport, including card metadata at some scroll positions. Desktop nav redesign remains in the visual backlog.
 
 ### Selected Work gallery (approved direction November 3, 2026)
 
@@ -105,3 +105,45 @@ Verify direct navigation, keyboard and touch access, reduced-motion behavior, mo
 - Interface loops v3, November 6, 2026 (local, not committed): Jackie found three loops too busy. Only the avatar creator stays animated, now in the middle of the bento (welcome, avatar, home); welcome and home are back to their still screens, and their loop files were removed.
 - Avatar alignment, November 6, 2026 (local, not committed): the cat avatar main images had the cat drawn at slightly different positions, so it jumped between options. All main views were rebuilt from the originals and aligned to the same paws center and baseline (median of the set), which fixes both the live prototype and the re-recorded loop. Scale is unchanged, so body types still differ in size as designed.
 - Characters video, November 6, 2026 (local, not committed), Jackie’s request: the featured cat in Brand › Characters is now the supplied kitten loop (`Tabby_kitten_animation_loop_b73e4bd3_1080p.mp4`, Jackie’s corrected version replacing `…122b1c4c…` from the private prototype assets, published at Jackie’s request), cropped to the card’s 4:5 frame around the cat and re-encoded for the web as `assets/snoof/pet-cat-loop.mp4` (720 × 900, 30 fps, 0.9 MB, no audio). It plays muted, looped, inline, without controls, over the still image (kept as poster and fallback), loads on first view, and pauses off screen; with reduced motion or no JavaScript only the still shows. It replaces the earlier three-layer idle animation; those layer files (`pet-cat-curious-bg/body/tail.webp`) are no longer referenced.
+
+### Mobile Hero career story (implemented locally, November 6, 2026)
+
+Authorized by Jackie's handoff confirmation to Codex. Supersedes the static-only behavior below 1025 px when motion is allowed; desktop timeline behavior remains separate.
+
+- On viewports up to 1024 px wide with motion allowed, the introductory headline, band, paragraph, and scroll cue remain in normal flow. The existing avatar then pins in the upper area of a stable `100svh` scene, with one career chapter below it. The skin picker is hidden only in this mode. The seven stages, order, copy, experience duration, and skill pills are reused from the source HTML without duplication or rewriting.
+- Native scroll is retained, including touch momentum and reverse scroll. There are no touch/wheel interception handlers, mandatory snap, nonlinear line, or horizontal track in the mobile story. Each chapter occupies at least 85% of the scene height in scroll distance; the last chapter holds before releasing into Selected Work. Fast native flings may skip over a chapter, rather than trapping or fighting touch input.
+- Skin changes use the existing `skin:select`/WebGL glitch pipeline and idle loops. Object orbit and the existing responsive floating object sets are retained after Jackie’s correction on November 6, 2026. Chapter content changes as a single block; inactive chapters are hidden, aria-hidden, and inert. No live-region announcement is forced on every scroll.
+- Updated November 6 after owner review: 20 px side gutters and 100 px bottom reservation plus device safe area replace the rail gutter. Avatar height is capped at 40% of the scene and constrained by the tallest chapter. At viewport heights up to 780 px, chapter titles use 22 px and summaries 15 px/1.5; taller screens retain 24 px titles and 16 px summaries. No paragraph, experience line, or skill pill is truncated at the validated sizes.
+- Reduced motion and no JavaScript retain the original seven static chapters and picker. Width/motion mode changes restore the existing avatar and chapter nodes, removing inactive/inert state; switching to desktop does not duplicate or steal chapters from the desktop stage. Short desktop windows still keep their previous static fallback.
+
+Validation: Chrome headless over local HTTP, touch/mobile emulation at 390 × 844 and 360 × 740. All seven stages checked downward and upward with matching skin and one visible chapter; real CDP touch gestures moved the page both ways; avatar idle canvas was live for each sampled skin. No script errors or page overflow. Chapter right edges were 334/304 px respectively, outside the rail; lowest skill row was 693/686 px, inside each viewport. Work navigation reached Selected Work at approximately 24 px from the top and set its active nav state. Reduced motion restored seven static non-inert chapters; no-JavaScript checks passed at both sizes. Mobile → 1440 px desktop → mobile transition retained exactly seven chapters and a single appropriate pin. Source syntax and whitespace checks pass. Detector only reports pre-existing approved Fraunces usage and a case-study easing advisory.
+
+Private evidence: `01 Projects/Portfolio OS/Site Validation/mobile-career-results.json`, `mobile-career-390-*.png`, and `mobile-career-360-*.png`. This is emulated Chrome validation, not physical iOS/Safari certification. Claude Code's pending mobile Snoof bento changes were preserved. No commit, push, or deployment.
+
+### Larger avatar and mobile bottom navigation validation, November 6, 2026
+
+Chrome mobile/touch emulation over local HTTP at 390 × 844 and 360 × 740: avatar frames measure 337 px and 268 px respectively, up from 253/222 px before this refinement. All seven stages and idle canvases remain active in both scroll directions; native CDP touch scrolling passes. Longest chapter clears the navbar by 32/17 px respectively. All four section anchors reach their targets and update aria-current; labels remain visible, including over Contact. Navigation targets are 56 px tall. No page overflow or script errors. Reduced motion, no-JavaScript static chapters, and mobile/desktop/mobile teardown checks pass. Device safe-area CSS is present; physical iOS/Safari remains untested.
+
+Private evidence: `01 Projects/Portfolio OS/Site Validation/mobile-career-bottom-nav-results.json` and `mobile-career-bottom-nav-{390,360}-{0,1,3,6}.png`. Previous validation artifacts remain for reference. No commit, push, or deploy.
+
+### Mobile avatar objects restored, November 6, 2026
+
+Jackie flagged the missing surrounding objects. Removed the mobile-story-only object hiding rule and orbit bypass. Each skin now retains its original responsive front/back object groups, floating motion and directional orbit transition, while preserving the larger avatar and bottom navbar. Existing mobile omissions of individual secondary objects remain unchanged. Validation evidence: `01 Projects/Portfolio OS/Site Validation/mobile-career-objects-*`.
+
+Restoration validation: all seven stages in both directions at 390 × 844 and 360 × 740, live avatar, native touch scrolling, all four navbar anchors, reduced motion, no-JavaScript and desktop/mobile mode changes pass; no script errors or page overflow, and chapter skills remain above the bottom bar. Screenshots visually confirm restored objects at both sizes. Syntax and whitespace checks pass. Chrome emulation only.
+
+### Mobile object proximity, November 6, 2026
+
+At Jackie’s request, the mobile-story figure now uses a centered width of `min(100%, avatar-height × 0.9)` instead of spanning the content width. This brings the existing percentage-positioned objects closer to the avatar while keeping avatar height, object sizes, depth layers and orbit geometry consistent. Desktop and chapter layout are unchanged.
+
+Proximity validation: Chrome mobile emulation at 390 × 844 and 360 × 740, all seven stages in both directions, live avatar, touch, navbar anchors, reduced motion, no JavaScript and desktop/mobile resize pass. No script errors or page overflow; text clears the navbar. Visual review confirms closer objects and unobstructed face at both sizes. Private screenshots and results: `Site Validation/mobile-career-objects-close-*`. Syntax and whitespace checks pass.
+
+### Mobile object clipping correction, November 6, 2026
+
+Jackie reported left-side objects clipped after the proximity adjustment. The centered mobile figure retains its narrow positioning box but now allows visible overflow, so rotated/floating objects and shadows are not clipped at that internal boundary. Avatar size and object positions remain unchanged.
+
+Clipping validation: at 390 × 844 and 360 × 740, every visible object in all seven stages is loaded and its horizontal bounding box stays inside the viewport. No page overflow or script errors; chapter skills clear the navbar. Touch, reverse scroll, navigation, reduced motion, no JavaScript and desktop/mobile mode changes pass. Evidence: private `Site Validation/mobile-career-objects-unclipped-*`. Chrome emulation; physical Safari not tested.
+
+### Snoof mobile Interface bento commit review, November 6, 2026
+
+Jackie authorized including Claude Code’s existing mobile refinement in the local commit: avatar creator spans the first row at 66% width; Welcome and Home occupy two columns below, Home offset 3rem. Loop insets match the smaller mobile phone frame. Chrome checks at 390 × 844 and 360 × 740 confirm first-row placement, side-by-side lower cards, no horizontal page overflow or script errors. No new project assets are included.

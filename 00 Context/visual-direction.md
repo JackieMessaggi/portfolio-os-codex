@@ -157,3 +157,7 @@ Representative avatar composition test: The owner supplied a second GPT-created 
 The Work, About, and Contact links shown in v8's header are superseded by the monogram-only header approved on November 3, 2026; v8 itself stays unchanged. The owner subsequently requested leaving v8 as it is for now. Retain it as the current provisional composition reference with the unresolved details above; do not interpret this as final design or implementation approval. See `character-bible.md` for asset status and `project-status.md` for continuity.
 
 Hero Study versions 01 to 03 (November 3, 2026, private, in `01 Projects/Portfolio OS/Hero Study/`) build on v8 with the live fonts. Version 03 is the approved Hero direction for the Friday delivery (see Approved Homepage Composition). It supersedes v8's two-line name, role lines, CTA, and skill row for that delivery; v8 remains the avatar and object reference. Versions 01 and 02 are kept as history.
+
+### Mobile Hero and navigation refinement, November 6, 2026
+
+Jackie approved a larger mobile career-story avatar and replacing the right rail with a fixed bottom navigation bar. Keep the full-body avatar, all seven stages, copy, glitch and idle animations. Avatar sizing adapts to viewport height and the tallest chapter. The bottom bar shows Home, Work, About, and Contact continuously, with an active indicator and horizontal progress. Reserve space for the bar and device safe area. Desktop composition is unchanged. Implemented locally; see `interaction-spec.md` for validation.

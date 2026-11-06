@@ -1,10 +1,10 @@
 # Project Status
 
-Updated: November 6, 2026, by Claude Code.
+Updated: November 6, 2026, by Codex after the mobile avatar object-clipping correction.
 
 ## Where we are
 
-Homepage Hero career story, About, header, and Selected Work lettering covers committed after Jackie’s approval. No active task or reserved files. GitHub Pages runs only through the manual workflow; the live site shows commit `3fadb33` (deployed November 6, 2026, run 42186272985) until the next approved deploy.
+Homepage Hero career story, About, header, and Selected Work lettering covers committed after Jackie’s approval; the mobile Hero adaptation, larger avatar, object placement, and bottom navigation were reviewed by Jackie and approved for a local commit together with Claude’s mobile Snoof Interface bento refinement. No active task or reserved files. GitHub Pages runs only through the manual workflow; the live site shows commit `3fadb33` (deployed November 6, 2026, run 42186272985) until the next approved deploy.
 
 ## What is ready
 
@@ -19,17 +19,18 @@ Homepage Hero career story, About, header, and Selected Work lettering covers co
 - Hero intro: new paragraph and “Scroll to explore my journey” cue; full-name logo in the homepage header (case pages keep the monogram); pinned Hero fits viewports below 820 px tall.
 - About: new copy and title, new portrait (`jackie-portrait-egg-chair.webp`, credit Silvio Pelegrin), photo centered on the text block.
 - Validation in headless Chrome at 1440 × 900, 1280 × 760, 1025 × 700, 1728 × 1000, 1920 × 1080, and 390 px: gesture simulations, frozen orbit frames, shader frames, link navigation, no script errors. Headless Chrome cannot show the avatar video switching live; the live glitch plus orbit needs browser review.
-- Story mode falls back to static chapters below 1025 px wide, below 700 px tall, or with reduced motion or no JavaScript.
+- Mobile bottom navigation implemented locally with persistent labels and 56 px targets; larger full-body avatar validated at both requested sizes. Mobile Hero story implemented locally: native scroll with pinned avatar above one chapter at a time, all seven stages and existing glitch/idle loops, no timeline; responsive object sets and orbit restored and brought closer to the avatar with internal clipping removed after owner feedback. Validated at 390 × 844 and 360 × 740 in both scroll directions, with touch, reduced motion/no-JavaScript fallback, mode changes, and reachable Selected Work. No page overflow or script errors. Evidence and limits in `interaction-spec.md`. Reduced motion/no JavaScript and short desktop windows retain the static layout.
 
 ## What is missing
 
-- Push and deploy of the latest commit (each needs Jackie’s approval).
 - Reveal animations for TerraYou, Quiz Bingo, and Damyller covers (need assets; see the November 6 audit in the conversation and Codex’s private studies).
 - Optional cleanup: `assets/about/jackie-portrait.webp` (previous About photo) is no longer referenced; Jackie has not decided whether to remove it. The untracked `assets/avatar/avatar-jackie.webp` stays out of Git.
 - Known tight spot: at 1025 × 700 the Design Team Lead “Design Systems” pill touches the bottom nav edge.
-- Broader backlog: mobile rail overlap and touch targets, final project-card art direction, later case studies. See `interaction-spec.md` and `character-bible.md`.
+- Broader backlog: final project-card art direction, later case studies. See `interaction-spec.md` and `character-bible.md`.
 - Cross-browser and real-device testing.
 
 ## Next step
 
-Cross-browser and real-device check of the live Snoof case (Safari, mobile), then the remaining Selected Work covers.
+Mobile Hero review is complete. Physical mobile Safari/device testing is the next recommended validation. Any push or deployment requires separate approval.
+
+Claude Code’s mobile Snoof Interface bento refinement is approved for the same local commit: animated avatar creator first/larger, welcome and home side by side below. No push or deployment authorized.

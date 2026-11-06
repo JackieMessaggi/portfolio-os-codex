@@ -1,24 +1,12 @@
-// Fixed section navigation: active section (aria-current), scroll progress, and mobile contrast over the eggplant sections.
+// Fixed section navigation: active section (aria-current), scroll progress, and persistent mobile bottom-bar labels.
 // Anchor links work without JavaScript; smooth scrolling is CSS-only and respects prefers-reduced-motion.
 const nav = document.querySelector('.section-nav');
 if (nav) {
   const links = [...nav.querySelectorAll('a[href^="#"]')];
   const sections = links.map((link) => document.querySelector(link.hash)).filter(Boolean);
-  const darkSections = [...document.querySelectorAll('.work, .contact')];
   let ticking = false;
 
-  // Mobile rail clarity: when the active section changes, show its name next to the number for a moment.
-  let lastId = null;
-  let labelTimer = 0;
-  function announce() {
-    if (window.innerWidth > 760) return;
-    nav.classList.add('show-label');
-    clearTimeout(labelTimer);
-    labelTimer = setTimeout(() => nav.classList.remove('show-label'), 1800);
-  }
-
   function setActive(id) {
-    if (id !== lastId) { lastId = id; announce(); }
     links.forEach((link) => {
       if (link.hash === '#' + id) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
@@ -40,12 +28,7 @@ if (nav) {
     if (max > 0 && window.scrollY >= max - 2) current = sections[sections.length - 1];
     if (current) setActive(current.id);
 
-    // Mobile rail has no background, so its numbers switch to ivory over the eggplant sections (Selected Work, Contact).
-    if (darkSections.length) {
-      const navBox = nav.getBoundingClientRect();
-      const center = navBox.top + navBox.height / 2;
-      nav.classList.toggle('on-dark', darkSections.some((s) => { const b = s.getBoundingClientRect(); return center > b.top && center < b.bottom; }));
-    }
+
   }
 
   function requestUpdate() {
@@ -1262,9 +1245,92 @@ void main(){
   };
   let cleanup = null;
   const syncMode = () => {
-    if (mode.matches && !cleanup) cleanup = setup();
+    if (mode.matches && !cleanup) { document.dispatchEvent(new Event('hero:desktop-setup')); cleanup = setup(); }
     else if (!mode.matches && cleanup) { cleanup(); cleanup = null; }
   };
   mode.addEventListener('change', syncMode);
   syncMode();
+})();
+
+// Mobile career story: native touch scrolling, one readable chapter below the pinned avatar.
+// Desktop owns a separate mode; reduced motion and no JavaScript retain the original static document.
+(() => {
+  const hero = document.querySelector('.hero');
+  const list = document.querySelector('.hero-chapters');
+  const figure = hero && hero.querySelector('.hero-figure');
+  if (!hero || !list || !figure) return;
+  const mode = matchMedia('(max-width: 1024px) and (prefers-reduced-motion: no-preference)');
+  let cleanup = null;
+  const setup = () => {
+    const chapters = [...list.querySelectorAll('.chapter')];
+    const anchor = document.createComment('Avatar position outside mobile story');
+    figure.before(anchor);
+    const sticky = document.createElement('div'); sticky.className = 'mobile-story-sticky';
+    const stage = document.createElement('div'); stage.className = 'mobile-story-stage';
+    const originals = new Map(chapters.map(c => [c, c.getAttribute('style')]));
+    list.classList.add('hero-mobile-story');
+    document.body.classList.add('has-mobile-story');
+    list.append(sticky); sticky.append(figure, stage); chapters.forEach(c => stage.append(c));
+    let step = 1; let current = -1; let pending = false;
+    const show = (index) => {
+      if (index === current) return;
+      current = index;
+      chapters.forEach((chapter, i) => {
+        const active = i === index;
+        chapter.classList.toggle('is-current', active);
+        chapter.setAttribute('aria-hidden', String(!active));
+        chapter.inert = !active;
+      });
+      document.dispatchEvent(new CustomEvent('skin:select', { detail: chapters[index].dataset.skin }));
+    };
+    const update = () => {
+      pending = false;
+      if (!sticky.isConnected) return;
+      const distance = -list.getBoundingClientRect().top;
+      show(Math.max(0, Math.min(chapters.length - 1, Math.floor(Math.max(0, distance) / step))));
+    };
+    const measure = () => {
+      const height = sticky.clientHeight;
+      const tallest = Math.max(...chapters.map(c => c.scrollHeight));
+      const box = getComputedStyle(sticky);
+      const reserved = parseFloat(box.paddingTop) + parseFloat(box.paddingBottom) + parseFloat(box.rowGap);
+      const avatarHeight = Math.max(128, Math.min(height * .40, height - tallest - reserved));
+      sticky.style.setProperty('--mobile-avatar-height', `${Math.floor(avatarHeight)}px`);
+      step = Math.max(height * .85, tallest + 80);
+      list.style.height = `${height + step * chapters.length}px`;
+      update();
+    };
+    const onScroll = () => { if (!pending) { pending = true; requestAnimationFrame(update); } };
+    const onHome = (e) => {
+      const a = e.target.closest('a[href="#hero"]');
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      show(0);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', measure);
+    window.addEventListener('load', measure);
+    document.addEventListener('click', onHome);
+    document.fonts.ready.then(() => { if (sticky.isConnected) measure(); });
+    measure();
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', measure);
+      window.removeEventListener('load', measure);
+      document.removeEventListener('click', onHome);
+      anchor.replaceWith(figure);
+      chapters.forEach(c => {
+        list.append(c); c.classList.remove('is-current'); c.removeAttribute('aria-hidden'); c.inert = false;
+        const value = originals.get(c); if (value === null) c.removeAttribute('style'); else c.setAttribute('style', value);
+      });
+      sticky.remove(); list.style.height = ''; list.classList.remove('hero-mobile-story');
+      document.body.classList.remove('has-mobile-story');
+    };
+  };
+  const sync = () => {
+    if (!mode.matches && cleanup) { cleanup(); cleanup = null; }
+    if (mode.matches && !cleanup) { document.dispatchEvent(new Event('hero:desktop-setup')); cleanup = setup(); }
+  };
+  document.addEventListener('hero:desktop-setup', () => { if (cleanup) { cleanup(); cleanup = null; } });
+  mode.addEventListener('change', sync);
+  sync();
 })();
