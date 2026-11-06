@@ -384,16 +384,8 @@
         <div class="cs-pets">
           <figure class="cs-pets-hero">
             <img src="assets/snoof/pet-cat-curious.webp" width="1200" height="1600" loading="lazy" alt="Snoof 3D tabby cat looking up curiously in a sunlit living room">
-            <!-- Idle animation (html.motion only): the same image split into background, tail, and body layers. -->
-            <div class="cs-pet-anim" aria-hidden="true">
-              <div class="cs-pet-stage">
-                <img class="cs-pet-bg" src="assets/snoof/pet-cat-curious-bg.webp" width="1200" height="1600" loading="lazy" alt="">
-                <div class="cs-pet-cat">
-                  <img class="cs-pet-tail" src="assets/snoof/pet-cat-curious-tail.webp" width="1200" height="1600" loading="lazy" alt="">
-                  <img class="cs-pet-body" src="assets/snoof/pet-cat-curious-body.webp" width="1200" height="1600" loading="lazy" alt="">
-                </div>
-              </div>
-            </div>
+            <!-- Idle loop (html.motion only): plays muted over the still image while in view; the still stays as poster and fallback. -->
+            <video class="cs-pet-video" muted loop playsinline preload="none" data-src="assets/snoof/pet-cat-loop.mp4" poster="assets/snoof/pet-cat-curious.webp" aria-hidden="true"></video>
           </figure>
           <figure class="cs-pets-sheet">
             <img src="assets/snoof/pet-cat-character-sheet.webp" width="1536" height="1024" loading="lazy" alt="Character sheet of the stylized 3D tabby cat in several views and expressions">

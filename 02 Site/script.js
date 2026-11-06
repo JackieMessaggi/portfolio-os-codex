@@ -314,7 +314,16 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
     });
   }
 
-  // Section 6: idle pet. The loop only runs while the card is on screen.
+  // Section 6: idle pet video. Loads on first view and plays only while on screen (motion only, see the .motion gate).
+  const petVideo = document.querySelector('.cs-pet-video');
+  if (petVideo) {
+    checks.push(() => {
+      const r = petVideo.getBoundingClientRect();
+      const on = r.bottom > 0 && r.top < window.innerHeight;
+      if (on) { if (!petVideo.src) petVideo.src = petVideo.dataset.src; if (petVideo.paused) { const p = petVideo.play(); if (p) p.catch(() => {}); } }
+      else if (!petVideo.paused) petVideo.pause();
+    });
+  }
   const pet = document.querySelector('.cs-pet-anim');
   if (pet) {
     checks.push(() => {

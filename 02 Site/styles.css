@@ -830,6 +830,8 @@ html:not(.js) .cs-version + .cs-version { margin-top: 2.5rem; }
    cropped like the 4:5 card, so the transform origins below are in image coordinates. */
 .cs-pets-hero { position: relative; }
 .cs-pet-anim { display: none; }
+.cs-pet-video { display: none; }
+.motion .cs-pet-video { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 1.2rem; }
 .motion .cs-pet-anim { display: block; position: absolute; inset: 0; overflow: hidden; border-radius: 1.2rem; }
 .cs-pet-stage { position: absolute; left: 0; top: 50%; width: 100%; aspect-ratio: 3 / 4; transform: translateY(-50%); }
 .cs-pet-stage img, .cs-pet-cat { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; }
