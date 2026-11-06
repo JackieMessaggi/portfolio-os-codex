@@ -606,6 +606,119 @@ void main(){
   document.addEventListener('skin:select', (e) => { const btn = buttons.find((b) => b.dataset.skin === e.detail); if (btn) select(btn); });
 })();
 
+// Selected Work reveal (motion only): a lettering cover glitches into an animated view of the project on hover or
+// keyboard focus, using the same digital glitch as the avatar skins; on touch screens it reveals while the card is in
+// view. The canvas draws both states: the lettering (background + mark) and the reveal (video frames on a brand field).
+// The video loads only on first reveal. Without WebGL or with reduced motion, the lettering simply stays.
+(() => {
+  const boxes = [...document.querySelectorAll('.work-letter[data-reveal-video]')];
+  if (!boxes.length || !window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const MS = 460;
+  const VERT = 'attribute vec2 p; varying vec2 uv; void main(){ uv = vec2((p.x + 1.0) * 0.5, (1.0 - p.y) * 0.5); gl_Position = vec4(p, 0.0, 1.0); }';
+  const FRAG = `precision mediump float;
+varying vec2 uv; uniform sampler2D tA; uniform sampler2D tB; uniform float g; uniform float seed;
+float rnd(float n){ return fract(sin(n * 91.345 + seed * 47.13) * 43758.5453); }
+vec3 px(sampler2D t, vec2 q){ return texture2D(t, clamp(q, 0.0, 1.0)).rgb; }
+vec3 pick(vec2 q, float useB){ return useB > 0.5 ? px(tB, q) : px(tA, q); }
+void main(){
+  if (g <= 0.0) { gl_FragColor = vec4(px(tA, uv), 1.0); return; }
+  if (g >= 1.0) { gl_FragColor = vec4(px(tB, uv), 1.0); return; }
+  float amp = sin(3.14159 * g);
+  float band = floor(uv.y * 16.0 + floor(g * 9.0) * 3.0);
+  float useB = step(0.25 + rnd(band) * 0.5, g);
+  float shift = (rnd(band + 7.0) - 0.5) * 0.12 * amp * step(0.45, rnd(band + 3.0));
+  vec2 q = vec2(uv.x + shift, uv.y);
+  float split = 0.012 * amp;
+  vec3 c = vec3(pick(q + vec2(split, 0.0), useB).r, pick(q, useB).g, pick(q - vec2(split, 0.0), useB).b);
+  c *= 1.0 - 0.18 * amp * step(0.5, fract(uv.y * 220.0));
+  gl_FragColor = vec4(c, 1.0);
+}`;
+  const loadImg = (src) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
+
+  boxes.forEach(async (box) => {
+    const canvas = document.createElement('canvas'); canvas.className = 'work-reveal-canvas'; canvas.setAttribute('aria-hidden', 'true');
+    const gl = canvas.getContext('webgl', { alpha: false, antialias: false });
+    if (!gl) return;
+    const sh = (type, src) => { const o = gl.createShader(type); gl.shaderSource(o, src); gl.compileShader(o); return o; };
+    const prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, VERT)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG)); gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const makeTex = (unit) => { const t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t); [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T].forEach((k) => gl.texParameteri(gl.TEXTURE_2D, k, gl.CLAMP_TO_EDGE)); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR); return t; };
+    const texA = makeTex(0); const texB = makeTex(1);
+    gl.uniform1i(gl.getUniformLocation(prog, 'tA'), 0); gl.uniform1i(gl.getUniformLocation(prog, 'tB'), 1);
+    const uG = gl.getUniformLocation(prog, 'g'); const uSeed = gl.getUniformLocation(prog, 'seed');
+
+    const [mark, poster] = await Promise.all([loadImg(box.dataset.letterMark), loadImg(box.dataset.revealPoster)]);
+    if (!mark) return;
+    const restC = document.createElement('canvas'); const revealC = document.createElement('canvas');
+    let video = null; let g = 0; let target = 0; let from = 0; let t0 = 0; let raf = 0;
+    const W = () => canvas.width; const H = () => canvas.height;
+    const size = () => {
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const w = Math.max(2, Math.round(box.clientWidth * dpr)); const h = Math.max(2, Math.round(box.clientHeight * dpr));
+      [canvas, restC, revealC].forEach((c) => { c.width = w; c.height = h; });
+      gl.viewport(0, 0, w, h);
+      // Rest state: the same lettering the page shows underneath (background + centered mark at 44% width).
+      const x = restC.getContext('2d'); x.fillStyle = box.dataset.letterBg; x.fillRect(0, 0, w, h);
+      const mw = w * 0.44; const mh = mw * (mark.naturalHeight / mark.naturalWidth);
+      x.drawImage(mark, (w - mw) / 2, (h - mh) / 2, mw, mh);
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texA); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, restC);
+      drawReveal(); render();
+    };
+    // Reveal state: the phone recording, full height with a little air, rounded, on the brand field.
+    const drawReveal = () => {
+      const w = W(); const h = H(); const x = revealC.getContext('2d');
+      x.fillStyle = box.dataset.revealBg; x.fillRect(0, 0, w, h);
+      const src = video && video.readyState >= 2 ? video : poster;
+      if (src) {
+        const sw = src.videoWidth || src.naturalWidth; const shh = src.videoHeight || src.naturalHeight;
+        const dh = h * 0.88; const dw = dh * (sw / shh); const dx = (w - dw) / 2; const dy = (h - dh) / 2; const r = dw * 0.07;
+        const path = () => { x.beginPath(); if (x.roundRect) x.roundRect(dx, dy, dw, dh, r); else x.rect(dx, dy, dw, dh); };
+        // Lift the screen off the brand field: soft shadow, then the frame, then a light hairline edge.
+        x.save(); x.shadowColor = 'rgba(16, 40, 44, .35)'; x.shadowBlur = h * 0.05; x.shadowOffsetY = h * 0.012; path(); x.fillStyle = '#fff'; x.fill(); x.restore();
+        x.save(); path(); x.clip(); x.drawImage(src, dx, dy, dw, dh); x.restore();
+        x.save(); path(); x.lineWidth = Math.max(1, h * 0.003); x.strokeStyle = 'rgba(255, 255, 255, .55)'; x.stroke(); x.restore();
+      }
+      gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, texB); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, revealC);
+    };
+    const render = () => { gl.uniform1f(uG, g); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); };
+    const loop = (now) => {
+      if (g !== target) { const k = Math.min(1, (now - t0) / MS); g = from + (target - from) * k; if (k >= 1) g = target; }
+      if (g > 0) drawReveal();
+      render();
+      const playing = video && !video.paused;
+      if (g !== target || (g > 0 && playing)) raf = requestAnimationFrame(loop); else raf = 0;
+      if (g === 0 && video && !video.paused) video.pause();
+    };
+    const go = (to) => {
+      if (to === target) return;
+      if (to === 1 && !video) {
+        video = document.createElement('video'); video.muted = true; video.loop = true; video.playsInline = true; video.preload = 'auto';
+        video.src = box.dataset.revealVideo;
+      }
+      if (to === 1 && video) { const pr = video.play(); if (pr) pr.catch(() => {}); }
+      from = g; target = to; t0 = performance.now(); gl.uniform1f(uSeed, Math.random() * 100);
+      if (!raf) raf = requestAnimationFrame(loop);
+    };
+    box.append(canvas);
+    size();
+    new ResizeObserver(() => size()).observe(box);
+    const link = box.closest('a') || box;
+    if (canHover) {
+      link.addEventListener('pointerenter', () => go(1));
+      link.addEventListener('pointerleave', () => go(0));
+    } else if ('IntersectionObserver' in window) {
+      new IntersectionObserver((es) => es.forEach((e) => go(e.intersectionRatio >= 0.6 ? 1 : 0)), { threshold: [0, 0.6, 1] }).observe(box);
+    }
+    link.addEventListener('focus', () => { if (link.matches(':focus-visible')) go(1); });
+    link.addEventListener('blur', () => go(0));
+  });
+})();
+
 // Selected Work: on desktop with motion allowed, pin the section and move the cards sideways with vertical scroll.
 (() => {
   const section = document.querySelector('.work');
@@ -889,15 +1002,23 @@ void main(){
   const posY = (k) => (k > N ? exitY() : stepY(Math.max(0, k)));
   const rawAt = (y) => { const [top, end] = range(); return ((y - top) / Math.max(1, end - top)) * SPAN; };
   // Plateau index for a scroll position, or -1 when between plateaus.
+  const EXIT_ZONE = 40; // the Work link lands scroll-margin (24 px) above the section; that still counts as "at Work"
   const plateauAt = (y) => {
-    if (Math.abs(y - exitY()) < 3) return N + 1;
+    if (y >= exitY() - EXIT_ZONE && y <= exitY() + 3) return N + 1;
     const r = rawAt(y);
     if (r < 0.02) return 0;
     if (r > N - DWELL) return r <= SPAN + 0.001 ? N : -1;
     const k = Math.round(r);
     return k >= 1 && Math.abs(r - k) <= DWELL ? k : -1;
   };
+  // Nearest plateau for any position, so the speed limit never works from a stale chapter after jumps or native scrolling.
+  const nearestK = (y) => {
+    if (y >= exitY() - EXIT_ZONE) return N + 1;
+    if (y > stepY(N)) return (y - stepY(N)) < (exitY() - y) ? N : N + 1;
+    return Math.max(0, Math.min(N, Math.round(rawAt(y))));
+  };
   let current = window.scrollY; let target = current; let raf = 0; let running = false; let lastSet = current;
+  let lastAnyWheel = 0; let strict = false; // strict: a native gesture was already moving when the story took over
   let anchor = 0; let enteredAt = 0; let enteredK = -1; let lastInput = 0; let lastDir = 1; let keyNav = false;
   const clampTarget = () => {
     const lo = posY(Math.max(0, anchor - 1)); const hi = posY(Math.min(N + 1, anchor + 1));
@@ -914,12 +1035,12 @@ void main(){
   const tick = () => {
     const now = performance.now();
     // External scroll (scrollbar drag, anchor jump, find-in-page): adopt it instead of fighting it.
-    if (Math.abs(window.scrollY - lastSet) > 2) { current = target = window.scrollY; anchor = Math.max(0, plateauAt(current)); lastInput = now; navJump = false; }
+    if (Math.abs(window.scrollY - lastSet) > 2) { lastDir = window.scrollY < lastSet ? -1 : 1; current = target = window.scrollY; lastSet = Math.round(current); anchor = nearestK(current); lastInput = now; navJump = false; }
     // Release the speed limit once the page sits on a new plateau long enough, or input pauses there.
     const k = plateauAt(current);
     if (k >= 0 && k !== anchor) {
       if (enteredK !== k) { enteredK = k; enteredAt = now; }
-      if (now - lastInput > QUIET || now - enteredAt > MIN_DWELL || keyNav) { anchor = k; keyNav = false; }
+      if (now - lastInput > QUIET || (!strict && now - enteredAt > MIN_DWELL) || keyNav) { anchor = k; keyNav = false; strict = false; }
     } else if (k === anchor) enteredK = -1;
     // Soft snap after input stops between plateaus.
     if (!navJump && now - lastInput > 180 && Math.abs(target - current) < 1.5 && k < 0 && current > posY(0) + 2 && current < exitY() - 2) target = snapTarget();
@@ -933,14 +1054,14 @@ void main(){
       update();
     }
     tick.last = now;
-    if (navJump && Math.abs(target - current) <= 0.5) { navJump = false; anchor = Math.max(0, plateauAt(current)); update(); }
+    if (navJump && Math.abs(target - current) <= 0.5) { navJump = false; anchor = nearestK(current); update(); }
     if (Math.abs(target - current) > 0.5 || now - lastInput < 400) raf = requestAnimationFrame(tick);
     else { running = false; tick.last = 0; }
   };
   const kick = () => { if (!running) { running = true; tick.last = 0; raf = requestAnimationFrame(tick); } };
   const inRange = (dir) => {
     const y = running ? current : window.scrollY; const top = posY(0); const end = exitY();
-    if (dir > 0) return y >= top - 2 && y < end - 1;
+    if (dir > 0) return y >= top - 2 && y < end - EXIT_ZONE;
     return y > top + 1 && y <= end + 2;
   };
   // Wheel or keys during a link glide: stop the glide where it is and continue from the nearest plateau.
@@ -955,8 +1076,17 @@ void main(){
     let dy = e.deltaY; if (e.deltaMode === 1) dy *= 16; else if (e.deltaMode === 2) dy *= window.innerHeight;
     if (Math.abs(dy) < 0.5) return;
     const dir = dy > 0 ? 1 : -1;
-    if (!running) { current = target = window.scrollY; lastSet = current; const k = plateauAt(current); if (k >= 0) anchor = k; }
+    const nowW = performance.now(); const midGesture = nowW - lastAnyWheel < 120; lastAnyWheel = nowW;
+    // A gesture that began as native scrolling (e.g. up through Selected Work) stays native: the browser marks the rest
+    // of it non-cancelable, so taking over would fight it. Follow along instead and settle on a chapter once it ends.
+    if (!e.cancelable) return;
     if (!inRange(dir) && !(running && Math.abs(target - current) > 1)) return; // outside the story: native scroll
+    if (!running) {
+      current = target = window.scrollY; lastSet = current; anchor = nearestK(current);
+      // Momentum that was already scrolling the page natively (e.g. up from Selected Work) may move one chapter, then
+      // must pause before the next, so it cannot carry straight through the last chapter.
+      strict = midGesture;
+    }
     e.preventDefault();
     lastInput = performance.now(); lastDir = dir;
     target += dy;
@@ -1004,7 +1134,7 @@ void main(){
   const onScroll = () => {
     if (running) return; // the smooth loop renders its own frames
     // Scrollbar drags and other native scrolling inside the story also settle on a plateau.
-    if (Math.abs(window.scrollY - lastSet) > 2) { current = target = lastSet = window.scrollY; if (current < exitY() - 2) { lastInput = performance.now(); kick(); } }
+    if (Math.abs(window.scrollY - lastSet) > 2) { lastDir = window.scrollY < lastSet ? -1 : 1; current = target = lastSet = window.scrollY; anchor = nearestK(current); if (current < exitY() - EXIT_ZONE) { lastInput = performance.now(); kick(); } }
     if (!ticking) { ticking = true; requestAnimationFrame(() => { if (pin.isConnected) update(); }); }
   };
   window.addEventListener('scroll', onScroll, { passive: true });

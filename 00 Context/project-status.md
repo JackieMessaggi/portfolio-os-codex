@@ -4,13 +4,16 @@ Updated: November 6, 2026, by Claude Code.
 
 ## Where we are
 
-Homepage Hero career story, About, and header refined and committed locally after Jackie’s approval. No active task or reserved files. GitHub Pages runs only through the manual workflow; the live site still shows commit `9f7a7d1` (deployed November 5, 2026).
+Homepage Hero career story, About, header, and Selected Work lettering covers committed after Jackie’s approval. No active task or reserved files. GitHub Pages runs only through the manual workflow; the live site shows commit `3fadb33` (deployed November 6, 2026, run 42186272985) until the next approved deploy.
 
 ## What is ready
 
+- Selected Work covers: lettering at rest; Snoof glitches into its prototype demo loop on hover, focus, or (touch) scroll into view, on muted teal. TerraYou, Quiz Bingo, and Damyller are typeset placeholders with “Coming soon”.
+- Selected Work Editorial Statement studies 01 (Codex, private, November 6): TerraYou with original wordmark and one dominant website-hero crop; Quiz Bingo with hybrid editorial title and a single gameplay screen. Private HTML and PNGs: `01 Projects/Portfolio OS/Selected Work Study/editorial-statement-v01/`. Chrome renders reviewed and local fonts confirmed. Source-resolution limits documented; no site integration or final card approval. Snoof/Damyller audited only.
+
 - Homepage and Snoof case, prototype, and demo loop. Earlier delivery approvals are recorded in `decision-log.md`; sources and exploration files remain private.
 - Hero career story with seven stages (Senior Designer, Design Team Lead, Digital Designer, Entrepreneur, Art Director, Graphic Designer, Advertising Student), each with idle avatar loop, thumbnail, icon set, experience duration, Jackie’s copy, and four skill pills.
-- Hero scroll v3: native smooth scroll with per-role plateaus, a one-role-at-a-time speed limit, soft snap, keyboard steps, and an exit plateau at Selected Work. In-page nav links glide straight to their sections.
+- Hero scroll v3: native smooth scroll with per-role plateaus, a one-role-at-a-time speed limit, soft snap, keyboard steps, and an exit plateau at Selected Work. In-page nav links glide straight to their sections. Gestures that begin as native scrolling (e.g. up through Selected Work) stay native and settle on a chapter afterwards.
 - Skin switches: WebGL glitch on the avatar while the object set orbits around it (800 ms ring turn, reversed when scrolling up).
 - Hero intro: new paragraph and “Scroll to explore my journey” cue; full-name logo in the homepage header (case pages keep the monogram); pinned Hero fits viewports below 820 px tall.
 - About: new copy and title, new portrait (`jackie-portrait-egg-chair.webp`, credit Silvio Pelegrin), photo centered on the text block.
@@ -19,7 +22,8 @@ Homepage Hero career story, About, and header refined and committed locally afte
 
 ## What is missing
 
-- Deploy of the latest commit (needs Jackie’s approval).
+- Push and deploy of the latest commit (each needs Jackie’s approval).
+- Reveal animations for TerraYou, Quiz Bingo, and Damyller covers (need assets; see the November 6 audit in the conversation and Codex’s private studies).
 - Optional cleanup: `assets/about/jackie-portrait.webp` (previous About photo) is no longer referenced; Jackie has not decided whether to remove it. The untracked `assets/avatar/avatar-jackie.webp` stays out of Git.
 - Known tight spot: at 1025 × 700 the Design Team Lead “Design Systems” pill touches the bottom nav edge.
 - Broader backlog: mobile rail overlap and touch targets, final project-card art direction, later case studies. See `interaction-spec.md` and `character-bible.md`.
@@ -27,4 +31,4 @@ Homepage Hero career story, About, and header refined and committed locally afte
 
 ## Next step
 
-Jackie reviews the committed changes in the browser; then push and deploy, each with separate approval.
+Jackie tests the Selected Work hover and the upward scroll in the browser; then push and deploy, each with separate approval, for today’s Snoof delivery.

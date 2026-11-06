@@ -216,6 +216,29 @@ h3 { font-size: 1.2rem; line-height: 1.4; }
 /* Card link (Snoof first): the whole media area opens the case study. */
 .work-card-link { display: block; border-radius: 1.2rem; text-decoration: none; }
 .work-card-link:focus-visible { outline: 3px solid var(--ivory); outline-offset: 4px; }
+/* Lettering covers (Editorial Statement, hybrid type). Snoof uses its real wordmark; the others are typeset placeholders
+   in the site fonts, not recreations of the project logos. */
+.work-letter { position: relative; display: grid; place-items: center; overflow: hidden; }
+.work-letter-mark { display: block; width: 44%; height: auto; }
+.work-letter-snoof { background: #faceBB; }
+.work-letter-type { display: flex; flex-direction: column; align-items: center; margin: 0; line-height: .9; text-align: center; }
+.wl-serif { font-family: "Fraunces", Georgia, serif; font-weight: 900; font-optical-sizing: none; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; letter-spacing: -.03em; }
+.wl-sans { font-family: "DM Sans", system-ui, sans-serif; font-weight: 800; letter-spacing: -.04em; }
+.work-letter-terrayou { background: #f1eee5; color: #233d4f; }
+/* TerraYou: one family for the whole mark (Fraunces). */
+.work-letter-terrayou .wl-small, .work-letter-terrayou .wl-big { font-family: "Fraunces", Georgia, serif; font-weight: 900; font-optical-sizing: none; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; letter-spacing: -.03em; }
+.work-letter-terrayou .wl-small { font-size: clamp(2.25rem, 4.6vw, 4.25rem); margin-bottom: -.1em; }
+.work-letter-terrayou .wl-big { font-size: clamp(5rem, 11vw, 10rem); }
+/* Quiz Bingo: one family for the whole mark (DM Sans), purple on the game yellow. */
+.work-letter-quizbingo { background: #f2d98c; color: #401767; }
+.work-letter-quizbingo .wl-big { font-family: "DM Sans", system-ui, sans-serif; font-weight: 800; font-size: clamp(4.5rem, 10vw, 9rem); letter-spacing: -.05em; }
+.work-letter-quizbingo .wl-big + .wl-big { margin-top: -.06em; }
+/* Damyller: light field, dark type. */
+.work-letter-damyller { background: #e8ecf2; color: #1f2a4d; }
+.work-letter-damyller .wl-sans { font-size: clamp(3.25rem, 7.4vw, 6.75rem); font-weight: 700; letter-spacing: .02em; }
+.work-letter-damyller .wl-serif { font-size: clamp(1.5rem, 3vw, 2.75rem); font-weight: 400; font-variation-settings: "wght" 400, "opsz" 72, "SOFT" 100, "WONK" 1; letter-spacing: -.01em; margin-top: .35em; }
+.work-soon { position: absolute; top: 1.5rem; left: 1.5rem; padding: .375rem .75rem; border: 1px solid currentColor; border-radius: 999px; font-family: "DM Sans", system-ui, sans-serif; font-size: .75rem; font-weight: 600; line-height: 1; letter-spacing: .08em; text-transform: uppercase; }
+.work-reveal-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
 .work-media-pending { background: var(--beige); color: var(--eggplant); display: grid; place-content: center; text-align: center; gap: .5rem; }
 .work-pending-name { font-family: "DM Sans", system-ui, sans-serif; font-size: 5rem; font-weight: 700; letter-spacing: -.045em; line-height: 1; }
 .work-pending-note { font-size: .8125rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
@@ -380,6 +403,11 @@ body { padding-bottom: 5.5rem; }
   .work-heading .work-counter { display: none; }
   .work-track { display: grid; gap: 3rem; overflow: visible; padding-inline: 1.25rem 3rem; padding-bottom: 0; }
   .work-card { flex: none; min-width: 0; }
+  .work-soon { top: .75rem; left: .75rem; padding: .3rem .55rem; font-size: .625rem; }
+  .work-letter-terrayou .wl-small { font-size: 1.75rem; } .work-letter-terrayou .wl-big { font-size: 4rem; }
+  .work-letter-quizbingo .wl-big { font-size: 3.25rem; }
+  .work-letter-damyller .wl-sans { font-size: 2.5rem; } .work-letter-damyller .wl-serif { font-size: 1.125rem; }
+  .work-letter-mark { width: 50%; }
   .work-disciplines { overflow-wrap: anywhere; }
   .work-meta { grid-template-areas: "index disciplines" ". contribution" ". cta"; }
   .work-cta { grid-area: cta; justify-self: start; display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; margin-top: .5rem; color: var(--ivory); font-family: "DM Sans", system-ui, sans-serif; font-size: .875rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; text-decoration: underline; text-underline-offset: .3em; }
