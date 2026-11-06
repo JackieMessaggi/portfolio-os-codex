@@ -357,21 +357,56 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
   const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
   const prog = gl.createProgram();
   gl.attachShader(prog, sh(gl.VERTEX_SHADER, 'attribute vec2 p; varying vec2 uv; void main(){ uv = vec2((p.x + 1.0) * 0.5, (1.0 - p.y) * 0.5); gl_Position = vec4(p, 0.0, 1.0); }'));
-  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, 'precision mediump float; varying vec2 uv; uniform sampler2D t; void main(){ vec3 c = texture2D(t, vec2(uv.x, uv.y * 0.5)).rgb; float a = smoothstep(0.05, 0.95, texture2D(t, vec2(uv.x, 0.5 + uv.y * 0.5)).r); gl_FragColor = vec4(c * a, a); }'));
-  gl.linkProgram(prog); gl.useProgram(prog);
+  // Stacked alpha: color in the top half, matte in the bottom half. During a skin switch (g from 0 to 1) the
+  // outgoing frame (tPrev) and the incoming loop (tCur) trade places band by band, with sliding slices, an RGB
+  // split, and scanlines that peak mid-switch: a short digital glitch, like changing skins in a game.
+  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, `precision mediump float;
+varying vec2 uv; uniform sampler2D tCur; uniform sampler2D tPrev; uniform float g; uniform float seed;
+float rnd(float n){ return fract(sin(n * 91.345 + seed * 47.13) * 43758.5453); }
+vec4 px(sampler2D t, vec2 q){ q = clamp(q, 0.0, 1.0); vec3 c = texture2D(t, vec2(q.x, q.y * 0.5)).rgb; float a = smoothstep(0.05, 0.95, texture2D(t, vec2(q.x, 0.5 + q.y * 0.5)).r); return vec4(c * a, a); }
+vec4 pick(vec2 q, float useCur){ return useCur > 0.5 ? px(tCur, q) : px(tPrev, q); }
+void main(){
+  if (g <= 0.0 || g >= 1.0) { gl_FragColor = g >= 1.0 ? px(tCur, uv) : px(tPrev, uv); return; }
+  float amp = sin(3.14159 * g);
+  float band = floor(uv.y * 22.0 + floor(g * 9.0) * 3.0);
+  float useCur = step(0.25 + rnd(band) * 0.5, g);
+  float shift = (rnd(band + 7.0) - 0.5) * 0.16 * amp * step(0.45, rnd(band + 3.0));
+  vec2 q = vec2(uv.x + shift, uv.y);
+  float split = 0.018 * amp;
+  vec4 r = pick(q + vec2(split, 0.0), useCur); vec4 m = pick(q, useCur); vec4 b = pick(q - vec2(split, 0.0), useCur);
+  float a = max(m.a, max(r.a, b.a));
+  vec3 c = vec3(r.r, m.g, b.b);
+  c *= 1.0 - 0.22 * amp * step(0.5, fract(uv.y * 180.0));
+  gl_FragColor = vec4(c, a);
+}`));
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return; // keep the still image
+  gl.useProgram(prog);
   gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
   const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-  gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
-  [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T].forEach((k) => gl.texParameteri(gl.TEXTURE_2D, k, gl.CLAMP_TO_EDGE));
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  const makeTex = (unit) => {
+    const t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
+    [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T].forEach((k) => gl.texParameteri(gl.TEXTURE_2D, k, gl.CLAMP_TO_EDGE));
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, 1, 1, 0, gl.RGB, gl.UNSIGNED_BYTE, new Uint8Array(3));
+    return t;
+  };
+  const texCur = makeTex(0); const texPrev = makeTex(1);
+  gl.uniform1i(gl.getUniformLocation(prog, 'tCur'), 0);
+  gl.uniform1i(gl.getUniformLocation(prog, 'tPrev'), 1);
+  const uG = gl.getUniformLocation(prog, 'g'); const uSeed = gl.getUniformLocation(prog, 'seed');
+  gl.uniform1f(uG, 1);
   gl.clearColor(0, 0, 0, 0);
   box.append(canvas);
 
+  const GLITCH_MS = 460;
   const videos = {};
   let video = null;
   let visible = true;
+  let waitTimer = 0;
+  let glitch = null; // { start } while a switch is in progress; start stays null until the new loop has a frame
   const getVideo = (src) => {
     if (videos[src]) return videos[src];
     const v = src === first.dataset.src ? first : first.cloneNode(false);
@@ -381,27 +416,59 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
     videos[src] = v;
     return v;
   };
+  const upload = (tex, unit, v) => { gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, tex); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, v); };
+  const render = () => {
+    let g = 1;
+    if (glitch) {
+      if (glitch.start === null) g = 0;
+      else { g = Math.min(1, (performance.now() - glitch.start) / GLITCH_MS); if (g >= 1) glitch = null; }
+    }
+    gl.uniform1f(uG, g);
+    gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  };
   const draw = () => {
     const v = video;
     if (!v) return;
     if (v.readyState >= 2) {
       // Browsers block video textures on file:// pages (opaque origin); keep the still instead of failing.
-      try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, v); } catch (err) { v.pause(); canvas.remove(); video = null; return; }
-      gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      try { upload(texCur, 0, v); } catch (err) { v.pause(); canvas.remove(); video = null; return; }
+      if (glitch && glitch.start === null) glitch.start = performance.now();
+      render();
       box.classList.add('is-live');
-    }
+    } else if (glitch) render();
     if (!v.paused && v === video) {
       if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(draw); else requestAnimationFrame(draw);
     }
   };
+  // The glitch animates faster than the video frame rate, so it drives its own frames while it runs.
+  const glitchLoop = () => { if (!glitch || !video) return; render(); requestAnimationFrame(glitchLoop); };
   const play = () => { if (!video || !visible) return; const p = video.play(); if (p) p.then(draw).catch(() => {}); else draw(); };
-  const use = (src) => {
+  const use = (src, animate) => {
+    const prev = video;
+    if (animate && prev && prev.readyState >= 2 && box.classList.contains('is-live')) {
+      try { upload(texPrev, 1, prev); } catch (err) { /* keep the plain switch */ }
+      glitch = { start: null }; gl.uniform1f(uSeed, Math.random() * 100);
+      requestAnimationFrame(glitchLoop);
+    } else glitch = null;
     Object.values(videos).forEach((v) => v.pause());
     video = getVideo(src);
+    if (glitch && video.readyState >= 2) glitch.start = performance.now();
+    clearTimeout(waitTimer);
+    if (video.readyState < 2) {
+      // If the new loop has no frame yet, fall back to its still (with the CSS glitch) instead of holding the old look.
+      const v = video;
+      waitTimer = setTimeout(() => { if (video === v && v.readyState < 2) { glitch = null; box.classList.remove('is-live'); } }, animate ? 380 : 0);
+    }
     play();
   };
-  use(first.dataset.src);
-  box.addEventListener('skin:change', (e) => { box.classList.remove('is-live'); use(e.detail.src); });
+  use(first.dataset.src, false);
+  box.addEventListener('skin:change', (e) => { use(e.detail.src, true); });
+  // Desktop story: warm the other skins' loops after the page settles, so switches start without a wait.
+  if (window.matchMedia('(min-width: 1025px)').matches) {
+    window.addEventListener('load', () => setTimeout(() => {
+      document.querySelectorAll('.skin-btn[data-video]').forEach((b) => getVideo(b.dataset.video));
+    }, 1500), { once: true });
+  }
   if ('IntersectionObserver' in window) {
     new IntersectionObserver((entries) => entries.forEach((e) => {
       visible = e.isIntersecting;
@@ -430,27 +497,109 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
   if (!buttons.length || !box) return;
   const still = box.querySelector('.hero-avatar-still');
   const motion = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
-  let switchTimer = 0; let revealTimer = 0;
-  const apply = (btn) => {
-    const skin = btn.dataset.skin;
+  const swapObjects = (skin) => {
     fig.dataset.skin = skin;
+    fig.querySelectorAll('.hero-objects').forEach((g) => { g.hidden = g.dataset.skin !== skin; });
+  };
+  const swapAvatar = (btn) => {
     still.src = btn.dataset.poster;
     box.setAttribute('aria-label', btn.dataset.label);
-    fig.querySelectorAll('.hero-objects').forEach((g) => { g.hidden = g.dataset.skin !== skin; });
     box.dispatchEvent(new CustomEvent('skin:change', { detail: { src: btn.dataset.video } }));
+  };
+  const apply = (btn) => { swapObjects(btn.dataset.skin); swapAvatar(btn); };
+
+  // Orbit (motion only): the object set turns around the avatar like a ring while the avatar glitches. Moving to an
+  // older stage (dir = 1), objects in front travel left to right and objects behind travel right to left; going back
+  // reverses the turn. The old set leaves on the far half of the turn and the new set arrives into its own places.
+  // Temporary copies do the travelling, so the real objects keep their float and parallax untouched.
+  const ORBIT_MS = 800;
+  let orbit = null;
+  const endOrbit = () => {
+    if (!orbit) return;
+    clearTimeout(orbit.timer); clearTimeout(orbit.avatarTimer);
+    orbit.anims.forEach((an) => an.cancel());
+    orbit.layers.forEach((l) => l.remove());
+    if (!orbit.avatarDone) swapAvatar(orbit.btn);
+    fig.classList.remove('is-orbiting');
+    orbit = null;
+  };
+  const snapshot = (img) => {
+    // Layout box (unaffected by float, tilt, and parallax); object groups fill the figure, so offsets are figure-relative.
+    const cs = getComputedStyle(img); const x = img.offsetLeft; const y = img.offsetTop; const w = img.offsetWidth; const h = img.offsetHeight;
+    return { img, x, y, w, h, cx: x + w / 2, cy: y + h / 2, rot: parseFloat(cs.getPropertyValue('--r')) || 0, filter: cs.filter, opacity: parseFloat(cs.opacity) || 1 };
+  };
+  const startOrbit = (btn, dir) => {
+    const fr = fig.getBoundingClientRect();
+    const W = fr.width; const H = fr.height; const mid = W / 2;
+    const visibleImgs = () => [...fig.querySelectorAll('.hero-objects:not([hidden]) .hero-obj')].filter((i) => i.offsetParent);
+    const olds = visibleImgs().map(snapshot);
+    swapObjects(btn.dataset.skin);
+    const news = visibleImgs().map(snapshot);
+    fig.classList.add('is-orbiting');
+    const front = document.createElement('div'); front.className = 'orbit-layer orbit-front'; front.setAttribute('aria-hidden', 'true');
+    const back = document.createElement('div'); back.className = 'orbit-layer orbit-back'; back.setAttribute('aria-hidden', 'true');
+    fig.append(back, front);
+    const anims = [];
+    const fly = (o, leaving, order) => {
+      // Which side of the ring: in front when travelling the "front" way for this direction.
+      const onLeft = o.cx < mid;
+      const inFront = leaving ? (onLeft === dir > 0) : (!onLeft === dir > 0);
+      const mx = 2 * mid - o.cx; // mirrored x across the avatar's axis
+      const fromX = leaving ? 0 : mx - o.cx; const toX = leaving ? mx - o.cx : 0;
+      // Each object crosses at its own height: front crossings spread over torso-to-knee height (never the face),
+      // back crossings rise a little. Spreading heights and start times keeps the middle of the turn from crowding.
+      const midY = inFront ? H * (0.45 + 0.38 * (o.cy / H)) - o.cy : Math.max(H * 0.08, o.cy - H * 0.06) - o.cy;
+      const sMid = inFront ? 1.18 : 0.78;
+      const c = o.img.cloneNode(false);
+      c.removeAttribute('loading');
+      Object.assign(c.style, { left: `${o.x}px`, top: `${o.y}px`, width: `${o.w}px`, right: 'auto', margin: '0', animation: 'none', translate: 'none', filter: o.filter, opacity: '0' });
+      (inFront ? front : back).append(c);
+      const r = o.rot; const op = o.opacity;
+      const t = (x, y, sc, rr) => `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(${sc}) rotate(${rr}deg)`;
+      const midX = (fromX + toX) / 2;
+      const backFilter = `${o.filter === 'none' ? '' : o.filter} blur(2px)`.trim();
+      const frontFilter = o.filter.replace(/blur\([^)]*\)/g, '').trim() || 'none'; // back-plane objects sharpen as they pass in front
+      const frames = leaving
+        ? [
+          { offset: 0, transform: t(fromX, 0, 1, r), opacity: op, filter: o.filter },
+          { offset: 0.5, transform: t(midX, midY, sMid, r + 8 * dir), opacity: inFront ? 1 : op * 0.55, filter: inFront ? frontFilter : backFilter },
+          { offset: 0.82, transform: t(toX * 0.92, midY * 0.25, 0.92, r + 12 * dir), opacity: 0, filter: inFront ? o.filter : backFilter },
+          { offset: 1, transform: t(toX, 0, 0.9, r + 14 * dir), opacity: 0, filter: o.filter },
+        ]
+        : [
+          { offset: 0, transform: t(fromX, 0, 0.9, r - 14 * dir), opacity: 0, filter: inFront ? o.filter : backFilter },
+          { offset: 0.2, transform: t(fromX * 0.92, midY * 0.25, 0.92, r - 12 * dir), opacity: 0, filter: inFront ? o.filter : backFilter },
+          { offset: 0.5, transform: t(midX, midY, sMid, r - 8 * dir), opacity: inFront ? 1 : op * 0.55, filter: inFront ? frontFilter : backFilter },
+          { offset: 1, transform: t(toX, 0, 1, r), opacity: op, filter: o.filter },
+        ];
+      // Old objects leave first (0 to ~620 ms), new ones arrive later (~180 to 800 ms), each staggered by its order.
+      const stagger = order * 100;
+      const delay = leaving ? stagger : 180 + stagger;
+      const duration = leaving ? 520 : ORBIT_MS - 180 - stagger;
+      anims.push(c.animate(frames, { duration, delay, easing: 'cubic-bezier(.45, .05, .35, 1)', fill: 'both' }));
+    };
+    const ordered = (list) => list.slice().sort((a, b) => a.cy - b.cy).map((o, i, arr) => [o, arr.length > 1 ? i / (arr.length - 1) : 0]);
+    ordered(olds).forEach(([o, k]) => fly(o, true, k));
+    ordered(news).forEach(([o, k]) => fly(o, false, k));
+    orbit = { btn, anims, layers: [front, back], avatarDone: false };
+    // The avatar glitch (460 ms) sits in the middle of the turn, so both read as one gesture.
+    orbit.avatarTimer = setTimeout(() => {
+      if (!orbit) return;
+      orbit.avatarDone = true; swapAvatar(btn);
+      fig.classList.remove('is-glitch-in'); void fig.offsetWidth; fig.classList.add('is-glitch-in');
+      setTimeout(() => fig.classList.remove('is-glitch-in'), 420);
+    }, 170);
+    orbit.timer = setTimeout(endOrbit, ORBIT_MS + 20);
   };
   const select = (btn) => {
     if (btn.getAttribute('aria-pressed') === 'true') return;
+    const prev = buttons.find((b) => b.getAttribute('aria-pressed') === 'true');
     buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
     if (!motion) { apply(btn); return; }
-    fig.classList.add('is-switching');
-    clearTimeout(switchTimer); clearTimeout(revealTimer);
-    switchTimer = setTimeout(() => {
-      apply(btn);
-      const show = () => { clearTimeout(revealTimer); fig.classList.remove('is-switching'); };
-      if (still.complete) setTimeout(show, 30);
-      else { still.addEventListener('load', show, { once: true }); still.addEventListener('error', show, { once: true }); revealTimer = setTimeout(show, 700); }
-    }, 280);
+    endOrbit();
+    // Buttons run oldest first, so a lower index is an older stage: that is the forward (scroll down) direction.
+    const dir = prev && buttons.indexOf(btn) > buttons.indexOf(prev) ? -1 : 1;
+    startOrbit(btn, dir);
   };
   buttons.forEach((btn) => btn.addEventListener('click', () => select(btn)));
   // Lets other scripts (the Hero story) switch skins even when the picker itself is hidden or inert.
@@ -535,9 +684,13 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
   const maskId = 'story-line-mask';
   const defs = document.createElementNS(NS, 'defs');
   const mask = document.createElementNS(NS, 'mask'); mask.setAttribute('id', maskId); mask.setAttribute('maskUnits', 'userSpaceOnUse');
+  // An SVG mask only covers 10% beyond the drawing by default; on wide screens the line swings further into the
+  // margin and was cut there. Give the mask region explicit room in every direction.
+  [['x', -20000], ['y', -20000], ['width', 60000], ['height', 1000000]].forEach(([k, v]) => mask.setAttribute(k, v));
   const maskAll = document.createElementNS(NS, 'rect'); maskAll.setAttribute('fill', '#fff');
   const maskTitle = document.createElementNS(NS, 'rect'); maskTitle.setAttribute('fill', '#000'); maskTitle.setAttribute('rx', '8');
-  mask.append(maskAll, maskTitle); defs.append(mask); svg.prepend(defs);
+  const maskLogo = document.createElementNS(NS, 'rect'); maskLogo.setAttribute('fill', '#000'); maskLogo.setAttribute('rx', '8');
+  mask.append(maskAll, maskTitle, maskLogo); defs.append(mask); svg.prepend(defs);
   path.setAttribute('mask', `url(#${maskId})`);
   hero.prepend(svg);
   const dot = document.createElement('span'); dot.className = 'story-dot'; dot.setAttribute('aria-hidden', 'true'); hero.append(dot);
@@ -547,6 +700,7 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
   const N = chapters.length; // chapter k (1..N) is centered at s = k
   const T0 = 0.75; // headline shrink finishes here
   let g = {}; let skin = hero.querySelector('.hero-figure').dataset.skin; let ticking = false;
+  let navJump = false; // true while an in-page link glides past the story (no snapping, no skin changes on the way)
 
   const measure = () => {
     [title, ...rest, stage, ...chapters].forEach((el) => { el.style.transform = ''; el.style.opacity = ''; });
@@ -652,11 +806,23 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
   };
 
   const clamp = (v) => Math.min(1, Math.max(0, v));
+  // Plateaus: each chapter holds still for a stretch of scroll (DWELL on each side of its center), and the change
+  // between chapters happens in the stretch between plateaus, eased in and out. Raw r is linear in scroll.
+  const DWELL = 0.16;
+  const dwell = (r) => {
+    if (r <= 0) return 0;
+    if (r < 1 - DWELL) return r / (1 - DWELL);
+    if (r >= N) return N;
+    const k = Math.round(r); const f = r - k; const a = Math.abs(f);
+    if (a <= DWELL) return k;
+    const u = (a - DWELL) / (0.5 - DWELL); const e = u * u * (3 - 2 * u);
+    return k + Math.sign(f) * e * 0.5;
+  };
   const update = () => {
     ticking = false;
     const dist = pin.offsetHeight - sticky.offsetHeight;
     const p = dist > 0 ? clamp(-pin.getBoundingClientRect().top / dist) : 0;
-    const s = p * (N + 0.4); // a short hold after the last chapter
+    const s = dwell(p * (N + 0.4)); // plateaus per chapter, plus a short hold after the last one
     // 1. Headline shrinks and moves up; band and supporting text leave upward.
     const t = clamp(s / T0); const e = t * t * (3 - 2 * t);
     title.style.transform = `translateY(${(g.dy * e).toFixed(1)}px) scale(${(1 - (1 - g.scale) * e).toFixed(4)})`;
@@ -679,6 +845,8 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
     maskAll.setAttribute('width', window.innerWidth + 100); maskAll.setAttribute('height', 99999);
     maskTitle.setAttribute('x', tb.left - hr2.left - 14); maskTitle.setAttribute('y', tb.top - hr2.top - 10 + shift);
     maskTitle.setAttribute('width', tb.width + 28); maskTitle.setAttribute('height', tb.height + 20);
+    const logo = header.querySelector('img'); const lb = logo ? logo.getBoundingClientRect() : null; // keep the line off the logo too
+    if (lb) { maskLogo.setAttribute('x', lb.left - hr2.left - 12); maskLogo.setAttribute('y', lb.top - hr2.top - 10 + shift); maskLogo.setAttribute('width', lb.width + 24); maskLogo.setAttribute('height', lb.height + 20); }
     svg.style.opacity = lineOn.toFixed(3);
     dot.style.opacity = lineOn.toFixed(3);
     dot.style.left = `${point.x}px`;
@@ -693,7 +861,7 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
       c.style.visibility = vis <= 0 ? 'hidden' : 'visible';
     });
     const next = SKINS[Math.min(N, Math.max(0, Math.round(s)))];
-    if (next !== skin) { skin = next; document.dispatchEvent(new CustomEvent('skin:select', { detail: next })); }
+    if (next !== skin && !navJump) { skin = next; document.dispatchEvent(new CustomEvent('skin:select', { detail: next })); }
   };
   // A fragment targeting a sticky Hero can otherwise land at its last pinned position.
   const homeLinks = [...document.querySelectorAll('a[href="#hero"]')];
@@ -706,96 +874,139 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
   homeLinks.forEach((link) => link.addEventListener('click', goHome));
   const onHash = () => { if (location.hash === '#hero') goHome(); };
   window.addEventListener('hashchange', onHash);
-  // Lock points: one scroll gesture glides to the next chapter (or back) and stops there, so no chapter is skipped.
-  // Steps are s = 0 (intro), 1..N (chapters), then N + 1 (start of Selected Work). Past that the page scrolls normally.
+  // Smooth scroll for the story (in the spirit of Lenis, without the library): wheel input moves a target, and the
+  // page eases toward it every frame, so scrolling always responds and always glides. Plateaus are k = 0 (intro),
+  // 1..N (chapters), and N + 1 (top of Selected Work). Two guards keep the story readable without fighting the user:
+  // - speed limit: the target never runs past the next plateau until the page has settled on it (a short pause in
+  //   input, or MIN_DWELL ms on the plateau), so even a hard swipe shows every chapter;
+  // - soft snap: when input stops between plateaus, the page eases to the one it was heading for.
   const SPAN = N + 0.4;
+  const LERP = 0.1; const MIN_DWELL = 700; const QUIET = 140;
   const stepY = (k) => pin.getBoundingClientRect().top + window.scrollY + (pin.offsetHeight - sticky.offsetHeight) * (k / SPAN);
   const range = () => { const top = stepY(0); return [top, top + (pin.offsetHeight - sticky.offsetHeight)]; };
-  let animating = false; let lockedUntilQuiet = false; let lastWheel = 0; let settleTimer = 0;
-  let glideTarget = 0; let raf = 0; let lastAbs = 0; let lastDir = 0;
-  // Exit lock point (N + 1): the start of Selected Work, so leaving the last chapter is one gesture, not a long scroll.
   const work = document.getElementById('work');
   const exitY = () => (work ? work.getBoundingClientRect().top + window.scrollY : range()[1] + sticky.offsetHeight);
-  const posY = (k) => (k > N ? exitY() : stepY(k));
-  const nearestStep = () => {
-    let best = 0; let bestD = Infinity;
-    for (let k = 0; k <= N + 1; k += 1) { const d = Math.abs(window.scrollY - posY(k)); if (d < bestD) { bestD = d; best = k; } }
-    return best;
+  const posY = (k) => (k > N ? exitY() : stepY(Math.max(0, k)));
+  const rawAt = (y) => { const [top, end] = range(); return ((y - top) / Math.max(1, end - top)) * SPAN; };
+  // Plateau index for a scroll position, or -1 when between plateaus.
+  const plateauAt = (y) => {
+    if (Math.abs(y - exitY()) < 3) return N + 1;
+    const r = rawAt(y);
+    if (r < 0.02) return 0;
+    if (r > N - DWELL) return r <= SPAN + 0.001 ? N : -1;
+    const k = Math.round(r);
+    return k >= 1 && Math.abs(r - k) <= DWELL ? k : -1;
   };
-  // Ease-out: the page responds on the first frame and decelerates into the lock point. A new glide can
-  // interrupt one in progress and continues from the current position, so quick swipes chain smoothly.
-  const glideTo = (y, ms = 520) => {
-    cancelAnimationFrame(raf);
-    const from = window.scrollY; const t0 = performance.now(); animating = true;
-    const ease = (t) => 1 - (1 - t) ** 4;
-    const tick = (now) => {
-      const t = Math.min(1, (now - t0) / ms);
-      window.scrollTo({ top: from + (y - from) * ease(t), behavior: 'instant' });
-      update(); // render in the same frame as the scroll, not one frame later
-      if (t < 1) raf = requestAnimationFrame(tick); else { animating = false; lockedUntilQuiet = true; }
-    };
-    raf = requestAnimationFrame(tick);
+  let current = window.scrollY; let target = current; let raf = 0; let running = false; let lastSet = current;
+  let anchor = 0; let enteredAt = 0; let enteredK = -1; let lastInput = 0; let lastDir = 1; let keyNav = false;
+  const clampTarget = () => {
+    const lo = posY(Math.max(0, anchor - 1)); const hi = posY(Math.min(N + 1, anchor + 1));
+    target = Math.min(hi, Math.max(lo, target));
   };
-  const currentS = () => { const [top, end] = range(); return ((window.scrollY - top) / Math.max(1, end - top)) * SPAN; };
-  const step = (dir) => {
-    const base = animating ? glideTarget : null;
-    let target;
-    if (base !== null) target = base + dir;
-    else {
-      const k = nearestStep();
-      const offStep = Math.abs(window.scrollY - posY(k)) > 4;
-      const sNow = window.scrollY > stepY(N) ? N + 0.5 : currentS();
-      target = offStep ? (dir > 0 ? Math.ceil(sNow) : Math.floor(sNow)) : k + dir;
+  const snapTarget = () => {
+    // Between plateaus: any deliberate move off a plateau carries on to the next one in that direction.
+    const y = current; const r = rawAt(y);
+    if (y > stepY(N) + 3) { const t = (y - stepY(N)) / Math.max(1, exitY() - stepY(N)); return lastDir > 0 ? (t > 0.05 ? exitY() : stepY(N)) : (t < 0.95 ? stepY(N) : exitY()); }
+    const lo = r < 1 ? 0 : Math.floor(r); const hi = lo + 1;
+    const t = r < 1 ? r / (1 - DWELL) : (r - lo - DWELL) / (1 - 2 * DWELL);
+    return posY(lastDir > 0 ? (t > 0.05 ? hi : lo) : (t < 0.95 ? lo : hi));
+  };
+  const tick = () => {
+    const now = performance.now();
+    // External scroll (scrollbar drag, anchor jump, find-in-page): adopt it instead of fighting it.
+    if (Math.abs(window.scrollY - lastSet) > 2) { current = target = window.scrollY; anchor = Math.max(0, plateauAt(current)); lastInput = now; navJump = false; }
+    // Release the speed limit once the page sits on a new plateau long enough, or input pauses there.
+    const k = plateauAt(current);
+    if (k >= 0 && k !== anchor) {
+      if (enteredK !== k) { enteredK = k; enteredAt = now; }
+      if (now - lastInput > QUIET || now - enteredAt > MIN_DWELL || keyNav) { anchor = k; keyNav = false; }
+    } else if (k === anchor) enteredK = -1;
+    // Soft snap after input stops between plateaus.
+    if (!navJump && now - lastInput > 180 && Math.abs(target - current) < 1.5 && k < 0 && current > posY(0) + 2 && current < exitY() - 2) target = snapTarget();
+    const gap = target - current;
+    if (Math.abs(gap) > 0.5) {
+      const dt = tick.last ? Math.min(0.05, (now - tick.last) / 1000) : 1 / 60;
+      current += gap * (1 - Math.exp(-60 * (navJump ? 0.16 : LERP) * dt));
+      if (Math.abs(target - current) < 0.5) current = target;
+      lastSet = Math.round(current);
+      window.scrollTo({ top: current, behavior: 'instant' });
+      update();
     }
-    if (target < 0 || target > N + 1) return false; // leave the story: let the page scroll normally
-    glideTarget = target;
-    glideTo(posY(target), target > N ? 700 : 520);
-    return true;
+    tick.last = now;
+    if (navJump && Math.abs(target - current) <= 0.5) { navJump = false; anchor = Math.max(0, plateauAt(current)); update(); }
+    if (Math.abs(target - current) > 0.5 || now - lastInput < 400) raf = requestAnimationFrame(tick);
+    else { running = false; tick.last = 0; }
   };
-  const inStory = (dir) => {
-    const [top, end] = range(); const y = window.scrollY;
-    if (dir > 0) return y >= top - 2 && y < exitY() - 2;
-    return y > top + 2 && y <= exitY() + 2;
+  const kick = () => { if (!running) { running = true; tick.last = 0; raf = requestAnimationFrame(tick); } };
+  const inRange = (dir) => {
+    const y = running ? current : window.scrollY; const top = posY(0); const end = exitY();
+    if (dir > 0) return y >= top - 2 && y < end - 1;
+    return y > top + 1 && y <= end + 2;
+  };
+  // Wheel or keys during a link glide: stop the glide where it is and continue from the nearest plateau.
+  const cancelJump = () => {
+    if (!navJump) return;
+    navJump = false; target = current;
+    anchor = current > stepY(N) + 3 ? (current >= exitY() - 3 ? N + 1 : N) : Math.max(0, Math.min(N, Math.round(rawAt(current))));
   };
   const onWheel = (e) => {
-    const now = performance.now(); const quiet = now - lastWheel > 160; lastWheel = now;
-    const abs = Math.abs(e.deltaY);
-    if (abs < 1) return;
-    const dir = e.deltaY > 0 ? 1 : -1;
-    // Trackpad inertia decays steadily. A pause, a direction change, or a clear rise in speed means a new swipe.
-    const fresh = quiet || dir !== lastDir || abs > lastAbs * 1.4 + 4;
-    lastAbs = abs; lastDir = dir;
-    if (animating || lockedUntilQuiet) {
-      const [top] = range(); const inside = window.scrollY >= top - 2 && window.scrollY <= exitY() + 2;
-      if (!fresh) { if (inside) e.preventDefault(); return; } // same gesture: one swipe moves one step
-      lockedUntilQuiet = false;
-      if (animating) { step(dir); e.preventDefault(); return; } // chain to the next step, or let the current glide finish
-    }
-    if (!inStory(dir)) return;
-    if (step(dir)) e.preventDefault();
+    if (e.ctrlKey) return; // pinch zoom
+    cancelJump();
+    let dy = e.deltaY; if (e.deltaMode === 1) dy *= 16; else if (e.deltaMode === 2) dy *= window.innerHeight;
+    if (Math.abs(dy) < 0.5) return;
+    const dir = dy > 0 ? 1 : -1;
+    if (!running) { current = target = window.scrollY; lastSet = current; const k = plateauAt(current); if (k >= 0) anchor = k; }
+    if (!inRange(dir) && !(running && Math.abs(target - current) > 1)) return; // outside the story: native scroll
+    e.preventDefault();
+    lastInput = performance.now(); lastDir = dir;
+    target += dy;
+    clampTarget();
+    kick();
   };
   const onKey = (e) => {
     if (e.target.closest && e.target.closest('input, textarea, select, [contenteditable]')) return;
     const down = ['ArrowDown', 'PageDown', ' '].includes(e.key) && !e.shiftKey; const up = ['ArrowUp', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey);
     if (!down && !up) return;
     const dir = down ? 1 : -1;
-    if (animating) { if (step(dir)) e.preventDefault(); return; }
-    if (!inStory(dir)) return;
-    if (step(dir)) e.preventDefault();
+    cancelJump();
+    if (!running) { current = target = window.scrollY; lastSet = current; }
+    if (!inRange(dir)) return;
+    // One key press, one chapter: from the plateau the page is on or heading to.
+    let k = plateauAt(target);
+    if (k < 0) { const r = rawAt(target); k = dir > 0 ? Math.floor(r) : Math.ceil(r); if (target > stepY(N) + 3) k = N; }
+    const next = Math.max(0, Math.min(N + 1, k + dir));
+    e.preventDefault();
+    lastInput = performance.now(); lastDir = dir; keyNav = true; anchor = k;
+    target = posY(next);
+    kick();
   };
-  // Scrollbar drags and other scroll sources settle on the nearest lock point.
-  const settle = () => {
-    clearTimeout(settleTimer);
-    settleTimer = setTimeout(() => {
-      if (animating) return;
-      const [top] = range(); const y = window.scrollY;
-      if (y <= top + 2 || y >= stepY(N) + 2) return;
-      const k = nearestStep(); if (Math.abs(y - stepY(k)) > 3) { glideTarget = k; glideTo(stepY(k), 420); }
-    }, 220);
+  // In-page links (Work, About, Contact): glide straight to the section through the story, instead of a native smooth
+  // scroll that the story would read as a stop between chapters and snap back. Home has its own handler (goHome).
+  const onAnchor = (e) => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const id = a.getAttribute('href');
+    if (id === '#' || id === '#hero') return;
+    const el = document.querySelector(id);
+    if (!el) return;
+    e.preventDefault();
+    history.pushState(null, '', id);
+    current = window.scrollY; lastSet = Math.round(current);
+    target = el.getBoundingClientRect().top + window.scrollY - (parseFloat(getComputedStyle(el).scrollMarginTop) || 0);
+    navJump = true; lastInput = performance.now();
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+    el.focus({ preventScroll: true });
+    kick();
   };
+  document.addEventListener('click', onAnchor);
   window.addEventListener('wheel', onWheel, { passive: false });
   window.addEventListener('keydown', onKey);
-  const onScroll = () => { settle(); if (!ticking) { ticking = true; requestAnimationFrame(() => { if (pin.isConnected) update(); }); } };
+  const onScroll = () => {
+    if (running) return; // the smooth loop renders its own frames
+    // Scrollbar drags and other native scrolling inside the story also settle on a plateau.
+    if (Math.abs(window.scrollY - lastSet) > 2) { current = target = lastSet = window.scrollY; if (current < exitY() - 2) { lastInput = performance.now(); kick(); } }
+    if (!ticking) { ticking = true; requestAnimationFrame(() => { if (pin.isConnected) update(); }); }
+  };
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', measure);
   window.addEventListener('load', measure);
@@ -806,8 +1017,9 @@ document.querySelectorAll('.cs-compare').forEach((figure) => {
     window.removeEventListener('hashchange', onHash);
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('wheel', onWheel);
+    document.removeEventListener('click', onAnchor);
     window.removeEventListener('keydown', onKey);
-    clearTimeout(settleTimer); cancelAnimationFrame(raf);
+    cancelAnimationFrame(raf);
     window.removeEventListener('resize', measure);
     window.removeEventListener('load', measure);
     headerAnchor.replaceWith(header);

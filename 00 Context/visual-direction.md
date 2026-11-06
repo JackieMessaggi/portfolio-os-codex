@@ -38,7 +38,7 @@ The owner supplied two SVG files in `02 Site/assets/logo/`:
 - `Jackie_Logo_black_Short.svg`
 - `JM_Logo.svg`
 
-Preserve the supplied originals. Visual inspection confirmed that `Jackie_Logo_black_Short.svg` is the JM monogram and `JM_Logo.svg` is the full-name wordmark. The owner approved the monogram for the header and replacing its black fill with the approved Deep Eggplant `#400849`. The derived asset is `Jackie_Logo_eggplant_Short.svg`. Header scale and spacing remain subject to the static composition comparison. The monogram is implemented in the site header (56 px wide on desktop, 44 px on mobile) since November 4, 2026.
+Preserve the supplied originals. Visual inspection confirmed that `Jackie_Logo_black_Short.svg` is the JM monogram and `JM_Logo.svg` is the full-name wordmark. The owner approved the monogram for the header and replacing its black fill with the approved Deep Eggplant `#400849`. The derived asset is `Jackie_Logo_eggplant_Short.svg`. Header scale and spacing remain subject to the static composition comparison. The monogram is implemented in the site header (56 px wide on desktop, 44 px on mobile) since November 4, 2026. Update November 6, 2026: on the homepage the header now uses the full-name wordmark (`JM_Logo.svg` with its black fill replaced by Deep Eggplant, derived asset `Jackie_Logo_eggplant_Full.svg`, 120 px wide on desktop, 96 px on mobile and on short story viewports), because the name did not appear anywhere in the Hero. Case pages keep the JM monogram. Jackie’s request; supersedes the monogram-only homepage header.
 
 ## Layout
 
