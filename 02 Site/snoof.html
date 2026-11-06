@@ -49,15 +49,23 @@
       <div class="wrap cs-hero-inner">
       <div class="cs-hero-text">
       <p class="cs-project"><img src="assets/snoof/snoof-wordmark-navy.png" width="1200" height="419" alt="snoof"><span>From Concept to Clarity</span></p>
-      <h1 id="cs-title" class="cs-display">A potentially <mark>toxic</mark> relationship</h1>
+      <h1 id="cs-title" class="cs-display">A potentially<br> <mark>toxic</mark><br> relationship</h1>
       <!-- Desktop: absolutely positioned to fill the full hero height on the right. Mobile: full-bleed below the title. -->
       <figure class="cs-hero-figure">
         <img src="assets/snoof/jager-yucca-portrait.webp" width="1290" height="1588" fetchpriority="high" alt="Jäger, a golden tabby cat with green eyes, curled up in the white pot of a yucca, one paw resting on its trunk">
       </figure>
       <div class="cs-hero-copy">
-        <p class="cs-lede">Meet Jäger.<br>And his beloved Yucca elephantipes.</p>
-        <p>He started sleeping in its pot, bending the trunk a little more every week. Which raised a simple question: is this plant actually safe for him?</p>
-        <p>Snoof is what came out of that question. Twice.</p>
+        <p class="cs-lede">It started with Jäger, my cat, and a plant he wouldn’t leave alone.</p>
+        <p>What seemed like a harmless habit made me wonder: was this plant actually safe for him?</p>
+        <!-- Full story: open without JavaScript; script.js collapses it behind the toggle. -->
+        <button class="cs-story-toggle" type="button" aria-expanded="true" aria-controls="cs-full-story" hidden><span class="cs-story-icon" aria-hidden="true"></span><span class="cs-story-label">Hide the full story</span></button>
+        <div class="cs-story" id="cs-full-story">
+          <div class="cs-story-inner">
+            <p class="cs-story-lede">Meet Jäger. And his beloved Yucca elephantipes.</p>
+            <p>He started sleeping in its pot, bending the trunk a little more every week.</p>
+            <p>Snoof is what came out of that question. Twice.</p>
+          </div>
+        </div>
       </div>
       </div>
       </div>
@@ -82,48 +90,49 @@
           <p class="cs-lede cs-lede-intro">Snoof began in July 2026 as a personal project. Plant apps were great at naming plants and reminding you to water them. Pet-safety information lived somewhere else and rarely explained much.</p>
         </div>
         <div class="cs-copy">
-          <p>Version 1.0 was my first answer. I ran a survey that received 43 submissions, wrote a product strategy and UX principles, built the brand, and started wireframing. The core idea was simple: tell people whether a plant is a <i>Good Match</i> for their household.</p>
-          <p>Some instincts were already there. One early principle read “context over binary labels.” Another said “explain uncertainty.” But the wireframes still ended in a verdict, and that’s where I paused the project.</p>
-          <p>A few months later, during Spiced Academy’s Design OS course, I went back to it. New method: interviews instead of a survey, a structured AI-assisted workflow, and a lot more questioning of my own assumptions. I wanted to see which parts of v1.0 would hold up.</p>
+          <p><strong>Version 1.0 was my first answer.</strong> A survey with 43 submissions, a product strategy, UX principles, a brand, and early wireframes. The idea: tell people whether a plant is a <i>Good Match</i> for their household.</p>
+          <p>Some instincts were already there, like “context over binary labels” and “explain uncertainty.” But the wireframes still ended in a verdict. <strong>That’s where I paused.</strong></p>
+          <p>A few months later, during Spiced Academy’s Design OS course, I went back to it with a new method and one question: which parts of v1.0 would hold up?</p>
         </div>
       </div>
+
 
       <div class="cs-strip" role="region" aria-label="What happened to v1.0" tabindex="0">
         <ol class="cs-strip-track">
           <li class="cs-tile cs-tile-ink cs-tile-hl">
             <p class="cs-tile-head"><span class="cs-tag">Deepened</span><span class="cs-tile-num">01</span></p>
             <div class="cs-tile-visual"><p class="cs-stat">43</p></div>
-            <p class="cs-tile-caption"><strong>Survey submissions in July 2026.</strong> A hunch that later became interview evidence.</p>
+            <p class="cs-tile-caption"><strong class="cs-tile-title">Where it began</strong> 43 survey submissions in July 2026 gave me a first hunch. In v2.0, interviews turned it into evidence.</p>
           </li>
           <li class="cs-tile">
             <p class="cs-tile-head"><span class="cs-tag">Kept</span><span class="cs-tile-num">02</span></p>
             <div class="cs-tile-visual cs-tile-visual-brand"><img src="assets/snoof/snoof-wordmark-navy.png" width="1200" height="419" alt="The Snoof wordmark"></div>
-            <p class="cs-tile-caption"><strong>Name, brand, and tone of voice.</strong></p>
+            <p class="cs-tile-caption"><strong class="cs-tile-title">The brand</strong> The name, identity, and tone of voice from v1.0 carried straight into v2.0.</p>
           </li>
           <li class="cs-tile cs-tile-ink">
             <p class="cs-tile-head"><span class="cs-tag">Kept</span><span class="cs-tile-num">03</span></p>
             <div class="cs-tile-visual"><p class="cs-tile-principle">“Support decisions. Don’t diagnose.”</p></div>
-            <p class="cs-tile-caption"><strong>A v1.0 principle</strong> that still sets the rules.</p>
+            <p class="cs-tile-caption"><strong class="cs-tile-title">The core principle</strong> Written for v1.0, it still sets the rules: Snoof supports decisions and never diagnoses.</p>
           </li>
           <li class="cs-tile cs-tile-wire">
             <p class="cs-tile-head"><span class="cs-tag">Changed</span><span class="cs-tile-num">04</span></p>
             <div class="cs-tile-visual cs-tile-visual-wire"><img src="assets/snoof/v1-wireframe-good-match.webp" width="393" height="852" loading="lazy" alt="v1.0 wireframe: “This plant is a nice match to Luna!” with a cat and a plant illustration, and buttons for New Search and Add to my Household"></div>
-            <p class="cs-tile-caption"><strong>Verdicts became separate layers of information.</strong> A household of pets became one pet profile.</p>
+            <p class="cs-tile-caption"><strong class="cs-tile-title">From verdicts to layers</strong> v1.0 judged a plant “a nice match.” v2.0 separates the plant, the evidence, and the pet, and checks one pet instead of a whole household.</p>
           </li>
           <li class="cs-tile cs-tile-wire">
             <p class="cs-tile-head"><span class="cs-tag cs-tag-muted">v1.0 wireframe</span><span class="cs-tile-num">05</span></p>
             <div class="cs-tile-visual cs-tile-visual-wire"><img src="assets/snoof/v1-wireframe-search.webp" width="393" height="852" loading="lazy" alt="v1.0 low-fidelity wireframe of plant search results"></div>
-            <p class="cs-tile-caption"><strong>Low fidelity, July 2026.</strong></p>
+            <p class="cs-tile-caption"><strong class="cs-tile-title">Where v1.0 stopped</strong> Low-fidelity wireframes, July 2026. Every result still ended in a verdict.</p>
           </li>
           <li class="cs-tile cs-tile-ink">
             <p class="cs-tile-head"><span class="cs-tag">Dropped</span><span class="cs-tile-num">06</span></p>
             <div class="cs-tile-visual"><p class="cs-tile-principle cs-tile-dropped">Plant care.<br>Safer alternatives.</p></div>
-            <p class="cs-tile-caption"><strong>The focus moved to pet safety.</strong></p>
+            <p class="cs-tile-caption"><strong class="cs-tile-title">A narrower focus</strong> v1.0 also covered plant care and safer alternatives. v2.0 dropped both to focus on pet safety.</p>
           </li>
           <li class="cs-tile cs-tile-end cs-tile-peach">
             <p class="cs-tile-head"><span class="cs-tile-num">07</span></p>
             <div class="cs-tile-visual"><p class="cs-stamp">Paused</p></div>
-            <p class="cs-tile-caption"><strong>Then I came back</strong> with a different method.</p>
+            <p class="cs-tile-caption"><strong class="cs-tile-title">Then I came back</strong> Months later, with interviews instead of a survey and a structured AI-assisted workflow.</p>
           </li>
         </ol>
       </div>
@@ -172,9 +181,11 @@
       </div>
 
       <div class="cs-research-foot">
-        <p>The sources didn’t make things easier. I compared twelve, from animal-welfare organizations to veterinary references, and their labels and formats rarely lined up.</p>
-        <p class="cs-note">Six exploratory interviews. Enough to reframe the problem, not to measure how common it is.</p>
-        <p class="cs-ai"><strong>Where AI helped:</strong> Claude Code helped me turn transcripts into observations and themes. I reviewed the theme map and every insight before building on them.</p>
+        <div class="cs-research-left">
+          <p>The sources didn’t make things easier. I compared twelve, from animal-welfare organizations to veterinary references, and their labels and formats rarely lined up.</p>
+          <p class="cs-note">Six exploratory interviews. Enough to reframe the problem, not to measure how common it is.</p>
+        </div>
+        <div class="cs-ai"><p class="cs-ai-title">How I worked with AI</p><p>I used Claude Code to speed up the slowest part: turning six interviews into observations, themes, and draft insights, and comparing twelve sources.</p><p>I treated every output as a draft, not a source of truth. I corrected nine of its theme interpretations, put key insights in my own words, and had 21 source claims rewritten where the wording went beyond the evidence.</p></div>
       </div>
     </section>
 
@@ -202,21 +213,26 @@
               <div class="cs-compare-frame">
                 <img class="cs-compare-after" src="assets/snoof/scr-finding-easter-lily.webp" width="786" height="1704" loading="lazy" alt="v2.0 prototype: Easter lily, “Toxic to cats,” with the sources that classify it and a card checking for Jäger">
                 <div class="cs-compare-before"><img src="assets/snoof/v1-wireframe-risky-match.webp" width="370" height="800" loading="lazy" alt="v1.0 wireframe: “This plant is not a good match to your house!” with a dog, two cats, and a plant, followed by risks, symptoms, and safer alternatives"></div>
-                <span class="cs-compare-tag cs-compare-tag-before" aria-hidden="true">v1.0</span>
-                <span class="cs-compare-tag cs-compare-tag-after" aria-hidden="true">v2.0</span>
+                <button type="button" class="cs-compare-tag cs-compare-tag-before" data-pos="100" aria-pressed="true">v1.0</button>
+                <button type="button" class="cs-compare-tag cs-compare-tag-after" data-pos="0" aria-pressed="false">v2.0</button>
                 <span class="cs-compare-handle" aria-hidden="true"></span>
                 <input class="cs-compare-range" type="range" min="0" max="100" value="50" aria-label="Compare the v1.0 wireframe with the v2.0 prototype screen">
               </div>
             </div>
-            <figcaption><span>Left: v1.0 low-fidelity wireframe, July 2026.</span> <span>Right: v2.0 prototype screen.</span> <span class="cs-compare-hint">Drag to compare.</span></figcaption>
+            <figcaption><span>Left: v1.0 low-fidelity wireframe, July 2026.</span> <span>Right: v2.0 prototype screen.</span> <span class="cs-compare-hint">Drag, or pick a version.</span></figcaption>
           </figure>
-          <div class="cs-before-copy">
-            <p class="cs-label">v1.0, a guess dressed up as an answer</p>
-            <p class="cs-marker">In v1.0, a pet’s habits fed straight into a verdict.</p>
-            <p>The wireframe read: “Since Luna, Charlie and Bob love chewing plants, we believe this plant can be risky to your household.” It sounded personal.</p>
-            <div class="cs-flow" role="img" aria-label="Version 1.0: behavior led to a verdict. Version 2.0: behavior adds context.">
-              <p class="cs-flow-old"><span>v1.0</span> Behavior <span aria-hidden="true">→</span> <s>Verdict</s></p>
-              <p class="cs-flow-new"><span>v2.0</span> Behavior <span aria-hidden="true">→</span> Context</p>
+          <div class="cs-before-copy" aria-live="polite">
+            <div class="cs-version" data-version="v1">
+              <p class="cs-label">v1.0, a guess dressed up as an answer</p>
+              <p class="cs-marker">In v1.0, a pet’s habits fed straight into a verdict.</p>
+              <p>The wireframe read: “Since Luna, Charlie and Bob love chewing plants, we believe this plant can be risky to your household.” It sounded personal.</p>
+              <p class="cs-flow-old cs-flow-line"><span>v1.0</span> Behavior <span aria-hidden="true">→</span> <s>Verdict</s></p>
+            </div>
+            <div class="cs-version" data-version="v2">
+              <p class="cs-label">v2.0, context instead of a verdict</p>
+              <p class="cs-marker">In v2.0, a pet’s habits inform how it could be exposed, not how toxic the plant is.</p>
+              <p>Toxicity comes from the sources. Jäger chews plants and drinks from vases, so Snoof points to the sources that describe eating the plant and drinking vase water as ways cats can be exposed to lilies.</p>
+              <p class="cs-flow-new cs-flow-line"><span>v2.0</span> Behavior <span aria-hidden="true">→</span> Context</p>
             </div>
           </div>
         </div>
@@ -257,18 +273,22 @@
           <div class="cs-choice-copy">
             <p class="cs-label">The direction</p>
             <h3 class="cs-h3 cs-choice-title">Reliable plant information, explained through the pet’s reported behavior.</h3>
-            <ul class="cs-criteria">
-              <li>Answers the real question: what does “toxic” mean for <i>my</i> pet?</li>
-              <li>Severity comes only from sources, never from behavior.</li>
-              <li>Works in one journey, with no second actor.</li>
-              <li>Essential safety information stays visible when behavior is unknown.</li>
-            </ul>
-            <p>On paper, it scored the same as a simpler concept. I chose it anyway, because it was the only one that answered “what does toxic mean for <i>my</i> cat?”</p>
+            <p class="cs-choice-why"><strong>It scored the same as a simpler concept.</strong> I chose it because it was the only one that answered the real question: what does “toxic” mean for <i>my</i> cat?</p>
+            <p>The simpler concept explained the plant. This one also connects what the pet does with how the plant could affect it, so people can make a better-informed decision.</p>
+            <details class="cs-more">
+              <summary><span class="cs-story-icon" aria-hidden="true"></span>What it also had to meet</summary>
+              <ul class="cs-criteria">
+                <li>Severity comes only from sources, never from behavior.</li>
+                <li>Works in one journey, with no second actor.</li>
+                <li>Essential safety information stays visible when behavior is unknown.</li>
+              </ul>
+            </details>
             <p class="cs-rule">A pet’s behavior gives context. It doesn’t predict exposure, change toxicity, or guarantee anything.</p>
           </div>
           <div class="cs-choice-visual">
             <figure class="cs-phone">
               <img src="assets/snoof/scr-finding-easter-lily.webp" width="786" height="1704" loading="lazy" alt="Snoof prototype: Easter lily result showing “Toxic to cats” with the sources, and a card checking for Jäger, a cat who chews plants and drinks from vases">
+              <span class="cs-callout-spot" aria-hidden="true"></span>
             </figure>
             <img class="cs-callout cs-ui" src="assets/snoof/crop-relevant-to-jager.webp" width="742" height="479" loading="lazy" alt="Detail: “Relevant to Jäger. You told us Jäger chews plants and drinks from vases. The sources describe eating the plant and drinking vase water as ways cats can be exposed to lilies.”">
           </div>
@@ -320,7 +340,7 @@
           <div class="cs-copy cs-copy-center">
             <p>It’s not an error state. It’s a designed outcome, with its own screen, its own explanation, and the same decision options as every other result. The app also never calls a plant “safe.” Non-toxic is not a guarantee.</p>
             <p>v1.0 already had a principle called “explain uncertainty.” v2.0 is where it finally reached the interface.</p>
-            <p class="cs-ai"><strong>Where AI helped:</strong> AI helped me examine the content and spot inconsistencies between sources. The boundaries were my decisions.</p>
+            <div class="cs-ai"><p class="cs-ai-title">How I worked with AI</p><p>AI helped me examine the content and spot where sources disagreed. The boundaries were mine: Snoof never decides which veterinary source is clinically correct, and severity always comes from the sources.</p></div>
           </div>
         </div>
       </div>
@@ -350,12 +370,12 @@
         <p class="cs-label cs-group-label">Color</p>
         <figure class="cs-palette">
           <ul>
-            <li style="--swatch:#223e49"><span>Deep Navy</span><span>#223E49</span></li>
-            <li style="--swatch:#4e8080"><span>Muted Teal</span><span>#4E8080</span></li>
-            <li style="--swatch:#fefbdf"><span>Warm Cream</span><span>#FEFBDF</span></li>
-            <li style="--swatch:#faceBB"><span>Soft Peach</span><span>#FACEBB</span></li>
-            <li style="--swatch:#f08434"><span>Curious Orange</span><span>#F08434</span></li>
-            <li style="--swatch:#c24c35"><span>Terracotta</span><span>#C24C35</span></li>
+            <li style="--swatch:#223e49"><span>Deep Navy</span><span>#223E49</span><span class="cs-swatch-role">Contrast, stability, and trust</span></li>
+            <li style="--swatch:#4e8080"><span>Muted Teal</span><span>#4E8080</span><span class="cs-swatch-role">Calm, with a nod to nature</span></li>
+            <li style="--swatch:#fefbdf"><span>Warm Cream</span><span>#FEFBDF</span><span class="cs-swatch-role">The warm light foundation</span></li>
+            <li style="--swatch:#faceBB"><span>Soft Peach</span><span>#FACEBB</span><span class="cs-swatch-role">A soft supporting surface</span></li>
+            <li style="--swatch:#f08434"><span>Curious Orange</span><span>#F08434</span><span class="cs-swatch-role">Energy and curiosity</span></li>
+            <li style="--swatch:#c24c35"><span>Terracotta</span><span>#C24C35</span><span class="cs-swatch-role">An expressive accent</span></li>
           </ul>
           <figcaption>The palette skips the usual plant-app green. Deep navy brings trust, muted teal nods to nature without shouting it, and cream, peach, and orange keep things warm.</figcaption>
         </figure>
@@ -386,14 +406,15 @@
         </div>
 
         <p class="cs-label cs-group-label">Interface</p>
+        <!-- With motion allowed, the avatar creator plays a short loop recorded from the prototype; the still screen stays otherwise. -->
         <div class="cs-bento">
           <figure class="cs-phone cs-bento-a"><img src="assets/snoof/scr-welcome.webp" width="786" height="1704" loading="lazy" alt="Snoof welcome screen: “Know your plants. Care for your curious companion.” with a 3D cat and dog"></figure>
-          <figure class="cs-phone cs-bento-b"><img src="assets/snoof/scr-home.webp" width="786" height="1704" loading="lazy" alt="Snoof home screen with Jäger’s pet profile and options to search by name or identify from a photo"></figure>
+          <figure class="cs-phone cs-phone-loop cs-bento-b"><img src="assets/snoof/scr-avatar-creator.webp" width="786" height="1704" loading="lazy" alt="Avatar creator: choosing the expression of a 3D tuxedo cat avatar"><video class="cs-loop" muted loop playsinline preload="none" data-src="assets/snoof/loop-avatar.mp4" poster="assets/snoof/loop-avatar-poster.webp" aria-hidden="true"></video><button class="cs-loop-toggle" type="button" aria-pressed="false" aria-label="Pause the avatar animation" hidden>Pause</button></figure>
+          <figure class="cs-phone cs-bento-d"><img src="assets/snoof/scr-home.webp" width="786" height="1704" loading="lazy" alt="Snoof home screen with Jäger’s pet profile and options to search by name or identify from a photo"></figure>
           <figure class="cs-bento-c">
             <img class="cs-ui" src="assets/snoof/crop-collection-badges.webp" width="742" height="713" loading="lazy" alt="Collection detail: Boston fern marked “Non-toxic to cats” in green, Easter lily marked “Toxic to cats” in red, each with the user’s decision">
             <figcaption><strong>Color means something.</strong> Each finding, its evidence, and what deserves attention gets its own visual cue, so a toxic plant and a missing answer never look the same.</figcaption>
           </figure>
-          <figure class="cs-phone cs-bento-d"><img src="assets/snoof/scr-avatar-creator.webp" width="786" height="1704" loading="lazy" alt="Avatar creator: choosing the expression of a 3D tuxedo cat avatar"></figure>
         </div>
 
         <div class="cs-tone">

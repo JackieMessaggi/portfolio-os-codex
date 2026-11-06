@@ -124,7 +124,7 @@ svg.snoof-icon:has(> path[d^="M18 12C18 15.314"]) { --ph: url(./assets/19ddc5ed8
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"context":{"editor":"enum","options":["Setup","Profile","Edit"],"default":"Setup"},"preset":{"editor":"enum","options":["Start","Ready"],"default":"Start"},"$preview":{"width":393,"height":852}}'>
-const B = id => '/_blob/' + id;
+const B = id => './assets/avatar/' + id + '.webp'; // public build: avatar images shipped with the prototype
 
 const CATS = [
   { key: 'pet', label: 'Pet', req: 'cat', opts: [

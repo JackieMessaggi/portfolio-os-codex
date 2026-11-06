@@ -128,8 +128,39 @@ if (caseNav) {
 document.querySelectorAll('.cs-compare').forEach((figure) => {
   const range = figure.querySelector('.cs-compare-range');
   if (!range) return;
-  const sync = () => figure.style.setProperty('--pos', `${range.value}%`);
+  // The copy beside the comparison follows the version that dominates the frame. A dead zone around the middle
+  // (40 to 60) keeps it from flickering while dragging. The v1.0 / v2.0 tags select a version directly.
+  const copy = figure.closest('.cs-before') && figure.closest('.cs-before').querySelector('.cs-before-copy');
+  const panels = copy ? [...copy.querySelectorAll('.cs-version')] : [];
+  const tags = [...figure.querySelectorAll('.cs-compare-tag[data-pos]')];
+  let version = 'v1';
+  const show = (v) => {
+    if (v === version && panels.every((p) => p.hidden === (p.dataset.version !== v))) return;
+    version = v;
+    panels.forEach((p) => { p.hidden = p.dataset.version !== v; });
+    tags.forEach((t) => t.setAttribute('aria-pressed', String((t.dataset.pos === '100') === (v === 'v1'))));
+  };
+  const sync = () => {
+    const pos = Number(range.value);
+    figure.style.setProperty('--pos', `${pos}%`);
+    if (pos > 60) show('v1'); else if (pos < 40) show('v2');
+  };
   range.addEventListener('input', sync);
+  let raf = 0;
+  tags.forEach((tag) => tag.addEventListener('click', () => {
+    const to = Number(tag.dataset.pos); const from = Number(range.value);
+    show(to === 100 ? 'v1' : 'v2');
+    cancelAnimationFrame(raf);
+    if (!window.matchMedia('(prefers-reduced-motion: no-preference)').matches) { range.value = to; sync(); return; }
+    const t0 = performance.now();
+    const step = (now) => {
+      const k = Math.min(1, (now - t0) / 450); const e = 1 - (1 - k) ** 3;
+      range.value = from + (to - from) * e; figure.style.setProperty('--pos', `${range.value}%`);
+      if (k < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+  }));
+  show('v1');
   sync();
 });
 
@@ -604,6 +635,64 @@ void main(){
   buttons.forEach((btn) => btn.addEventListener('click', () => select(btn)));
   // Lets other scripts (the Hero story) switch skins even when the picker itself is hidden or inert.
   document.addEventListener('skin:select', (e) => { const btn = buttons.find((b) => b.dataset.skin === e.detail); if (btn) select(btn); });
+})();
+
+// Snoof case, Interface: short loops recorded from the prototype play over the still screens, only with motion allowed
+// and only while in view (each file loads on first view). Each phone has a Pause toggle (WCAG 2.2.2).
+(() => {
+  const figs = [...document.querySelectorAll('.cs-phone-loop')];
+  if (!figs.length || !document.documentElement.classList.contains('motion')) return;
+  figs.forEach((fig) => {
+    const v = fig.querySelector('.cs-loop'); const t = fig.querySelector('.cs-loop-toggle');
+    let paused = false; let visible = false;
+    const sync = () => {
+      if (visible && !paused) {
+        if (!v.src) { v.src = v.dataset.src; fig.classList.add('is-ready'); }
+        const p = v.play(); if (p) p.catch(() => {});
+      } else if (v.src) v.pause();
+      t.setAttribute('aria-pressed', String(paused));
+      t.textContent = paused ? 'Play' : 'Pause';
+    };
+    t.hidden = false;
+    t.addEventListener('click', () => { paused = !paused; sync(); });
+    fig.check = () => {
+      const r = fig.getBoundingClientRect(); const vh = window.innerHeight;
+      const now = r.top < vh * 0.8 && r.bottom > vh * 0.2;
+      if (now !== visible) { visible = now; sync(); }
+    };
+  });
+  let ticking = false;
+  const check = () => { ticking = false; figs.forEach((f) => f.check()); };
+  const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(check); } };
+  window.addEventListener('scroll', request, { passive: true });
+  window.addEventListener('resize', request);
+  check();
+})();
+
+// Snoof case, The direction: mark the detail on the screen, then lift it out to the callout, once, when in view.
+(() => {
+  const v = document.querySelector('.cs-choice-visual');
+  if (!v || !document.documentElement.classList.contains('motion') || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { v.classList.add('is-shown'); io.disconnect(); } }), { threshold: 0.45 });
+  io.observe(v);
+})();
+
+// Snoof case Hero: the full Jäger story sits behind a "Read the full story" toggle (click or tap, not hover). Without
+// JavaScript the story stays open and the toggle stays hidden. Collapsed content is inert, so it is skipped by focus.
+(() => {
+  const toggle = document.querySelector('.cs-story-toggle');
+  const story = toggle && document.getElementById(toggle.getAttribute('aria-controls'));
+  if (!story) return;
+  const label = toggle.querySelector('.cs-story-label');
+  const set = (open) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    label.textContent = open ? 'Hide the full story' : 'Read the full story';
+    story.classList.toggle('is-collapsed', !open);
+    story.inert = !open;
+  };
+  set(false);
+  toggle.hidden = false;
+  toggle.addEventListener('click', () => set(toggle.getAttribute('aria-expanded') !== 'true'));
 })();
 
 // Selected Work reveal (motion only): a lettering cover glitches into an animated view of the project on hover or

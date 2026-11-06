@@ -467,6 +467,8 @@ body { padding-bottom: 5.5rem; }
 .cs-ai { font-size: .875rem; line-height: 1.55; max-width: 40em; padding-left: 1rem; border-left: 2px solid var(--orange); }
 /* Owner-approved exception (November 5): the label is Signal Orange on both backgrounds. On ivory it is 2.87:1, below WCAG AA. */
 .cs-ai strong { color: var(--orange); }
+.cs-ai p { margin: 0 0 .5rem; } .cs-ai p:last-child { margin-bottom: 0; }
+.cs-ai .cs-ai-title { color: var(--orange); font-weight: 700; }
 .cs-ui { display: block; width: 100%; height: auto; background: #fff; border-radius: 1.25rem; }
 .cs-split { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; }
 .cs-split > :first-child { grid-column: 1 / 6; }
@@ -493,6 +495,23 @@ body { padding-bottom: 5.5rem; }
 .cs-hero-copy p { margin-bottom: .75rem; }
 .cs-hero-copy .cs-lede { font-size: clamp(1.25rem, 1.7vw, 1.5rem); }
 .cs-hero-copy .cs-lede { margin-bottom: 1rem; }
+/* Hero full story: a discreet editorial toggle; the story expands in the page flow (no overlay). */
+.cs-story-toggle { display: inline-flex; align-items: center; gap: .625rem; margin: .5rem 0 0; padding: .375rem 0; background: none; border: 0; color: var(--eggplant); font: inherit; font-size: .8125rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.cs-story-toggle:hover .cs-story-label { text-decoration: underline; text-underline-offset: .25em; }
+.cs-story-toggle:focus-visible { outline: 2px solid var(--eggplant); outline-offset: 4px; border-radius: 2px; }
+.cs-story-icon { position: relative; flex: none; width: 1.25rem; height: 1.25rem; border: 1.5px solid currentColor; border-radius: 50%; }
+.cs-story-icon::before, .cs-story-icon::after { content: ""; position: absolute; left: 50%; top: 50%; width: .5rem; height: 1.5px; background: currentColor; transform: translate(-50%, -50%); }
+.cs-story-icon::after { transform: translate(-50%, -50%) rotate(90deg); }
+.cs-story-toggle[aria-expanded="true"] .cs-story-icon::after { transform: translate(-50%, -50%) rotate(0deg); }
+.cs-story { display: grid; grid-template-rows: 1fr; }
+.cs-story.is-collapsed { grid-template-rows: 0fr; }
+.cs-story-inner { min-height: 0; overflow: hidden; }
+.cs-story-inner > :first-child { margin-top: 1rem; }
+.cs-story-lede { font-weight: 600; }
+@media (prefers-reduced-motion: no-preference) {
+  .cs-story { transition: grid-template-rows .45s cubic-bezier(.2, .7, .2, 1); }
+  .cs-story-icon::after { transition: transform .3s ease; }
+}
 /* Metadata band below the Hero: full-width eggplant band, four columns on the grid. */
 .cs-meta-band { padding-block: 2.5rem; background: var(--eggplant); color: var(--ivory); }
 .cs-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem 2rem; margin-block: 0; }
@@ -522,6 +541,7 @@ body { padding-bottom: 5.5rem; }
 .cs-tile-visual-wire img { display: block; width: 100%; height: auto; border: 1px solid var(--eggplant); border-bottom: 0; border-radius: .625rem .625rem 0 0; }
 .cs-tile-caption { min-height: 4.5em; margin: 0; font-size: .9375rem; line-height: 1.5; }
 .cs-tile-caption strong { font-weight: 700; }
+.cs-tile-title { display: block; margin-bottom: .25rem; font-size: 1.0625rem; line-height: 1.3; }
 .cs-tile-wire .cs-tile-visual { background: var(--beige); }
 /* All tile shells stay ivory on the beige band; color lives inside the visual area. */
 .cs-tile-ink .cs-tile-visual { background: var(--eggplant); color: var(--ivory); }
@@ -555,6 +575,7 @@ body { padding-bottom: 5.5rem; }
 .cs-behaviors figcaption { margin-top: .875rem; font-size: .875rem; line-height: 1.5; opacity: .82; }
 .cs-research-foot { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; row-gap: 1rem; padding-top: 2rem; border-top: 1px solid var(--eggplant); }
 .cs-research-foot > :first-child { grid-column: 1 / 6; grid-row: 1 / 3; font-size: 1.125rem; }
+.cs-research-left .cs-note { margin: 1rem 0 0; font-size: .9375rem; }
 .cs-research-foot > :not(:first-child) { grid-column: 7 / 13; margin-bottom: 0; }
 
 /* 04 Problem */
@@ -573,7 +594,9 @@ body { padding-bottom: 5.5rem; }
 .cs-compare-before { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--pos)) 0 0); background: #fff; }
 .cs-compare-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: var(--eggplant); pointer-events: none; }
 .cs-compare-handle::after { content: "‹ ›"; position: absolute; left: 50%; top: 50%; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; transform: translate(-50%, -50%); background: var(--eggplant); color: var(--ivory); border-radius: 50%; font-size: 1.125rem; font-weight: 700; letter-spacing: .1em; }
-.cs-compare-tag { position: absolute; top: .875rem; padding: .25rem .5rem; font-size: .75rem; font-weight: 600; letter-spacing: .08em; line-height: 1.3; pointer-events: none; }
+.cs-compare-tag { position: absolute; z-index: 2; top: .875rem; padding: .25rem .5rem; border: 0; font: inherit; font-size: .75rem; font-weight: 600; letter-spacing: .08em; line-height: 1.3; cursor: pointer; }
+.cs-compare-tag:focus-visible { outline: 2px solid var(--orange-deep); outline-offset: 2px; }
+.cs-compare-tag[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--eggplant), 0 0 0 3px var(--orange); }
 .cs-compare-tag-before { left: .875rem; background: var(--ivory); color: var(--eggplant); box-shadow: inset 0 0 0 1px var(--eggplant); }
 .cs-compare-tag-after { right: .875rem; background: var(--eggplant); color: var(--ivory); }
 .cs-compare-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; touch-action: pan-y; }
@@ -594,9 +617,15 @@ html:not(.js) .cs-compare-handle, html:not(.js) .cs-compare-range, html:not(.js)
 .cs-before-copy .cs-label { margin-bottom: 1rem; }
 .cs-before-copy .cs-marker + p { margin-top: 1.5rem; }
 .cs-flow { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--eggplant); }
-.cs-flow p { display: flex; align-items: center; gap: .75rem; margin: 0 0 .5rem; font-size: 1.5rem; font-weight: 700; letter-spacing: -.01em; }
-.cs-flow p > span:first-child { padding: .125rem .5rem; font-size: .75rem; letter-spacing: .08em; box-shadow: inset 0 0 0 1px var(--eggplant); }
+.cs-flow p, .cs-flow-line { display: flex; align-items: center; gap: .75rem; margin: 0 0 .5rem; font-size: 1.5rem; font-weight: 700; letter-spacing: -.01em; }
+.cs-flow p > span:first-child, .cs-flow-line > span:first-child { padding: .125rem .5rem; font-size: .75rem; letter-spacing: .08em; box-shadow: inset 0 0 0 1px var(--eggplant); }
 .cs-flow-old { opacity: .65; }
+.cs-flow-line { margin: 2rem 0 0 !important; padding-top: 1.5rem; border-top: 1px solid var(--eggplant); }
+.cs-version[data-version="v1"] .cs-flow-old { opacity: 1; }
+/* Comparator copy follows the selected version (script.js); without JavaScript both versions show. */
+.js .cs-version[hidden] { display: none; }
+html:not(.js) .cs-version + .cs-version { margin-top: 2.5rem; }
+/* Swap is instant on purpose: the text must never sit invisible mid-fade. */
 .cs-flow-new > span:first-child { background: var(--eggplant); color: var(--ivory); }
 .cs-statement { text-wrap: balance; max-width: 20em; margin: 7rem auto 1.25rem; text-align: center; font-size: clamp(2.5rem, 3.2vw, 3rem); line-height: 1.1; }
 
@@ -614,10 +643,25 @@ html:not(.js) .cs-compare-handle, html:not(.js) .cs-compare-range, html:not(.js)
 .cs-criteria { margin: 1.5rem 0; padding: 0; list-style: none; }
 .cs-criteria li { position: relative; padding: .625rem 0 .625rem 1.5rem; border-bottom: 1px solid rgba(64, 8, 73, .25); }
 .cs-criteria li::before { content: ""; position: absolute; left: 0; top: 1.15rem; width: .5rem; height: .5rem; background: var(--orange); }
+.cs-choice-why { margin-top: 1.5rem; font-size: 1.25rem; line-height: 1.45; }
+.cs-more { margin: 1.25rem 0 0; }
+.cs-more summary { display: inline-flex; align-items: center; gap: .625rem; padding: .375rem 0; font-size: .8125rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; list-style: none; }
+.cs-more summary::-webkit-details-marker { display: none; }
+.cs-more summary:hover { text-decoration: underline; text-underline-offset: .25em; }
+.cs-more summary:focus-visible { outline: 2px solid var(--eggplant); outline-offset: 4px; border-radius: 2px; }
+.cs-more[open] .cs-story-icon::after { transform: translate(-50%, -50%) rotate(0deg); }
+.cs-more .cs-criteria { margin: .5rem 0 0; }
 .cs-rule { margin: 2rem 0 0; padding: 1.25rem 1.5rem; background: var(--beige); border-radius: 1rem; font-family: "DM Sans", system-ui, sans-serif; font-variation-settings: normal; font-weight: 700; font-size: 1.375rem; line-height: 1.4; letter-spacing: -.01em; }
 .cs-choice-visual { position: relative; grid-column: 8 / 13; }
 .cs-choice-visual .cs-phone { max-width: 19rem; margin-left: auto; }
 .cs-callout { position: absolute; left: 0; bottom: 14%; width: 64%; max-width: 23rem; padding: .25rem; border: 1px solid var(--eggplant); }
+.cs-choice-visual .cs-phone { position: relative; }
+.cs-callout-spot { position: absolute; left: 5%; right: 5%; top: 63%; height: 25%; border: 2px solid var(--orange); border-radius: .75rem; opacity: 0; pointer-events: none; }
+/* Motion: the detail is first marked on the screen, then lifts out to the callout, so it reads as part of this result. */
+.motion .cs-choice-visual .cs-callout { transform-origin: 85% 30%; opacity: 0; transform: translateX(30%) scale(.7); transition: opacity .5s ease .9s, transform .8s cubic-bezier(.2, .7, .2, 1) .9s; }
+.motion .cs-choice-visual.is-shown .cs-callout { opacity: 1; transform: none; }
+.motion .cs-choice-visual.is-shown .cs-callout-spot { animation: cs-spot 1.6s ease .2s both; }
+@keyframes cs-spot { 0% { opacity: 0; transform: scale(1.06); } 25%, 60% { opacity: 1; transform: none; } 100% { opacity: .0; } }
 
 /* 05B Designing for uncertainty: immersive eggplant band */
 .cs-uncertainty { background: var(--eggplant); color: var(--ivory); padding-block: 8rem; }
@@ -645,16 +689,18 @@ html:not(.js) .cs-compare-handle, html:not(.js) .cs-compare-range, html:not(.js)
 
 /* 06 Meet Snoof */
 .cs-brand { padding-bottom: 8rem; }
-.cs-brand-hero { display: grid; place-items: center; gap: 1.5rem; margin-top: 5rem; padding: 7rem 2rem; background: var(--snoof-navy); color: var(--snoof-cream); text-align: center; }
-.cs-brand-hero img { width: min(80vw, 46rem); height: auto; }
+.cs-brand-hero { display: grid; place-items: center; gap: 1.25rem; margin-top: 5rem; padding: 5.5rem 2rem; background: var(--snoof-navy); color: var(--snoof-cream); text-align: center; }
+.cs-brand-hero img { width: min(70vw, 30rem); height: auto; }
 .cs-brand-hero p { margin: 0; font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: 500; }
 .cs-brand-intro { padding-top: 8rem; }
 .cs-group-label { margin: 5rem 0 1.75rem; padding-top: 1rem; border-top: 1px solid var(--eggplant); }
 .cs-palette { margin: 0; }
-.cs-palette ul { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1rem; margin: 0 0 1.5rem; padding: 0; list-style: none; }
+/* Palette as one weighted strip: the core colors take more room, the accents less, so the hierarchy reads at a glance. */
+.cs-palette ul { display: grid; grid-template-columns: 3fr 2.4fr 2.4fr 1.6fr 1.2fr 1.2fr; gap: 0 .5rem; margin: 0 0 1.5rem; padding: 0; list-style: none; }
 .cs-palette li { display: flex; flex-direction: column; gap: .125rem; font-size: .9375rem; font-weight: 600; }
-.cs-palette li::before { content: ""; height: 15rem; margin-bottom: .75rem; background: var(--swatch); border-radius: .75rem; box-shadow: inset 0 0 0 1px rgba(64, 8, 73, .15); }
+.cs-palette li::before { content: ""; height: 8.5rem; margin-bottom: .75rem; background: var(--swatch); border-radius: .75rem; box-shadow: inset 0 0 0 1px rgba(64, 8, 73, .15); }
 .cs-palette li span + span { font-weight: 400; font-size: .8125rem; letter-spacing: .04em; }
+.cs-palette .cs-swatch-role { margin-top: .25rem; letter-spacing: 0; font-size: .8125rem; line-height: 1.35; opacity: .8; }
 .cs-palette figcaption { max-width: 38em; font-size: 1.0625rem; line-height: 1.55; }
 .cs-pets { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 2rem; align-items: start; }
 .cs-pets figure { margin: 0; }
@@ -673,6 +719,12 @@ html:not(.js) .cs-compare-handle, html:not(.js) .cs-compare-range, html:not(.js)
 .cs-bento-d { grid-column: 9 / 13; grid-row: 1; margin-top: 8rem; }
 .cs-bento .cs-phone { padding: .5rem; border-radius: 2.75rem; }
 .cs-bento .cs-phone img { border-radius: 2.3rem; }
+.cs-phone-loop { position: relative; }
+.cs-loop { display: none; }
+.motion .cs-phone-loop.is-ready .cs-loop { position: absolute; inset: .5rem; display: block; width: calc(100% - 1rem); height: calc(100% - 1rem); object-fit: cover; border-radius: 2.3rem; background: #fff; }
+.cs-loop-toggle { position: absolute; right: 1.1rem; bottom: 1.1rem; min-height: 2.75rem; padding: 0 .875rem; border: 0; border-radius: 999px; background: rgba(64, 8, 73, .82); color: var(--ivory); font: 600 .75rem/1 "DM Sans", system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; opacity: 0; transition: opacity .2s ease; }
+.cs-phone-loop:hover .cs-loop-toggle, .cs-loop-toggle:focus-visible, .cs-loop-toggle[aria-pressed="true"] { opacity: 1; }
+.cs-loop-toggle:focus-visible { outline: 2px solid var(--orange-deep); outline-offset: 2px; }
 /* Detail: the collection crop at near-native scale next to its explanation. */
 .cs-bento-c { grid-column: 2 / 12; grid-row: 2; display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); column-gap: 2rem; align-items: center; margin: 0; }
 .cs-bento-c img { grid-column: 1 / 6; padding: .375rem; }
@@ -921,7 +973,7 @@ html:not(.js) .case-menu a::before, html:not(.js) .case-menu .nav-num { display:
   .cs-brand-intro { padding-top: 4rem; }
   .cs-group-label { margin-top: 3.5rem; }
   .cs-brand-hero { margin-top: 3.5rem; }
-  .cs-palette ul { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 1.25rem; }
+  .cs-palette ul { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 1.25rem; gap: 1.25rem .75rem; }
   .cs-palette li::before { height: 6rem; }
   .cs-pets-hero { margin-bottom: 1.5rem; }
   .cs-brand-v2 { margin-block: 3.5rem 0; font-size: 1.125rem; }
