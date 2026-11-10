@@ -1,15 +1,15 @@
 # Project Status
 
-Updated: November 10, 2026, by Claude Code after the authorized privacy and legal pages deployment.
+Updated: November 10, 2026, by Claude Code after the authorized Hola! Churros card deployment.
 
 ## Where we are
 
-Live site: https://jackiemessaggi.com/ (custom domain since November 10, 2026, HTTPS enforced; the old github.io address redirects). Last published commit: `9d183aa` (privacy notice, Privacy Policy, Impressum), successful manual run `42854423446`, November 10, 2026; the published files match the commit byte for byte. `main` and `origin/main` are in sync. GitHub Pages remains manual. No active task or reserved files.
+Live site: https://jackiemessaggi.com/ (custom domain since November 10, 2026, HTTPS enforced; the old github.io address redirects). Last published commit: `f5f3199` (Hola! Churros card), successful manual run `42864074471`, November 10, 2026; the published files match the commit byte for byte. Privacy notice, Privacy Policy, and Impressum went live earlier the same day in `9d183aa`. `main` and `origin/main` are in sync. GitHub Pages remains manual. No active task or reserved files.
 
 ## What is ready
 
 - Privacy (published and tested live, November 10): Cloudflare Web Analytics loaded by `privacy.js` with an opt-out notice (“A little insight?”, Decline / Got it), Privacy settings in every footer, and `privacy.html` and `impressum.html`. A saved Decline stops all Cloudflare requests on later pages and visits. `noindex, nofollow` stays on all five pages. The opt-out model is a conscious choice and may not meet a prior-consent reading of § 25 TDDDG (see `decision-log.md`).
-- Selected Work covers: lettering at rest; Snoof glitches into its prototype demo loop on hover, focus, or (touch) scroll into view, on muted teal. TerraYou, Quiz Bingo, and Damyller are typeset placeholders with “Coming soon”.
+- Selected Work has five cards (published `f5f3199`): lettering at rest; Snoof glitches into its prototype demo loop on hover, focus, or (touch) scroll into view, on muted teal. TerraYou, Quiz Bingo, Damyller, and Hola! Churros are typeset placeholders with “Coming soon”; the horizontal gallery adapts to five cards. Hola! Churros case study and final card identity come later.
 - Selected Work Editorial Statement studies 01 (Codex, private, November 6): TerraYou with original wordmark and one dominant website-hero crop; Quiz Bingo with hybrid editorial title and a single gameplay screen. Private HTML and PNGs: `01 Projects/Portfolio OS/Selected Work Study/editorial-statement-v01/`. Chrome renders reviewed and local fonts confirmed. Source-resolution limits documented; no site integration or final card approval. Snoof/Damyller audited only.
 
 - Snoof case peer-review pass (November 6): short Jäger intro with “Read the full story”, captioned Origin strip, “How I worked with AI” notes from documented process, C1-B rationale first, clickable v1.0/v2.0 comparator with synced copy, rebalanced brand palette, callout motion in The direction, and a looping avatar-creator recording in Interface. Brand › Characters now features the kitten video loop (`pet-cat-loop.mp4`). The public prototype now ships its cat avatar images (aligned), fixing broken images in the avatar creator.
@@ -25,7 +25,7 @@ Live site: https://jackiemessaggi.com/ (custom domain since November 10, 2026, H
 ## What is missing
 
 - Reveal animations for TerraYou, Quiz Bingo, and Damyller covers (need assets; see the November 6 audit in the conversation and Codex’s private studies).
-- Local, not published: the Hola! Churros Selected Work card (`index.html`, `styles.css`, one line in `interaction-spec.md`), awaiting Jackie’s review of content and presentation; and the About CV download button with `assets/cv/Jackie-Messaggi-CV.pdf`. That PDF still links to the old github.io address and must be replaced with the updated Web export from the private `Resume/` system before publication, together with a Privacy Policy sentence about the download.
+- In preparation (local, not published): the About CV link (“View CV · PDF”, opens the PDF in a new tab), `assets/cv/Jackie-Messaggi-CV.pdf` replaced by the updated Web export (jackiemessaggi.com link, no phone), and a Privacy Policy sentence about the CV.
 - The untracked `assets/avatar/avatar-jackie.webp` stays out of Git until Jackie decides. Optional cleanup: `assets/about/jackie-portrait.webp` (previous About photo) is no longer referenced; Jackie has not decided whether to remove it.
 - Known tight spot: at 1025 × 700 the Design Team Lead “Design Systems” pill touches the bottom nav edge.
 - Broader backlog: final project-card art direction, later case studies. See `interaction-spec.md` and `character-bible.md`.
@@ -33,4 +33,4 @@ Live site: https://jackiemessaggi.com/ (custom domain since November 10, 2026, H
 
 ## Next step
 
-Next, in this order: review the Hola! Churros card with Jackie, then the CV download (updated PDF, button, Privacy Policy line), each as its own isolated commit with separate approval. Still open: real-device checks (iOS/Safari) for the mobile scroll and the privacy notice; on mobile the notice covers the Hero “Scroll to explore” cue until a choice is made.
+Next: Jackie’s review of the CV commit (updated PDF, About link, Privacy Policy line) as its own isolated commit with separate approval for commit, push, and deploy. Still open: real-device checks (iOS/Safari) for the mobile scroll and the privacy notice; on mobile the notice covers the Hero “Scroll to explore” cue until a choice is made.
