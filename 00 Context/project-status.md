@@ -1,13 +1,14 @@
 # Project Status
 
-Updated: November 6, 2026, by Codex after the authorized GitHub Pages deployment.
+Updated: November 10, 2026, by Claude Code after the authorized privacy and legal pages deployment.
 
 ## Where we are
 
-Homepage mobile Hero, larger avatar, closer unclipped objects, bottom navigation, and Claude’s mobile Snoof Interface bento refinement are committed, pushed, and deployed as `737b452` (November 6, 2026, successful run `42211933230`). Live site: https://jackiemessaggi.github.io/portfolio-os-codex/. GitHub Pages remains manual. Mobile chapter-skipping correction now includes an all-input adjacent-stage guard and 1100 ms transition hold, validated locally and approved by Jackie for commit, push and manual deploy. No active task or reserved files.
+Live site: https://jackiemessaggi.com/ (custom domain since November 10, 2026, HTTPS enforced; the old github.io address redirects). Last published commit: `9d183aa` (privacy notice, Privacy Policy, Impressum), successful manual run `42854423446`, November 10, 2026; the published files match the commit byte for byte. `main` and `origin/main` are in sync. GitHub Pages remains manual. No active task or reserved files.
 
 ## What is ready
 
+- Privacy (published and tested live, November 10): Cloudflare Web Analytics loaded by `privacy.js` with an opt-out notice (“A little insight?”, Decline / Got it), Privacy settings in every footer, and `privacy.html` and `impressum.html`. A saved Decline stops all Cloudflare requests on later pages and visits. `noindex, nofollow` stays on all five pages. The opt-out model is a conscious choice and may not meet a prior-consent reading of § 25 TDDDG (see `decision-log.md`).
 - Selected Work covers: lettering at rest; Snoof glitches into its prototype demo loop on hover, focus, or (touch) scroll into view, on muted teal. TerraYou, Quiz Bingo, and Damyller are typeset placeholders with “Coming soon”.
 - Selected Work Editorial Statement studies 01 (Codex, private, November 6): TerraYou with original wordmark and one dominant website-hero crop; Quiz Bingo with hybrid editorial title and a single gameplay screen. Private HTML and PNGs: `01 Projects/Portfolio OS/Selected Work Study/editorial-statement-v01/`. Chrome renders reviewed and local fonts confirmed. Source-resolution limits documented; no site integration or final card approval. Snoof/Damyller audited only.
 
@@ -24,13 +25,12 @@ Homepage mobile Hero, larger avatar, closer unclipped objects, bottom navigation
 ## What is missing
 
 - Reveal animations for TerraYou, Quiz Bingo, and Damyller covers (need assets; see the November 6 audit in the conversation and Codex’s private studies).
-- Optional cleanup: `assets/about/jackie-portrait.webp` (previous About photo) is no longer referenced; Jackie has not decided whether to remove it. The untracked `assets/avatar/avatar-jackie.webp` stays out of Git.
+- Local, not published: the Hola! Churros Selected Work card (`index.html`, `styles.css`, one line in `interaction-spec.md`), awaiting Jackie’s review of content and presentation; and the About CV download button with `assets/cv/Jackie-Messaggi-CV.pdf`. That PDF still links to the old github.io address and must be replaced with the updated Web export from the private `Resume/` system before publication, together with a Privacy Policy sentence about the download.
+- The untracked `assets/avatar/avatar-jackie.webp` stays out of Git until Jackie decides. Optional cleanup: `assets/about/jackie-portrait.webp` (previous About photo) is no longer referenced; Jackie has not decided whether to remove it.
 - Known tight spot: at 1025 × 700 the Design Team Lead “Design Systems” pill touches the bottom nav edge.
 - Broader backlog: final project-card art direction, later case studies. See `interaction-spec.md` and `character-bible.md`.
 - Cross-browser and real-device testing.
 
 ## Next step
 
-Check the published mobile scroll correction on a real device, especially iOS/Safari. Chapter sequence and Graphic Designer avatar visibility pass Chrome emulation at both requested sizes. Further refinements need Jackie’s approval.
-
-Claude Code’s mobile Snoof Interface bento refinement is approved for the same local commit: animated avatar creator first/larger, welcome and home side by side below. Deployed with Jackie’s separate approval.
+Next, in this order: review the Hola! Churros card with Jackie, then the CV download (updated PDF, button, Privacy Policy line), each as its own isolated commit with separate approval. Still open: real-device checks (iOS/Safari) for the mobile scroll and the privacy notice; on mobile the notice covers the Hero “Scroll to explore” cue until a choice is made.
