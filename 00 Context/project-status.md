@@ -26,7 +26,7 @@ Live site: https://jackiemessaggi.com/ (custom domain since November 10, 2026, H
 ## What is missing
 
 - Reveal animations for TerraYou, Quiz Bingo, and Damyller covers (need assets; see the November 6 audit in the conversation and Codex’s private studies).
-- The untracked `assets/avatar/avatar-jackie.webp` stays local and out of Git until Jackie decides. Optional cleanup: `assets/about/jackie-portrait.webp` (previous About photo) is no longer referenced; Jackie has not decided whether to remove it.
+- Optional cleanup: `assets/about/jackie-portrait.webp` (previous About photo) is no longer referenced; Jackie has not decided whether to remove it.
 - Known tight spot: at 1025 × 700 the Design Team Lead “Design Systems” pill touches the bottom nav edge.
 - Broader backlog: final project-card art direction, later case studies. See `interaction-spec.md` and `character-bible.md`.
 - Cross-browser and real-device testing.
