@@ -1093,3 +1093,81 @@ html:not(.js) .case-menu a::before, html:not(.js) .case-menu .nav-num { display:
   .hero-mobile-story .chapter-summary { font-size: .9375rem; line-height: 1.5; }
   .hero-mobile-story .chapter-skills { margin-top: 12px; }
 }
+
+/* Privacy notice and settings (privacy.js). Opt-out notice for Cloudflare Web Analytics:
+   non-modal, fixed above the bottom navigation bars, eggplant with ivory text, square corners and
+   no shadow like the nav bars; buttons reuse the outlined pill language. */
+.privacy-notice { position: fixed; z-index: 20; left: 1.5rem; bottom: 5.25rem; max-width: 22rem; padding: 1rem 1.125rem 1.125rem; background: var(--eggplant); color: var(--ivory); border: 1px solid var(--ivory); /* stays visible over eggplant sections */ font-family: "DM Sans", system-ui, sans-serif; font-size: .8125rem; line-height: 1.45; }
+.privacy-notice[hidden] { display: none; }
+.privacy-notice-title { margin: 0 0 .25rem; font-size: .9375rem; font-weight: 600; line-height: 1.3; }
+.privacy-notice-text { margin: 0 0 .875rem; }
+.privacy-notice-text a { color: inherit; text-underline-offset: .2em; }
+.privacy-notice-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+.privacy-notice-btn { min-height: 2.75rem; padding: 0 1.125rem; border: 1px solid var(--ivory); border-radius: 999px; background: transparent; color: var(--ivory); font: inherit; font-weight: 600; line-height: 1; cursor: pointer; }
+.privacy-notice-btn:hover { background: var(--ivory); color: var(--eggplant); }
+.privacy-notice-btn:focus-visible { outline: 2px solid var(--ivory); outline-offset: 3px; }
+.proto-page .privacy-notice { bottom: 1.5rem; } /* the prototype page has no bottom navigation */
+/* 761–1024 px: the Hero stacks (avatar below the fold), so the right side above the nav bar is free. */
+@media (min-width: 761px) and (max-width: 1024px) { .privacy-notice { left: auto; right: 1.5rem; } }
+/* 1025 px and up (approved November 10, 2026, extended to wide screens): text and avatar sit side by side,
+   so the notice sits on the nav baseline in the gap to the right of the centered bar (about 490 px wide).
+   It covers neither the Hero text, CTAs nor navigation; it can overlap the bottom of the avatar until a choice. */
+@media (min-width: 1025px) {
+  .privacy-notice { left: auto; right: 1.5rem; bottom: 1.5rem; max-width: min(22rem, calc((100vw - 490px) / 2 - 2.25rem)); }
+}
+/* Footer entry point, styled as a quiet text link. */
+.privacy-settings-link { padding: 0; border: 0; background: none; color: inherit; font: inherit; letter-spacing: inherit; cursor: pointer; text-align: left; }
+.privacy-settings-link:hover { text-decoration: underline; text-underline-offset: .2em; }
+.privacy-settings-link:focus-visible { outline: 2px solid var(--eggplant); outline-offset: 4px; }
+.proto-privacy { margin: .75rem 0 0; font-size: .8125rem; text-align: center; }
+.proto-privacy .privacy-settings-link { text-decoration: underline; text-underline-offset: .2em; }
+@media (max-width: 760px) {
+  .privacy-notice { left: .75rem; right: .75rem; max-width: none; bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px)); padding: .875rem 1rem 1rem; }
+  .proto-page .privacy-notice { bottom: calc(.75rem + env(safe-area-inset-bottom, 0px)); }
+}
+/* Footer legal links (all pages): Privacy Policy, Impressum, Privacy settings as one quiet group. */
+.site-footer-legal { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1.5rem; }
+.proto-privacy .site-footer-legal { justify-content: center; gap: .25rem 1.25rem; }
+.proto-privacy a { text-underline-offset: .2em; }
+/* Notice edge cases, 761–1024 px (approved November 10, 2026). Snoof: the facts band sits right under the hero
+   photo, so the notice moves to the top right over the photo. Prototype: the notice sits in the free gap right of
+   the phone frame, ending at the frame's base above the "Runs on sample data" note. The frame width mirrors the
+   page's own fit(): 393 px × min(1, max(.5, (viewport height − 156 px) / 852)). */
+@media (min-width: 761px) and (max-width: 1024px) {
+  body.case .privacy-notice { top: 1.5rem; bottom: auto; max-width: min(22rem, calc(42vw - 2.25rem)); } /* stays within the photo (right ~42%) */
+  .proto-page .privacy-notice { left: auto; right: 1.5rem; bottom: 4.5rem; max-width: min(22rem, calc((100vw - min(393px, max(196.5px, (100vh - 156px) * .4613))) / 2 - 2.25rem)); }
+}
+/* Legal pages (privacy.html, impressum.html): editorial text column aligned with the monogram, Fraunces B title,
+   DM Sans body, thin eggplant rules between sections. No bottom nav, so the notice uses the page edge. */
+.legal-page main, .legal-page .site-footer { font-family: "DM Sans", system-ui, sans-serif; }
+.legal { padding-block: 3.5rem 6rem; }
+.legal > * { max-width: 42rem; }
+.legal-title { margin: 0 0 1rem; font-family: "Fraunces", Georgia, serif; font-weight: 900; font-optical-sizing: none; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; font-size: clamp(2.75rem, 6vw, 4.5rem); line-height: 1; letter-spacing: -.025em; }
+.legal-title-sub { display: block; margin-top: .75rem; font-family: "DM Sans", system-ui, sans-serif; font-variation-settings: normal; font-weight: 500; font-size: 1.25rem; letter-spacing: 0; }
+.legal-updated { margin: 0 0 2.5rem; font-size: .875rem; opacity: .82; }
+.legal-lead { margin: 0 0 1rem; font-size: 1.25rem; font-weight: 500; line-height: 1.5; }
+.legal section { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--eggplant); }
+.legal h2 { margin: 0 0 .875rem; font-family: "DM Sans", system-ui, sans-serif; font-size: 1.25rem; font-weight: 600; letter-spacing: -.005em; line-height: 1.3; }
+.legal p, .legal li, .legal address { font-size: 1.0625rem; line-height: 1.65; }
+.legal p { margin: 0 0 1rem; }
+.legal ul { margin: 0 0 1rem; padding-left: 1.25rem; }
+.legal address { font-style: normal; margin-bottom: 1rem; }
+.legal a { color: inherit; text-underline-offset: .2em; }
+.legal a:focus-visible, .legal-inline-btn:focus-visible { outline: 2px solid var(--eggplant); outline-offset: 3px; }
+.legal code { padding: .05em .3em; background: var(--beige); font-size: .9em; }
+.legal-inline-btn { padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.legal-page .privacy-notice { bottom: 1.5rem; max-width: 22rem; }
+@media (max-width: 760px) {
+  .legal { padding-block: 2.5rem 5rem; }
+  .legal-page .privacy-notice { bottom: calc(.75rem + env(safe-area-inset-bottom, 0px)); max-width: none; }
+}
+/* Legal pages: first-visit notice in the page flow above the title; bottom reserve while a floating notice is open (privacy.js). */
+.privacy-notice--inline { position: static; max-width: 42rem; margin: 0 0 2.5rem; }
+html.privacy-notice-reserve { scroll-padding-bottom: calc(var(--privacy-notice-h, 0px) + 1.5rem); }
+html.privacy-notice-reserve body.legal-page { padding-bottom: calc(var(--privacy-notice-h, 0px) + 3rem); }
+/* Keep the in-flow notice identical to the floating one: shield it from the legal text styles. */
+.legal .privacy-notice { margin: 0 0 2.5rem; padding: 1rem 1.125rem 1.125rem; border: 1px solid var(--ivory); }
+.legal .privacy-notice p { font-size: inherit; line-height: inherit; }
+.legal .privacy-notice .privacy-notice-title { margin: 0 0 .25rem; font-size: .9375rem; line-height: 1.3; }
+.legal .privacy-notice .privacy-notice-text { margin: 0 0 .875rem; }
+@media (max-width: 760px) { .legal .privacy-notice { padding: .875rem 1rem 1rem; } }

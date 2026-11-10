@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.add('js');if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.classList.add('motion');</script>
   <script src="script.js" defer></script>
+  <!-- Analytics preference: loads Cloudflare Web Analytics unless declined (privacy.js). -->
+  <script src="privacy.js" defer data-privacy-url="privacy.html"></script>
 </head>
 <body class="case">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -490,9 +492,6 @@
       </div>
     </section>
   </main>
-  <footer class="wrap site-footer"><p>Jackie Messaggi / Snoof case study</p><a href="#intro">Back to top ↑</a></footer>
-  <!-- Cloudflare Web Analytics -->
-  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0859ee09588c492f97b0d13c07f94b79"}'></script>
-  <!-- End Cloudflare Web Analytics -->
+  <footer class="wrap site-footer"><p>Jackie Messaggi / Snoof case study</p><span class="site-footer-legal"><a href="privacy.html">Privacy Policy</a><a href="impressum.html">Impressum</a><button type="button" class="privacy-settings-link" data-privacy-settings>Privacy settings</button></span><a href="#intro">Back to top ↑</a></footer>
 </body>
 </html>

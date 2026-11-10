@@ -8,6 +8,8 @@
   <meta name="author" content="Jackie Messaggi">
   <title>Snoof, Interactive Prototype | Jackie Messaggi</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- Analytics preference: loads Cloudflare Web Analytics unless declined (privacy.js). Not added inside the iframe. -->
+  <script src="privacy.js" defer data-privacy-url="privacy.html"></script>
 </head>
 <!-- Host page for the Snoof prototype (snoof-prototype/, a public build of the Claude Design export with the same
      screens and behavior). The prototype renders at a fixed 393 × 852 frame; this page only centers that frame and
@@ -22,6 +24,7 @@
       <iframe src="snoof-prototype/Prototype.standalone.html" width="393" height="852" title="Snoof interactive prototype"></iframe>
     </div>
     <p class="proto-note">Runs on sample data, and progress resets every session.</p>
+    <p class="proto-privacy"><span class="site-footer-legal"><a href="privacy.html">Privacy Policy</a><a href="impressum.html">Impressum</a><button type="button" class="privacy-settings-link" data-privacy-settings>Privacy settings</button></span></p>
   </main>
   <script>
     // Scale the fixed 393 × 852 prototype frame to the space available (never above 100%).
@@ -38,8 +41,5 @@
       window.addEventListener('resize', fit);
     })();
   </script>
-  <!-- Cloudflare Web Analytics -->
-  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0859ee09588c492f97b0d13c07f94b79"}'></script>
-  <!-- End Cloudflare Web Analytics -->
 </body>
 </html>
