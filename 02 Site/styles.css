@@ -2256,3 +2256,13 @@ html.privacy-notice-reserve body.legal-page { padding-bottom: calc(var(--privacy
   .ty-tip-lines i { display: block; height: .4375rem; width: 100%; border-radius: 999px; background: rgba(255,255,255,.55); }
   .ty-tip-lines i:nth-child(2) { width: 88%; } .ty-tip-lines i:nth-child(3) { width: 70%; }
   @media (max-width: 760px) { .ty-timeline.is-anim li:last-of-type::before { display: none; } }
+
+/* TerraYou post-launch tweaks (Nov 12): app phone aligned with the full text block; narrower do's and don'ts stage. */
+.ty-appwrap { align-items: center; }
+.ty-appcopy .ty-h2 { margin-bottom: 2rem; }
+.ty-guide-panel .ty-try { max-width: 38rem; }
+.ty-guide-panel .ty-try-groups { grid-template-columns: auto auto; justify-content: start; column-gap: 2.5rem; }
+.ty-guide-panel .ty-try-stage { padding: 2rem 0 2.25rem; }
+.ty-guide-panel .ty-try-stage svg { width: 58%; }
+@media (max-width: 760px) { .ty-guide-panel .ty-try { max-width: none; } }
+@media (max-width: 760px) { .ty-appstage { order: 0; margin-top: 2rem; } }

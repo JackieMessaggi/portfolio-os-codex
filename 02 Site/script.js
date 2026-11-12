@@ -692,7 +692,7 @@ void main(){
 // view. The canvas draws both states: the lettering (background + mark) and the reveal (video frames on a brand field).
 // The video loads only on first reveal. Without WebGL or with reduced motion, the lettering simply stays.
 (() => {
-  const boxes = [...document.querySelectorAll('.work-letter[data-reveal-video]')];
+  const boxes = [...document.querySelectorAll('.work-letter[data-reveal-video], .work-letter[data-reveal-poster]')];
   if (!boxes.length || !window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const MS = 460;
@@ -733,8 +733,11 @@ void main(){
     gl.uniform1i(gl.getUniformLocation(prog, 'tA'), 0); gl.uniform1i(gl.getUniformLocation(prog, 'tB'), 1);
     const uG = gl.getUniformLocation(prog, 'g'); const uSeed = gl.getUniformLocation(prog, 'seed');
 
-    const [mark, poster] = await Promise.all([loadImg(box.dataset.letterMark), loadImg(box.dataset.revealPoster)]);
-    if (!mark) return;
+    const [mark, poster] = await Promise.all([box.dataset.letterMark ? loadImg(box.dataset.letterMark) : null, loadImg(box.dataset.revealPoster)]);
+    // Typeset covers (no mark image): the rest state is redrawn from the live lettering, and the canvas
+    // only shows while the glitch runs, so the real type stays on screen at rest.
+    const typeset = !box.dataset.letterMark;
+    if (!mark && !typeset) return;
     const restC = document.createElement('canvas'); const revealC = document.createElement('canvas');
     let video = null; let g = 0; let target = 0; let from = 0; let t0 = 0; let raf = 0;
     const W = () => canvas.width; const H = () => canvas.height;
@@ -745,8 +748,18 @@ void main(){
       gl.viewport(0, 0, w, h);
       // Rest state: the same lettering the page shows underneath (background + centered mark at 44% width).
       const x = restC.getContext('2d'); x.fillStyle = box.dataset.letterBg; x.fillRect(0, 0, w, h);
-      const mw = w * 0.44; const mh = mw * (mark.naturalHeight / mark.naturalWidth);
-      x.drawImage(mark, (w - mw) / 2, (h - mh) / 2, mw, mh);
+      if (mark) {
+        const mw = w * 0.44; const mh = mw * (mark.naturalHeight / mark.naturalWidth);
+        x.drawImage(mark, (w - mw) / 2, (h - mh) / 2, mw, mh);
+      } else {
+        const br = box.getBoundingClientRect(); const k = w / br.width;
+        box.querySelectorAll('.work-letter-type span').forEach((el) => {
+          const r = el.getBoundingClientRect(); const cs = getComputedStyle(el);
+          x.fillStyle = cs.color; x.textBaseline = 'middle'; x.textAlign = 'center';
+          x.font = `${cs.fontWeight} ${parseFloat(cs.fontSize) * k}px ${cs.fontFamily}`;
+          x.fillText(el.textContent, (r.left - br.left + r.width / 2) * k, (r.top - br.top + r.height / 2) * k);
+        });
+      }
       gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texA); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, restC);
       drawReveal(); render();
     };
@@ -757,7 +770,8 @@ void main(){
       const src = video && video.readyState >= 2 ? video : poster;
       if (src) {
         const sw = src.videoWidth || src.naturalWidth; const shh = src.videoHeight || src.naturalHeight;
-        const dh = h * 0.88; const dw = dh * (sw / shh); const dx = (w - dw) / 2; const dy = (h - dh) / 2; const r = dw * 0.07;
+        const sc = Math.min((h * 0.88) / shh, (w * 0.88) / sw); const dh = shh * sc; const dw = sw * sc;
+        const dx = (w - dw) / 2; const dy = (h - dh) / 2; const r = Math.min(dw, dh) * (dw > dh ? 0.035 : 0.07);
         const path = () => { x.beginPath(); if (x.roundRect) x.roundRect(dx, dy, dw, dh, r); else x.rect(dx, dy, dw, dh); };
         // Lift the screen off the brand field: soft shadow, then the frame, then a light hairline edge.
         x.save(); x.shadowColor = 'rgba(16, 40, 44, .35)'; x.shadowBlur = h * 0.05; x.shadowOffsetY = h * 0.012; path(); x.fillStyle = '#fff'; x.fill(); x.restore();
@@ -766,7 +780,7 @@ void main(){
       }
       gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, texB); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, revealC);
     };
-    const render = () => { gl.uniform1f(uG, g); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); };
+    const render = () => { gl.uniform1f(uG, g); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); if (typeset) canvas.style.opacity = (g > 0 || target > 0) ? '1' : '0'; };
     const loop = (now) => {
       if (g !== target) { const k = Math.min(1, (now - t0) / MS); g = from + (target - from) * k; if (k >= 1) g = target; }
       if (g > 0) drawReveal();
@@ -777,7 +791,7 @@ void main(){
     };
     const go = (to) => {
       if (to === target) return;
-      if (to === 1 && !video) {
+      if (to === 1 && !video && box.dataset.revealVideo) {
         video = document.createElement('video'); video.muted = true; video.loop = true; video.playsInline = true; video.preload = 'auto';
         video.src = box.dataset.revealVideo;
       }
@@ -787,6 +801,7 @@ void main(){
     };
     box.append(canvas);
     size();
+    if (typeset && document.fonts) document.fonts.ready.then(size);
     new ResizeObserver(() => size()).observe(box);
     const link = box.closest('a') || box;
     if (canHover) {
