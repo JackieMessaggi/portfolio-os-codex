@@ -1382,3 +1382,235 @@ void main(){
   mode.addEventListener('change', sync);
   sync();
 })();
+
+// ==========================================================================
+// TerraYou case study (terrayou.html). Runs only on that page.
+// ==========================================================================
+if (document.body && document.body.classList.contains('ty')) {
+// (Report book removed: chapter 8 now shows report covers only.)
+
+// ===== Study 03 additions =====
+(() => {
+  // Logo anatomy: labels are toggle buttons; hover/focus previews, click pins.
+  const ana = document.querySelector('.ty-anatomy');
+  if (ana) {
+    const parts = [...ana.querySelectorAll('.ty-part')];
+    let pinned = null;
+    const show = key => {
+      ana.classList.toggle('is-focus', !!key);
+      ana.querySelectorAll('g[data-part]').forEach(g => g.classList.toggle('is-on', g.dataset.part === key));
+      parts.forEach(b => b.setAttribute('aria-pressed', b.dataset.part === pinned));
+    };
+    parts.forEach(b => {
+      b.addEventListener('mouseenter', () => show(b.dataset.part));
+      b.addEventListener('mouseleave', () => show(pinned));
+      b.addEventListener('focus', () => show(b.dataset.part));
+      b.addEventListener('blur', () => show(pinned));
+      b.addEventListener('click', () => { pinned = pinned === b.dataset.part ? null : b.dataset.part; show(pinned || b.dataset.part); });
+    });
+  }
+
+  // Wireframe to UI comparator (native range input drives the clip).
+  document.querySelectorAll('.ty-compare').forEach(c => {
+    const r = c.querySelector('input');
+    const set = () => c.style.setProperty('--pos', r.value + '%');
+    r.addEventListener('input', set); set();
+  });
+
+  // Pillar thread: three toggle buttons swap the screen set.
+  const thread = document.querySelector('.ty-thread');
+  if (thread) {
+    const btns = [...thread.querySelectorAll('.ty-thread-btn')];
+    const sets = [...thread.querySelectorAll('.ty-thread-set')];
+    thread.querySelector('.ty-thread-btns').hidden = false;
+    const pick = i => {
+      btns.forEach((b, k) => b.setAttribute('aria-pressed', k === i));
+      sets.forEach((s, k) => s.hidden = k !== i);
+    };
+    btns.forEach((b, i) => b.addEventListener('click', () => pick(i)));
+    pick(0);
+  }
+})();
+
+// ===== Study 04 additions =====
+(() => {
+  // Read more: open without JavaScript; collapsed content is inert.
+  document.querySelectorAll('.ty-more-toggle').forEach(t => {
+    const box = document.getElementById(t.getAttribute('aria-controls'));
+    const label = t.querySelector('.ty-more-label'), closed = label.textContent;
+    const set = open => { t.setAttribute('aria-expanded', open); box.classList.toggle('is-collapsed', !open); box.inert = !open; label.textContent = open ? 'Show less' : closed; };
+    set(false); t.hidden = false;
+    t.addEventListener('click', () => set(t.getAttribute('aria-expanded') !== 'true'));
+  });
+
+  // Palette: each swatch explains its job.
+  const info = document.querySelector('.ty-pal-info');
+  document.querySelectorAll('.ty-sw').forEach(b => {
+    b.setAttribute('aria-pressed', 'false');
+    b.insertAdjacentHTML('afterbegin', '<i aria-hidden="true"></i>');
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.ty-sw').forEach(x => x.setAttribute('aria-pressed', x === b));
+      info.textContent = b.dataset.info;
+    });
+  });
+
+  // Logo on backgrounds.
+  const stage = document.querySelector('.ty-try-stage'), verdict = document.querySelector('.ty-verdict');
+  document.querySelectorAll('.ty-try-btn').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.ty-try-btn').forEach(x => x.setAttribute('aria-pressed', x === b));
+    stage.style.setProperty('--bg', b.dataset.bg); stage.style.setProperty('--ink', b.dataset.ink);
+    const ok = b.dataset.ok === '1';
+    verdict.classList.toggle('no', !ok);
+    verdict.innerHTML = `<span>${b.dataset.msg}</span>`;
+  }));
+
+})();
+
+// ===== Study 05 additions =====
+(() => {
+  // Scroll reveal for story beats (motion only; content is visible otherwise).
+  const reveals = document.querySelectorAll('.ty-reveal');
+  if (document.documentElement.classList.contains('motion') && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: .25 });
+    reveals.forEach(r => io.observe(r));
+  } else reveals.forEach(r => r.classList.add('is-in'));
+
+  // Brand guide tabs.
+  const gt = [...document.querySelectorAll('.ty-guide-tab')];
+  const gp = gt.map(t => document.getElementById(t.getAttribute('aria-controls')));
+  const pickG = (i, focus) => {
+    gt.forEach((t, k) => { const on = k === i; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; gp[k].hidden = !on; });
+    gp[i].classList.remove('is-entering'); void gp[i].offsetWidth; gp[i].classList.add('is-entering');
+    if (focus) gt[i].focus();
+  };
+  gt.forEach((t, i) => {
+    t.addEventListener('click', () => pickG(i));
+    t.addEventListener('keydown', e => { const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (k) { e.preventDefault(); pickG((i + k + gt.length) % gt.length, true); } });
+  });
+  if (gt.length) pickG(0);
+
+  // Logo family: light / dark.
+  const fam = document.querySelector('.ty-family-box');
+  document.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => {
+    const dark = b.dataset.mode === 'dark';
+    document.querySelectorAll('[data-mode]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    fam.classList.toggle('dark', dark);
+    fam.querySelectorAll('img').forEach(im => im.src = dark ? im.dataset.dark : im.dataset.light);
+  }));
+
+  // Clear space: main / icon / product.
+  const cs = document.querySelector('.ty-cs');
+  const csSet = { main: ['assets/terrayou/logos/Logo_Positive.svg', '.25', '7rem', '¼x', 'Main logo with its clear space'], icon: ['assets/terrayou/logos/Icon_Positive.svg', '.25', '8rem', '¼x', 'Icon with its clear space'], product: ['assets/terrayou/logos/pl-archetype.webp', '.5', '3.5rem', '½x', 'Product logo with its clear space'] };
+  document.querySelectorAll('[data-cs]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-cs]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    const [src, k, h, tag, alt] = csSet[b.dataset.cs];
+    const img = cs.querySelector('img'); img.src = src; img.alt = alt;
+    cs.style.setProperty('--k', k); if (!matchMedia('(max-width: 760px)').matches) cs.style.setProperty('--h', h);
+    cs.querySelectorAll('.tag').forEach(t => t.textContent = tag);
+  }));
+
+})();
+
+
+
+// Study 10: concept ideas animate on hover, focus, tap, and once when scrolled into view.
+(() => {
+  const ideas = [...document.querySelectorAll('.ty-idea')]; if (!ideas.length) return;
+  ideas.forEach(el => {
+    el.addEventListener('mouseenter', () => el.classList.add('is-on'));
+    el.addEventListener('mouseleave', () => el.classList.remove('is-on'));
+    el.addEventListener('focus', () => el.classList.add('is-on'));
+    el.addEventListener('blur', () => el.classList.remove('is-on'));
+    el.addEventListener('click', () => el.classList.toggle('is-on'));
+  });
+  if (!document.documentElement.classList.contains('motion') || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return; io.unobserve(e.target);
+    const i = ideas.indexOf(e.target);
+    setTimeout(() => { e.target.classList.add('is-on'); setTimeout(() => { if (!e.target.matches(':hover, :focus')) e.target.classList.remove('is-on'); }, 1700); }, (i % 4) * 220);
+  }), { threshold: .5 });
+  ideas.forEach(el => io.observe(el));
+})();
+
+// Do / Don't badge and stage state for the logo background tester.
+(() => {
+  const stage = document.querySelector('.ty-try-stage'); if (!stage) return;
+  const badge = stage.querySelector('.ty-try-badge');
+  document.querySelectorAll('.ty-try-btn').forEach(b => b.addEventListener('click', () => {
+    const ok = b.dataset.ok === '1'; stage.dataset.ok = ok ? '1' : '0'; if (badge) badge.innerHTML = ok ? '<i class="ok">✓</i> Do' : '<i class="no">✕</i> Don’t';
+  }));
+})();
+
+// Chapter 5 recreation: pillar picks colour, question image, product name and test list.
+(() => {
+  const page = document.querySelector('.ty-qpage'); if (!page) return;
+  const P = [
+    { c: 'var(--ty-discovery)', q: 'assets/terrayou/tests/q-discovery.webp', name: 'archetype', tests: [['Archetype','discovery_archetype.webp','A personality assessment based on Jungian archetypes, exploring strengths and behavioral patterns.'],['Enneagram','discovery_enneagram.webp','A personality assessment exploring nine personality types, core motivations, and emotional patterns.'],['Big Five','discovery_big5.webp','A personality assessment based on five core personality traits.']] },
+    { c: 'var(--ty-balance)', q: 'assets/terrayou/tests/q-balance.webp', name: 'burnout', tests: [['Burnout','balance_burnout.webp','A self-assessment exploring stress levels and emotional well-being.'],['Mindfulness','balance_mindfulness.webp','A self-assessment of mindfulness, awareness, and everyday focus.'],['Ikigai','balance_ikigai.webp','A self-discovery test exploring personal purpose, joy, and fulfillment.']] },
+    { c: 'var(--ty-growth)', q: 'assets/terrayou/tests/q-growth.webp', name: 'iq test', tests: [['Emotional Intelligence','growth_emotionalintelligence.webp','An assessment of five key areas of emotional intelligence.'],['IQ','growth_iq.webp','A cognitive assessment focused on reasoning and problem-solving abilities.'],['Cognitive Ability','growth_cognitive-ability.webp','An assessment of five cognitive skill areas relevant to personal and professional development.']] }
+  ];
+  const pills = [...document.querySelectorAll('.ty-pill')], list = document.querySelector('.ty-testicons');
+  const img = page.querySelector('.ty-qp-img'), nm = page.querySelector('.ty-qp-name');
+  P.forEach(p => { const im = new Image(); im.src = p.q; });
+  const set = i => {
+    const p = P[i];
+    pills.forEach((b, k) => b.setAttribute('aria-pressed', k === i));
+    const wrap = page.closest('.ty-devices'); wrap.style.setProperty('--c', p.c); img.src = p.q; nm.textContent = p.name; wrap.querySelector('.ty-ph-img').src = p.q; wrap.querySelector('.ty-ph-name').textContent = p.name; const bd = page.querySelector('.ty-qp-badge'); if (bd) bd.textContent = 'TERRA YOU ' + ['DISCOVERY','BALANCE','GROWTH'][i];
+    list.innerHTML = p.tests.map(([t, f, d], k) => `<li style="--i:${k}"><img src="assets/terrayou/tests/${f}" alt=""${f.includes('ikigai') ? ' class="round"' : ''}><b>${t}</b><span>${d}</span></li>`).join('');
+  };
+  pills.forEach((b, i) => b.addEventListener('click', () => set(i)));
+  set(0);
+})();
+
+// Organic vs incent campaign flow: shows where the ad sat on desktop and mobile.
+(() => {
+  const wrap = document.querySelector('.ty-devices'); if (!wrap) return;
+  const btns = document.querySelectorAll('[data-flow]');
+  btns.forEach(b => { if (b.tagName !== 'BUTTON') return; b.addEventListener('click', () => {
+    document.querySelectorAll('button[data-flow]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    wrap.dataset.flow = b.dataset.flow;
+  }); });
+})();
+
+// System timeline: when it scrolls into view, a dot walks from XD to tokens, step by step.
+(() => {
+  const tl = document.querySelector('.ty-timeline');
+  if (!tl || !document.documentElement.classList.contains('motion') || !('IntersectionObserver' in window)) return;
+  const steps = [...tl.children];
+  const dot = document.createElement('span'); dot.className = 'ty-tl-dot'; dot.setAttribute('aria-hidden', 'true'); tl.append(dot);
+  tl.classList.add('is-anim');
+  const place = i => { const li = steps[i]; dot.style.transform = `translate(${li.offsetLeft}px, ${li.offsetTop}px)`; };
+  steps[0].classList.add('is-past'); place(0);
+  let cur = 0, timer = null;
+  const run = () => { timer = setInterval(() => {
+    if (cur >= steps.length - 1) { clearInterval(timer); return; }
+    steps[cur].classList.add('is-past'); cur++; place(cur);
+    setTimeout(() => steps[cur].classList.add('is-past'), 650);
+  }, 900); };
+  const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { io.disconnect(); setTimeout(run, 300); } }, { threshold: .35 });
+  io.observe(tl);
+  addEventListener('resize', () => place(cur));
+})();
+
+// App chapter: buttons swap the large phone screen.
+(() => {
+  const img = document.querySelector('.ty-appimg'); if (!img) return;
+  const btns = [...document.querySelectorAll('.ty-appbtn')];
+  btns.forEach(b => { new Image().src = `assets/terrayou/appshots/new/${b.dataset.s}.webp`; });
+  btns.forEach(b => b.addEventListener('click', () => {
+    btns.forEach(x => x.setAttribute('aria-pressed', x === b));
+    img.classList.add('is-swapping');
+    setTimeout(() => { img.src = `assets/terrayou/appshots/new/${b.dataset.s}.webp`; img.alt = b.dataset.alt; img.classList.remove('is-swapping'); }, 180);
+  }));
+})();
+
+// Did you know? text per category: only Discovery has a verified tip (live app). Others show neutral lines.
+(() => {
+  const TIP = {};  // Same neutral lines in every category (owner decision, Nov 12).
+  const set = i => document.querySelectorAll('.ty-tiptext').forEach(p => {
+    if (TIP[i]) { p.textContent = TIP[i]; p.removeAttribute('aria-label'); }
+    else { p.innerHTML = '<span class="ty-tip-lines" aria-hidden="true"><i></i><i></i><i></i></span>'; p.setAttribute('aria-label', 'Tip text not shown'); }
+  });
+  document.querySelectorAll('.ty-pill').forEach((b, i) => b.addEventListener('click', () => set(i)));
+})();
+}

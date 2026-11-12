@@ -13,3 +13,8 @@
 
 # Hero study mock not approved for public release.
 /.impeccable/mocks/header-hero-c-v8.png
+
+# Internal source inventories and audits (private drive paths, client structure). Not for public release.
+/00 Context/terrayou-assets-inventory.md
+/00 Context/terrayou-case-audit.md
+/00 Context/quiz-bingo-assets-inventory.md

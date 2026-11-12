@@ -1,6 +1,6 @@
 # Project Status
 
-Updated: November 10, 2026, by Claude Code after the authorized CV link deployment.
+Updated: November 12, 2026, by Claude Code after the authorized TerraYou integration and publication.
 
 ## Where we are
 
@@ -33,4 +33,22 @@ Live site: https://jackiemessaggi.com/ (custom domain since November 10, 2026, H
 
 ## Next step
 
-No active task. Still open: real-device checks (iOS/Safari) for the mobile scroll and the privacy notice; on mobile the notice covers the Hero “Scroll to explore” cue until a choice is made.
+TerraYou case study: **integrated into the site on November 12, 2026** (Claude Code), from the final private Study 10, as a secondary case. Jackie approved the 54 public assets and authorized one commit, a push, and publication through the existing manual Pages workflow.
+
+- **New page:** `02 Site/terrayou.html`. It follows the Snoof case conventions: same head with privacy.js and noindex, case nav, footer, and links back to `index.html#work`.
+- **Shared files:**
+  - `styles.css`: TerraYou rules appended at the end, all scoped to `.ty-*`. Dead rules for the removed SVG illustrations and a duplicate `.case main` were dropped.
+  - `script.js`: TerraYou code appended inside an `if (document.body.classList.contains('ty'))` guard. Dead simulator and component-explorer code was removed.
+- **Homepage:** the TerraYou card now links to the case. "Coming soon" is removed for TerraYou only. Card order and layout are unchanged.
+- **Assets:** `02 Site/assets/terrayou/` holds 48 WebP files converted through Chrome (quality 0.84 to 0.9, alpha kept for the cut-outs) plus 6 SVG logos, 1.5 MB in total. Only assets used by the page were copied. Study sources stay private.
+- **Validation:** CDP-driven Chrome at 1440 × 900 and 390 × 844 over local HTTP. The checks covered:
+  - card to case navigation and back;
+  - real scrolling with the timeline animation;
+  - chapter navigation;
+  - pillar, flow, logo, guide-tab, do's and don'ts, app-screen, read-more, and concept-hover interactions.
+
+  Results: no exceptions, no 404s, no broken images, no overflow. The Snoof page also shows no exceptions. The only console noise is localhost-only (Cloudflare analytics CORS and a missing favicon), and it predates this work.
+- **Final `/auditar-case` on `terrayou.html`:** ready to publish, no blocking issues.
+- **Public Repository Safety Check:** done. Internal inventories and audits are git-ignored; Figma file keys are removed from the log.
+
+No other active task. Still open: real-device checks (iOS/Safari) for the mobile scroll and the privacy notice; on mobile the notice covers the Hero “Scroll to explore” cue until a choice is made.
