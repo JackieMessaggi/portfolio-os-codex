@@ -53,7 +53,7 @@ TerraYou case study: **integrated into the site on November 12, 2026** (Claude C
 
 ## Active Task / Handoff
 
-- **Task and status:** Quiz Bingo case study. Study 03 refined November 14, 2026 (Unity in 2D, individual city and category assets, stage labels, copy review). Awaiting Jackie's visual review. Nothing is implemented in `02 Site/`.
+- **Task and status:** Quiz Bingo case study. Integrated into `02 Site/` as `quizbingo.html` and committed locally (`4badfb6`, November 15, 2026), from the approved private Study 04. Safari and iPhone reviewed manually by Jackie. Not yet published: deployment is a separate, manual step (`pages.yml` runs only on `workflow_dispatch`). The entries below are the history.
 - **Last agent:** Claude Code.
 - **Completed (November 14):**
   - Unity: the exploded popup is now a staggered 2D layout. The reference stays visible and the seven numbered slices separate from back to front;
@@ -74,6 +74,6 @@ TerraYou case study: **integrated into the site on November 12, 2026** (Claude C
 - **November 15 (audit refinements):** `/auditar-case Quiz Bingo` run; fixes applied to Study 04: release on Android and iOS in the hero, 02 transition, no repeated validation line, motion references without tool names, Official Release hire timing, 06 causality removed, 07 collaboration wording, rewritten learnings, placeholder note, section 04 contrast (≥5.1:1), lighter video encodes in `assets5/v/`. Private markers and links kept on purpose.
 - **November 15:** Study 04 approved as the final reference. Integration plan in `01 Projects/Quiz Bingo/integration-plan.md` (planning only; decisions D1 to D7 pending).
 - **November 15 (local integration):** `02 Site/quizbingo.html`, `quizbingo.js`, a scoped `body.qb` section in `styles.css`, optional `data-nav-start` in `script.js`, active homepage card, ivory monogram, game fonts with OFL texts, and `assets/quizbingo/` (132 WebP + 12 MP4, 21.7 MB on disk, 3.5 MB before first scroll). Validated against Study 04 (pixel parity), on desktop, tablet, mobile, reduced motion, and on the homepage, Snoof, and TerraYou. Safari and real devices not tested. Not committed.
-- **Next action:** Jackie's review of the local page, then commit approval.
+- **Next action:** push approved; publishing (manual `Publish site` workflow) needs Jackie's separate approval.
 
 No other active task. Still open: real-device checks (iOS/Safari) for the mobile scroll and the privacy notice; on mobile the notice covers the Hero “Scroll to explore” cue until a choice is made.
