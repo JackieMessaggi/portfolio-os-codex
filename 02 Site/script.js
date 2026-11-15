@@ -80,7 +80,10 @@ if (caseNav) {
     const goingDown = y > lastY + 4;
     const goingUp = y < lastY - 4;
     const keep = y >= max - 120 || caseNav.classList.contains('is-open') || caseNav.contains(document.activeElement);
-    const inHero = y < 320 && !caseNav.contains(document.activeElement) && !caseNav.classList.contains('is-open');
+    // Optional data-nav-start="#id" (Quiz Bingo): stay hidden until that element gets .is-reached. Other cases keep the 320 px rule.
+    const startEl = caseNav.dataset.navStart ? document.querySelector(caseNav.dataset.navStart) : null;
+    const beforeStart = startEl ? !startEl.classList.contains('is-reached') : y < 320;
+    const inHero = beforeStart && !caseNav.contains(document.activeElement) && !caseNav.classList.contains('is-open');
     if (inHero) caseNav.classList.add('is-hidden');
     else if (keep || goingUp) caseNav.classList.remove('is-hidden');
     else if (goingDown) caseNav.classList.add('is-hidden');

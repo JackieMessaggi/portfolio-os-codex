@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Quiz Bingo World Tour, a trivia game played on a bingo card: visual concept, game UI, motion direction, and Unity handoff, by Jackie Messaggi.">
+  <meta name="author" content="Jackie Messaggi">
+  <title>Quiz Bingo World Tour | Jackie Messaggi</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preload" href="assets/fonts/PaytoneOne-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <script>document.documentElement.classList.add('js');if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.classList.add('motion');if(!matchMedia('(prefers-reduced-motion: no-preference)').matches||location.hash==='#rm')document.documentElement.classList.add('rm');</script>
+  <script src="script.js" defer></script>
+  <script src="quizbingo.js" defer></script>
+  <!-- Analytics preference: loads Cloudflare Web Analytics unless declined (privacy.js). -->
+  <script src="privacy.js" defer data-privacy-url="privacy.html"></script>
+</head>
+<body class="case qb">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="monogram" href="index.html"><img src="assets/logo/Jackie_Logo_ivory_Short.svg" width="56" height="19" alt="Jackie Messaggi, home"></a>
+  </header>
+
+  <nav class="case-nav is-hidden" data-nav-start="#gamewrap" aria-label="Case study">
+    <div class="case-progress" aria-hidden="true"><span></span></div>
+    <a class="case-back" href="index.html#work"><span aria-hidden="true">←</span> Work</a>
+    <span class="case-name" aria-hidden="true">Quiz Bingo</span>
+    <button class="case-toggle" type="button" aria-expanded="false" aria-controls="case-menu">
+      <span class="case-count"><span class="case-current-num">01</span>/08</span>
+      <span class="case-current-label">Play</span>
+      <span class="visually-hidden">, open section menu</span>
+    </button>
+    <ol class="case-menu" id="case-menu">
+      <li><a href="#gamewrap"><span class="nav-num">01</span> Play</a></li>
+      <li><a href="#ftue"><span class="nav-num">02</span> Concept</a></li>
+      <li><a href="#stages"><span class="nav-num">03</span> Stages</a></li>
+      <li><a href="#world"><span class="nav-num">04</span> Identity</a></li>
+      <li><a href="#motion"><span class="nav-num">05</span> Motion</a></li>
+      <li><a href="#system"><span class="nav-num">06</span> UI system</a></li>
+      <li><a href="#unity"><span class="nav-num">07</span> Unity</a></li>
+      <li><a href="#learned"><span class="nav-num">08</span> Learnings</a></li>
+      <li class="case-menu-back"><a href="index.html#work"><span aria-hidden="true">←</span> Back to Selected Work</a></li>
+    </ol>
+  </nav>
+
+  <main id="main">
+    <section class="stage" id="stage" data-label="Play" aria-label="Quiz Bingo World Tour, key art and playable demo">
+      <div class="sticky" id="sticky">
+        <div class="bg"></div>
+        <div class="city" id="city"></div>
+        <div class="rays" id="rays"><i></i></div>
+        <img class="monuments" id="monuments" src="assets/quizbingo/img/monuments.webp" width="2000" height="1184" alt="">
+        <div class="sparks" id="sparks" aria-hidden="true"></div>
+        <div id="decor" aria-hidden="true"></div>
+
+        <div class="layer logo" id="logo">
+          <div class="e nobob" style="--d:.15s;--fs:.2;--dur:.85s;position:absolute;inset:0"><img class="globe" src="assets/quizbingo/img/globe.webp" width="1300" height="1175" alt=""></div>
+          <div class="shadow"></div>
+          <div class="e nobob" style="--d:.5s;--fy:-40%;--fs:1.25;--dur:.75s;--ease:cubic-bezier(.3,1.5,.45,1);position:absolute;inset:0"><img class="letter" src="assets/quizbingo/img/lettering.webp" width="1200" height="1008" alt="Quiz Bingo World Tour"></div>
+        </div>
+
+        <div class="cap" id="cap">
+          <p class="k">Quiz Bingo World Tour</p>
+          <p class="t">A trivia game played on a bingo card, and my first mobile game. As Design Lead and UI Designer, I led its visual and UI design from the early prototype through its release on Android and iOS, 2024 to 2026.</p>
+        </div>
+        <div class="cue" id="cue" aria-hidden="true"><i></i>Scroll to play</div>
+
+        <div class="gamewrap" id="gamewrap">
+          <div class="side side-l" id="sideL">
+            <p class="kick">Give it a spin</p>
+            <h2>Play the core loop</h2>
+            <p class="credit">Rebuilt from the final Figma screens and the original Unity assets. Game rules by the product team, low-fidelity wireframes by our PM. The visual concept, high-fidelity UI, and interactive prototypes are mine.</p>
+          </div>
+
+          <div class="screen" id="screen" inert>
+            <div class="art" id="art">
+              <img class="base" src="assets/quizbingo/img/bingo-base.webp" width="1080" height="2048" alt="">
+              <div class="slot" id="slot"></div>
+              <div class="film" aria-hidden="true"></div>
+              <p class="tip">Tap Spin to get a Question Ball!<img src="assets/quizbingo/img/info-icon.webp" width="120" height="136" alt=""></p>
+              <button class="spin" id="spin" type="button" aria-label="Spin"><img src="assets/quizbingo/img/spin.webp" width="760" height="236" alt=""></button>
+              <img class="finger" src="assets/quizbingo/img/finger.webp" width="340" height="341" alt="">
+
+              <div class="ov reveal" id="reveal" aria-hidden="true">
+                <div class="in">
+                  <img class="ico" src="assets/quizbingo/img/geo-icon.webp" width="700" height="706" alt="">
+                  <div class="word">Geography</div>
+                </div>
+              </div>
+
+              <div class="ov question" id="question" role="group" aria-labelledby="qtext">
+                <div class="qbg"></div>
+                <img class="qimg" src="assets/quizbingo/img/q-base.webp" width="1080" height="1830" alt="Alexanderplatz in Berlin at night">
+                <div class="qtext"><p id="qtext"></p></div>
+                <div class="face" aria-label="Seconds left"><span id="timer">15</span></div>
+                <div id="answers"></div>
+              </div>
+
+              <div class="ov modal" id="again" role="dialog" aria-modal="true" aria-label="Another question?">
+                <img class="pop" src="assets/quizbingo/img/again.webp" width="987" height="1705" alt="Try again! Another question? Get another chance and keep going! 200 coins or Free">
+                <button class="hot" style="left:105px;top:1570px;width:403px;height:215px" data-retry type="button" aria-label="Another question for 200 coins"></button>
+                <button class="hot" style="left:548px;top:1570px;width:403px;height:215px" data-retry type="button" aria-label="Another question for free"></button>
+              </div>
+
+              <div class="ov modal" id="moretime" role="dialog" aria-modal="true" aria-label="Time is off! Need more time?">
+                <img class="pop" src="assets/quizbingo/img/moretime.webp" width="987" height="1705" alt="Time is off! Need more time? Add 15 seconds to keep playing! 200 coins or Free">
+                <button class="hot" style="left:105px;top:1570px;width:403px;height:215px" data-more type="button" aria-label="Add 15 seconds for 200 coins"></button>
+                <button class="hot" style="left:548px;top:1570px;width:403px;height:215px" data-more type="button" aria-label="Add 15 seconds for free"></button>
+              </div>
+
+              <div class="ov bingo" id="bingo" aria-hidden="true">
+                <img class="cf" src="assets/quizbingo/img/lc-Confetti_Group.webp" width="1000" height="789" alt="" style="position:absolute">
+                <div class="disc"><img class="st" src="assets/quizbingo/img/bingo-stamp.webp" width="500" height="500" alt=""><img class="lt" src="assets/quizbingo/img/bingo-lettering.webp" width="691" height="312" alt=""></div>
+              </div>
+
+              <div class="ov modal" id="level" role="dialog" aria-modal="true" aria-label="Level 12, Well Done!">
+                <img class="pop" src="assets/quizbingo/img/level.webp" width="987" height="1705" alt="Level 12. Well Done! Your Reward: 200 coins. Continue or Double Reward">
+                <button class="hot" style="left:105px;top:1570px;width:403px;height:215px" data-cont type="button" aria-label="Continue"></button>
+                <button class="hot" style="left:548px;top:1570px;width:403px;height:215px" data-cont type="button" aria-label="Double reward"></button>
+              </div>
+
+              <div class="ov done" id="done" role="dialog" aria-modal="true" aria-labelledby="done-t">
+                <div>
+                  <h3 id="done-t">That’s the loop</h3>
+                  <p>Spin, answer, daub, Bingo. Everything else in the game grew around these few seconds.</p>
+                  <div class="row">
+                    <button class="bigbtn y" id="replay" type="button">Play again</button>
+                    <a class="bigbtn" href="#ftue">Keep scrolling</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="side side-r" id="sideR">
+            <p class="kick">Where you are</p>
+            <ol class="steps" id="steps" aria-label="Game steps"></ol>
+            <div class="info" id="info" aria-live="polite"></div>
+            <div class="ctrl">
+              <button class="cbtn" id="back" type="button">← Back</button>
+              <button class="cbtn" id="redo" type="button">↻ Replay step</button>
+              <button class="cbtn" id="next" type="button">Next →</button>
+            </div>
+            <p class="demo-note">Demo setup: the draw is fixed to Geography 9, and 10 and 3 start daubed so one right answer completes the vertical goal.</p>
+          </div>
+
+          <div class="mini" id="mini">
+            <div class="row1">
+              <p class="n" id="miniN"></p>
+              <div class="ctrl" style="margin:0">
+                <button class="cbtn" id="mBack" type="button" aria-label="Back">←</button>
+                <button class="cbtn" id="mNext" type="button" aria-label="Next">→</button>
+              </div>
+            </div>
+            <p class="t" id="miniT"></p>
+          </div>
+        </div>
+
+        <div class="layer cardpos" id="cardpos"><div class="e nobob" style="--d:.95s;--fy:60vh;--fr:18deg;--fs:.9;--dur:1s;--ease:cubic-bezier(.2,1.15,.35,1)"><div id="cardHost" style="position:relative;width:892px;height:935px"></div></div></div>
+        <p class="vh" aria-live="polite" id="live"></p>
+      </div>
+    </section>
+
+    <!-- ================= The story after the loop ================= -->
+
+    <!-- 1 · Making the game playable -->
+    <section class="s3 f-sec" id="ftue" data-label="Concept" aria-labelledby="f-h">
+      <div class="qb-wrap">
+        <div class="f-top">
+          <div class="qb-rv">
+            <p class="s3-k">02 / Concept &amp; validation</p>
+            <h2 id="f-h" class="s3-h">Rules on paper, a game on screen</h2>
+            <p class="s3-p">The project started as Quiz Arena, a quiz-meets-bingo concept. The product team defined the mechanics and the first five minutes in a game design document, and our PM turned them into low-fidelity wireframes. The priority was speed: a playable prototype to validate the gameplay.</p>
+            <p class="s3-p">I translated the wireframes into high-fidelity UI and an interactive Figma prototype of the FTUE. The document introduces one mechanic at a time (the question ball, the card, stars, the End button, lives, the timer), so each screen had to make one idea clear: a tip on Spin, a 3×3 card that reads at a glance, and a first Bingo within reach.</p>
+            <p class="s3-p">The first challenge wasn’t building a visual world. It was making the game playable and understandable, so a full identity was deliberately left for later. Once the mechanics took shape, the next challenge was giving them one.</p>
+          </div>
+          <figure class="ph f-proto qb-rv">
+            <video src="assets/quizbingo/video/v-first5.mp4" poster="assets/quizbingo/img/v-first5.webp" muted loop playsinline preload="none" data-auto aria-label="The first-five-minutes prototype: Play, the first spin, a guided History question, a star, and the next spin"></video>
+            <button class="vp" type="button" aria-label="Pause video">❚❚</button>
+            <figcaption><span class="by by-me">Interactive Figma prototype</span><br>The first five minutes, June 2024.</figcaption>
+          </figure>
+        </div>
+
+        <div class="f-head qb-rv" aria-hidden="true"><span>Low-fidelity wireframe · PM</span><span class="ar">→</span><span>High-fidelity UI · my prototype</span></div>
+        <ol class="f-pairs qb-rv" aria-label="Four moments from the PM’s low-fidelity wireframes and the same moments in my high-fidelity UI">
+          <li class="f-pair"><img class="wf" src="assets/quizbingo/img/pm-ftue-1.webp" width="172" height="276" alt="PM wireframe: a Tap SPIN tip over a gray screen" loading="lazy"><span class="ar" aria-hidden="true">→</span><img class="ui" src="assets/quizbingo/img/ftue-1.webp" width="640" height="1117" alt="Prototype: Hit SPIN to snag your first Question Ball, with a pointing finger" loading="lazy"><p><b>1 · Spin</b>The tip sits on the button it describes.</p></li>
+          <li class="f-pair"><img class="wf" src="assets/quizbingo/img/pm-ftue-2.webp" width="172" height="276" alt="PM wireframe: This is your first question, let’s answer it together" loading="lazy"><span class="ar" aria-hidden="true">→</span><img class="ui" src="assets/quizbingo/img/ftue-3.webp" width="640" height="1117" alt="Prototype: a Geography question about a square in Berlin with four answers" loading="lazy"><p><b>2 · Question</b>One photo, one question, four large answers.</p></li>
+          <li class="f-pair"><img class="wf" src="assets/quizbingo/img/pm-ftue-3.webp" width="172" height="276" alt="PM wireframe: BINGO and You got a Star" loading="lazy"><span class="ar" aria-hidden="true">→</span><img class="ui" src="assets/quizbingo/img/ftue-4.webp" width="640" height="1117" alt="Prototype: a big star on a glowing badge" loading="lazy"><p><b>3 · Reward</b>“You got a Star” becomes a full-screen moment.</p></li>
+          <li class="f-pair"><img class="wf" src="assets/quizbingo/img/pm-ftue-4.webp" width="172" height="276" alt="PM wireframe: Stars are won with the first Bingos of columns, rows, and diagonals" loading="lazy"><span class="ar" aria-hidden="true">→</span><img class="ui" src="assets/quizbingo/img/ftue-6.webp" width="640" height="1117" alt="Prototype: Awesome, you got 3 stars, with End and Spin buttons" loading="lazy"><p><b>4 · End of level</b>Rules arrive one at a time, when they matter.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 2 · Designing while shipping -->
+    <section class="s3 st-sec" id="stages" data-label="Stages" aria-labelledby="st-h">
+      <div class="qb-wrap st-grid">
+        <div class="qb-rv">
+          <p class="s3-k">03 / Designing in stages</p>
+          <h2 id="st-h" class="s3-h">From a prototype to a world</h2>
+          <p class="s3-p">From there, the project moved toward release in three stages, often with the team working on two at once. Each stage had a different job, and the game’s identity only arrived in the second one.</p>
+          <ol class="st-rail" id="st-rail">
+            <li><button type="button" data-p="0" aria-pressed="true"><i>1</i><b>Concept &amp; Validation</b><span>Quiz Arena · prove the gameplay, fast</span></button></li>
+            <li><button type="button" data-p="1" aria-pressed="false"><i>2</i><b>Soft Launch · Late 2024</b><span>Quiz Bingo World Tour · build its world</span></button></li>
+            <li><button type="button" data-p="2" aria-pressed="false"><i>3</i><b>Official Release · 2025</b><span>Polish, expand, and add motion</span></button></li>
+          </ol>
+          <p class="s3-cap" style="opacity:.7">Stages of development, not store release dates. Player names and ad slots are placeholders from the original design files.</p>
+        </div>
+        <div class="st-col qb-rv"><div class="st-deck" id="st-deck" aria-live="polite"></div><p class="st-cur" id="st-cur"></p></div>
+        <div class="qb-rv">
+          <ul class="st-chips" id="st-chips" aria-label="Screen">
+            <li><button type="button" data-s="card" aria-pressed="true">Bingo card</button></li>
+            <li><button type="button" data-s="quiz" aria-pressed="false">Question</button></li>
+            <li><button type="button" data-s="map" aria-pressed="false">Chapters</button></li>
+            <li><button type="button" data-s="pop" aria-pressed="false">Pop-up</button></li>
+          </ul>
+          <div class="st-note" id="st-note"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · Giving the game its own world -->
+    <section class="s3 w-sec" id="world" data-label="Identity" aria-labelledby="w-h">
+      <div class="qb-wrap">
+        <div class="w-top">
+          <div class="w-logo-wrap qb-rv"><img class="w-logo" src="assets/quizbingo/img/logo.webp" width="800" height="861" alt="The Quiz Bingo World Tour logo" loading="lazy"></div>
+          <div class="qb-rv">
+            <p class="s3-k">04 / Soft launch identity</p>
+            <h2 id="w-h" class="s3-h">Every level is a stop on a trip</h2>
+            <p class="s3-p">Giving the mechanics an identity was the Soft Launch’s job. The Quiz Arena concept grew into Quiz Bingo World Tour, and I developed its World Tour theme, the logo, and the visual direction. Cities group the levels, each with its own landmark, and every trivia category owns one color and one object, so you know where you are before you read a word.</p>
+            <p class="s3-p">The chapter art and unlock popups below are Official Release versions, where the same system kept growing.</p>
+            <p class="s3-cap" style="opacity:.9">Logo, World Tour theme, and visual direction by me.</p>
+          </div>
+        </div>
+      </div>
+      <div class="w-row qb-rv" tabindex="0" aria-label="Final chapter art for nine cities. Hover or focus to pause.">
+        <p class="w-label qb-wrap"><span>Chapter art · Official Release</span><span>Nine cities, one landmark each</span></p>
+        <div class="w-track" data-loop><figure class="w-city"><img src="assets/quizbingo/img/city-newyork.webp" width="960" height="377" alt="New York chapter card with the Statue of Liberty" loading="lazy"><figcaption>New York</figcaption></figure><figure class="w-city"><img src="assets/quizbingo/img/city-london.webp" width="960" height="377" alt="London chapter card with Big Ben" loading="lazy"><figcaption>London</figcaption></figure><figure class="w-city"><img src="assets/quizbingo/img/city-rome.webp" width="960" height="377" alt="Rome chapter card with the Colosseum" loading="lazy"><figcaption>Rome</figcaption></figure><figure class="w-city"><img src="assets/quizbingo/img/city-tokyo.webp" width="960" height="377" alt="Tokyo chapter card with a torii gate" loading="lazy"><figcaption>Tokyo</figcaption></figure><figure class="w-city"><img src="assets/quizbingo/img/city-paris.webp" width="960" height="377" alt="Paris chapter card with the Eiffel Tower" loading="lazy"><figcaption>Paris</figcaption></figure><figure class="w-city"><img src="assets/quizbingo/img/city-cairo.webp" width="960" height="377" alt="Cairo chapter card with the Sphinx" loading="lazy"><figcaption>Cairo</figcaption></figure><figure class="w-city"><img src="assets/quizbingo/img/city-amsterdam.webp" width="960" height="377" alt="Amsterdam chapter card with a windmill" loading="lazy"><figcaption>Amsterdam</figcaption></figure><figure class="w-city"><img src="assets/quizbingo/img/city-newdelhi.webp" width="960" height="377" alt="New Delhi chapter card with the Taj Mahal" loading="lazy"><figcaption>New Delhi</figcaption></figure><figure class="w-city"><img src="assets/quizbingo/img/city-sydney.webp" width="960" height="377" alt="Sydney chapter card with the Opera House" loading="lazy"><figcaption>Sydney</figcaption></figure></div>
+      </div>
+      <div class="w-row qb-rv" tabindex="0" aria-label="New Chapter and New Category popups. Hover or focus to pause.">
+        <p class="w-label qb-wrap"><span>Unlock popups · Official Release</span><span>New chapters and new categories</span></p>
+        <div class="w-track rev" data-loop data-speed="9"><img class="w-pop" src="assets/quizbingo/img/pop-ch-London.webp" alt="New Chapter: London popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-cat-Culture.webp" alt="New Category: Culture popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-ch-Paris.webp" alt="New Chapter: Paris popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-cat-Sport.webp" alt="New Category: Sport popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-ch-Tokyo.webp" alt="New Chapter: Tokyo popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-cat-Science.webp" alt="New Category: Science popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-ch-Cairo.webp" alt="New Chapter: Cairo popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-cat-History.webp" alt="New Category: History popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-ch-NewYork.webp" alt="New Chapter: New York popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-cat-Entertainment.webp" alt="New Category: Entertainment popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-ch-Rome.webp" alt="New Chapter: Rome popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-cat-Geography.webp" alt="New Category: Geography popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-ch-NewDelhi.webp" alt="New Chapter: New Delhi popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-cat-Trivia.webp" alt="New Category: Trivia popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-ch-Sidney.webp" alt="New Chapter: Sydney popup" loading="lazy"><img class="w-pop" src="assets/quizbingo/img/pop-ch-Amsterdam.webp" alt="New Chapter: Amsterdam popup" loading="lazy"></div>
+      </div>
+      <div class="qb-wrap w-pivot qb-rv">
+        <div>
+          <p class="s3-sub">One landmark, three steps</p>
+          <p class="s3-p">I explored the Amsterdam windmill with AI, first as a scene and then as a 3D-style icon, before it became the final icon in the New Chapter popup.</p>
+        </div>
+        <ol class="w-evo">
+          <li class="w-step"><div class="w-media"><img class="ls" src="assets/quizbingo/img/wm-ai-scene.webp" width="1000" height="411" alt="AI-generated scene: a pink windmill in a tulip field" loading="lazy"></div><p class="s3-tag">1 · Exploration</p><p class="w-cap">AI scene, Midjourney</p></li>
+          <li class="w-ar" aria-hidden="true">→</li>
+          <li class="w-step"><div class="w-media"><img class="ic" src="assets/quizbingo/img/wm-ai-icon-a.webp" width="482" height="640" alt="AI icon exploration: a windmill with a blue roof" loading="lazy"></div><p class="s3-tag">2 · Exploration</p><p class="w-cap">AI icon, Midjourney</p></li>
+          <li class="w-ar" aria-hidden="true">→</li>
+          <li class="w-step"><div class="w-media"><img class="ic" src="assets/quizbingo/img/wm-final.webp" width="482" height="640" alt="The final windmill icon" loading="lazy"></div><p class="s3-tag">3 · Official Release</p><p class="w-cap">Final 3D icon, used in the New Chapter popup</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 4 · From designing to directing -->
+    <section class="s3 m-sec" id="motion" data-label="Motion" aria-labelledby="m-h">
+      <div class="qb-wrap">
+        <div class="m-head qb-rv">
+          <p class="s3-k">05 / From designing to directing</p>
+          <h2 id="m-h" class="s3-h">From storyboard to screen</h2>
+          <div>
+            <p class="s3-p">In the early stages, I created the motion references myself. While we prepared the Official Release, I advocated bringing a Motion/3D Designer onto the team, and my role shifted to art direction: storyboards to agree on each moment, interactive references for timing, and feedback and visual guidance while the specialist built the final 3D and motion.</p>
+          </div>
+        </div>
+
+        <!-- Part 1 -->
+        <div class="m-part qb-rv">
+          <header class="m-ph"><b>1</b><div><h3>My early motion explorations</h3><p>Motion references I made myself: flat and quick, to show what happens and when.</p></div></header>
+          <div class="m-row1">
+            <figure class="ph"><div class="pv"><video src="assets/quizbingo/video/v-soft-spin.mp4" poster="assets/quizbingo/img/v-soft-spin.webp" muted loop playsinline preload="none" data-auto aria-label="Motion reference: the spin highlights a number on the 3×3 card, then Science is revealed"></video><button class="vp" type="button" aria-label="Pause video">❚❚</button></div><figcaption><b>Spin</b>The ball lands and the category is revealed.</figcaption></figure>
+            <figure class="ph"><div class="pv"><video src="assets/quizbingo/video/v-early-1.mp4" poster="assets/quizbingo/img/v-early-1.webp" muted loop playsinline preload="none" data-auto aria-label="Motion reference: the last daub lands and a Bingo! badge bursts in with confetti and rays"></video><button class="vp" type="button" aria-label="Pause video">❚❚</button></div><figcaption><b>Bingo!</b>The last daub lands and the badge bursts in.</figcaption></figure>
+            <figure class="ph"><div class="pv"><video src="assets/quizbingo/video/v-early-2.mp4" poster="assets/quizbingo/img/v-early-2.webp" muted loop playsinline preload="none" data-auto aria-label="Motion reference: Level Complete! appears and a check mark pops in"></video><button class="vp" type="button" aria-label="Pause video">❚❚</button></div><figcaption><b>Level Complete!</b>The lettering lands, then a check pops in.</figcaption></figure>
+            <figure class="ph"><div class="pv"><video src="assets/quizbingo/video/v-early-3.mp4" poster="assets/quizbingo/img/v-early-3.webp" muted loop playsinline preload="none" data-auto aria-label="Motion reference: the Well Done popup with a star that settles and sparkles"></video><button class="vp" type="button" aria-label="Pause video">❚❚</button></div><figcaption><b>Well Done</b>A flat star settles into the reward popup.</figcaption></figure>
+          </div>
+          <p class="m-aside">Four beats of the same loop, as motion references for the Soft Launch. Note the small ball machine in the corner of the HUD. It comes back in part 3.</p>
+        </div>
+
+        <!-- Part 2 -->
+        <div class="m-part qb-rv" id="m-sb">
+          <header class="m-ph"><b>2</b><div><h3>My direction and handoff</h3><p>Figma storyboards and interactive references, built for our developer and for the specialist.</p></div></header>
+          <div class="m-pane" data-times=".3,1,2,4.3">
+            <div class="m-stage">
+              <div>
+                <p class="m-lab">Level Complete · Figma storyboard</p>
+                <ol class="m-frames">
+                  <li><button type="button"><img src="assets/quizbingo/img/fig-sb-star-1.webp" width="362" height="600" alt="Storyboard 1: the empty Well Done popup" loading="lazy"><span>1</span></button></li>
+                  <li><button type="button"><img src="assets/quizbingo/img/fig-sb-star-2.webp" width="362" height="600" alt="Storyboard 2: the star pops in" loading="lazy"><span>2</span></button></li>
+                  <li><button type="button"><img src="assets/quizbingo/img/fig-sb-star-3.webp" width="362" height="600" alt="Storyboard 3: the star settles" loading="lazy"><span>3</span></button></li>
+                  <li><button type="button"><img src="assets/quizbingo/img/fig-sb-star-4.webp" width="362" height="600" alt="Storyboard 4: final state with rewards" loading="lazy"><span>4</span></button></li>
+                </ol>
+                <div class="m-scrub"><button type="button" class="m-play" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub the Well Done reference"></div>
+                <p class="s3-cap">Pick a frame or drag the bar. The interactive reference jumps to the same moment.</p>
+              </div>
+              <figure class="ph"><p class="m-lab">Well Done · Figma interactive reference</p><video src="assets/quizbingo/video/v-star.mp4" poster="assets/quizbingo/img/v-star-poster-1.webp" muted playsinline preload="metadata" aria-label="Well Done interactive Figma reference: the star pops into the popup"></video></figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part 3 -->
+        <div class="m-part qb-rv">
+          <header class="m-ph"><b>3</b><div><h3>Motion/3D execution</h3><p>Final 3D and motion by our Motion/3D Designer, shared as approval previews under my art direction.</p></div></header>
+          <div class="m-exec">
+            <div class="m-vs">
+              <figure class="ph"><p class="m-lab"><span class="by by-me">By me</span> Figma prototype</p><div class="pv"><video src="assets/quizbingo/video/v-vs-proto.mp4" poster="assets/quizbingo/img/v-vs-proto.webp" muted loop playsinline preload="none" data-auto aria-label="My Figma prototype of the matchmaking screen: two flat avatars, VS, and a diagonal wipe"></video><button class="vp" type="button" aria-label="Pause video">❚❚</button></div></figure>
+              <span class="ar" aria-hidden="true">→</span>
+              <figure class="ph"><p class="m-lab"><span class="by by-pro">Motion/3D Designer</span> Matchmaking</p><div class="pv"><video src="assets/quizbingo/video/v-vs.mp4" poster="assets/quizbingo/img/v-vs.webp" muted loop playsinline preload="none" data-auto aria-label="Matchmaking approval preview: the screen splits diagonally, a 3D lightning bolt with VS lands, and two 3D avatars appear"></video><button class="vp" type="button" aria-label="Pause video">❚❚</button></div></figure>
+              <p class="s3-cap m-vcap">Matchmaking. My prototype set the diagonal split, the layout, and the order of the reveal. The preview adds the 3D bolt, the avatars, and the motion.</p>
+            </div>
+            <figure class="ph m-ball"><p class="m-lab"><span class="by by-pro">Motion/3D Designer</span> Ball machine</p><div class="pv"><video src="assets/quizbingo/video/v-ball.mp4" poster="assets/quizbingo/img/v-ball.webp" muted loop playsinline preload="none" data-auto aria-label="Ball machine approval preview: the 3D machine rises over the 5×5 card, mixes the balls, and a cell gets daubed"></video><button class="vp" type="button" aria-label="Pause video">❚❚</button></div><figcaption>The spin. The small HUD ball machine becomes the center of the moment.</figcaption></figure>
+          </div>
+          <p class="m-note">Approval previews were shared for sign-off and aren’t necessarily the shipped versions.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · Building beyond the core game -->
+    <section class="s3 y-sec" id="system" data-label="UI system" aria-labelledby="y-h">
+      <div class="qb-wrap">
+        <div class="y-head qb-rv">
+          <p class="s3-k">06 / Growing the UI system</p>
+          <h2 id="y-h" class="s3-h">The same pieces, many features</h2>
+          <p class="s3-p">As the game grew, the same kit kept stretching. Rewards, duels, profiles, feedback, and a shop each reused the same UI components (the popup frame, the ribbon header, the chunky buttons, and one 3D object as the hero), and none of them needed a new visual language.</p>
+        </div>
+        <ul class="y-tabs qb-rv" id="y-tabs" aria-label="Feature">
+          <li><button type="button" data-g="rewards" aria-pressed="true">Rewards</button></li>
+          <li><button type="button" data-g="feedback" aria-pressed="false">Feedback</button></li>
+          <li><button type="button" data-g="duels" aria-pressed="false">Duels &amp; profile</button></li>
+          <li><button type="button" data-g="shop" aria-pressed="false">Shop</button></li>
+        </ul>
+        <div class="y-hand qb-rv" id="y-hand"></div>
+        <p class="y-note" id="y-note" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- 6 · Making it work in Unity -->
+    <section class="s3 u-sec" id="unity" data-label="Unity" aria-labelledby="u-h">
+      <div class="qb-wrap">
+        <div class="u-grid">
+          <div class="qb-rv">
+            <p class="s3-k">07 / Working with Unity</p>
+            <h2 id="u-h" class="s3-h">Built to be built</h2>
+            <p class="s3-p">Designing for Unity meant designing for implementation. I prepared every screen so our Unity developer could build it without guessing, then answered questions as implementation went along. Each one left Figma with:</p>
+            <ol class="u-list">
+              <li>an interactive Figma prototype of the flow</li>
+              <li>a high-fidelity reference screen and a type spec</li>
+              <li>every layer as a 4× UI asset export</li>
+              <li>a motion reference for anything that moves</li>
+            </ol>
+          </div>
+          <figure class="u-proto qb-rv">
+            <div class="u-vid"><video src="assets/quizbingo/video/v-prototype.mp4" poster="assets/quizbingo/img/v-prototype.webp" muted loop playsinline preload="none" data-auto aria-label="Interactive Figma prototype: Home, Edit Profile, nickname, avatar, frame, country, and back to Home"></video><button class="vp" type="button" aria-label="Pause video">❚❚</button></div>
+            <figcaption class="s3-cap">The profile flow as an interactive Figma prototype, used as the implementation reference.</figcaption>
+          </figure>
+        </div>
+
+        <div class="u-lab qb-rv">
+          <div class="u-lab-top">
+            <div>
+              <h3>Edit Profile, broken into 4× exports</h3>
+              <p>The Edit Profile popup from the flow above, and the UI assets I exported for it, from back to front.</p>
+            </div>
+            <button class="u-btn" id="u-btn" type="button" aria-pressed="false">Take it apart</button>
+          </div>
+          <div class="u-ex" id="u-ex" role="img" aria-label="The Edit Profile popup and its nine exported UI assets, from back to front: background, ribbon, avatar frame, avatar, name field, tab, options panel, Save button, close button.">
+            <img class="ref" src="assets/quizbingo/img/prof-ref.webp" width="637" height="1100" alt="" loading="lazy"><figcaption aria-hidden="true">Reference screen</figcaption>
+            <span class="arrow" aria-hidden="true">←</span>
+            <div class="lay" style="--i:0"><img src="assets/quizbingo/img/prof-1-background.webp" alt="" loading="lazy"></div><div class="tile" style="--i:0"><i>1</i></div><p class="lbl" style="--i:0" title="PopUp_EditProfile_Background@4x.png">Background<small>PopUp_EditProfile_Background@4x.png</small></p><div class="lay" style="--i:1"><img src="assets/quizbingo/img/prof-2-ribbon.webp" alt="" loading="lazy"></div><div class="tile" style="--i:1"><i>2</i></div><p class="lbl" style="--i:1" title="PopUp_Ribbon_Purple@4x.png">Ribbon<small>PopUp_Ribbon_Purple@4x.png</small></p><div class="lay" style="--i:2"><img src="assets/quizbingo/img/prof-3-frame.webp" alt="" loading="lazy"></div><div class="tile" style="--i:2"><i>3</i></div><p class="lbl" style="--i:2" title="ProfileScreen_Frame_Purple@4x.png">Avatar frame<small>ProfileScreen_Frame_Purple@4x.png</small></p><div class="lay" style="--i:3"><img src="assets/quizbingo/img/prof-4-avatar.webp" alt="" loading="lazy"></div><div class="tile" style="--i:3"><i>4</i></div><p class="lbl" style="--i:3" title="ProfileScreen_Avatar_1@4x.png">Avatar<small>ProfileScreen_Avatar_1@4x.png</small></p><div class="lay" style="--i:4"><img src="assets/quizbingo/img/prof-5-namefield.webp" alt="" loading="lazy"></div><div class="tile" style="--i:4"><i>5</i></div><p class="lbl" style="--i:4" title="PopUp_EditProfile_AvatarName_Background@4x.png">Name field<small>PopUp_EditProfile_AvatarName_Background@4x.png</small></p><div class="lay" style="--i:5"><img src="assets/quizbingo/img/prof-6-tab.webp" alt="" loading="lazy"></div><div class="tile" style="--i:5"><i>6</i></div><p class="lbl" style="--i:5" title="PopUp_EditProfile_Tab_Left_Pressed@4x.png">Tab<small>PopUp_EditProfile_Tab_Left_Pressed@4x.png</small></p><div class="lay" style="--i:6"><img src="assets/quizbingo/img/prof-7-options.webp" alt="" loading="lazy"></div><div class="tile" style="--i:6"><i>7</i></div><p class="lbl" style="--i:6" title="PopUp_EditProfile_Options_Background@4x.png">Options panel<small>PopUp_EditProfile_Options_Background@4x.png</small></p><div class="lay" style="--i:7"><img src="assets/quizbingo/img/prof-8-save.webp" alt="" loading="lazy"></div><div class="tile" style="--i:7"><i>8</i></div><p class="lbl" style="--i:7" title="PopUp_EditProfile_Save_Button@4x.png">Save button<small>PopUp_EditProfile_Save_Button@4x.png</small></p><div class="lay" style="--i:8"><img src="assets/quizbingo/img/prof-9-close.webp" alt="" loading="lazy"></div><div class="tile" style="--i:8"><i>9</i></div><p class="lbl" style="--i:8" title="CloseButton@4x.png">Close<small>CloseButton@4x.png</small></p>
+          </div>
+          <p class="s3-cap" style="opacity:.75">Text, flags, and avatars are kept separate from the background exports.</p>
+        </div>
+
+        <div class="u-foot qb-rv">
+          <figure class="u-sizes">
+            <div class="u-devs">
+              <div class="u-dev" style="--w:1080;--h:2048"><img src="assets/quizbingo/img/home-2048.webp" width="598" height="1100" alt="Home on a 1080 by 2048 screen" loading="lazy"><p><b>1080 × 2048</b>Base phone</p></div>
+              <div class="u-dev" style="--w:1080;--h:2340"><img src="assets/quizbingo/img/home-2340.webp" width="277" height="600" alt="Home on a 1080 by 2340 screen" loading="lazy"><p><b>1080 × 2340</b>Taller phone</p></div>
+              <div class="u-dev" style="--w:1080;--h:2560"><img src="assets/quizbingo/img/home-2560.webp" width="254" height="600" alt="Home on a 1080 by 2560 screen" loading="lazy"><p><b>1080 × 2560</b>Tallest phone</p></div>
+              <div class="u-dev" style="--w:1536;--h:2048"><img src="assets/quizbingo/img/home-tablet.webp" width="525" height="700" alt="Home adapted for a 1536 by 2048 tablet" loading="lazy"><p><b>1536 × 2048</b>Tablet</p></div>
+            </div>
+            <figcaption class="s3-cap">One Home layout, exported for three phone heights and adapted for tablet. Shown at the same scale.</figcaption>
+          </figure>
+          <div class="u-resp">
+            <h3>One layout, multiple screen sizes</h3>
+            <p>I exported the same Home for three phone heights and a tablet. The top bar and the navigation stay pinned to the edges, while the landmark, the reward stickers, and the Level button shift to use the space between them. On tablet, the stickers spread wider around a larger landmark, so the hierarchy reads the same on every screen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · What I learned -->
+    <section class="s3 l-sec" id="learned" data-label="Learnings" aria-labelledby="l-h">
+      <div class="qb-wrap">
+        <p class="s3-k qb-rv">08 / What I learned</p>
+        <h2 id="l-h" class="s3-h qb-rv">My first mobile game</h2>
+        <div class="l-grid">
+          <div class="qb-rv"><h3>Feedback is the game</h3><p>Quiz Bingo showed me how much of a game’s experience lives in its feedback. Progression, rewards, and celebrations are what make a short session feel worth repeating, so a star landing or a chest opening deserves the same care as any screen.</p></div>
+          <div class="qb-rv"><h3>Designing with the engine in mind</h3><p>A game engine changes when you think about the details. States, assets, and motion have to be considered while a screen is being designed, not after, and technical limits are far easier to design with early than to work around late.</p></div>
+          <div class="qb-rv"><h3>Knowing when to bring in expertise</h3><p>My first mobile game taught me that leading design doesn’t mean executing every part of it. I could create motion references and communicate how an interaction should feel, but I also recognized where my skills had limits. Advocating for a Motion/3D Designer gave the game the expertise it needed and challenged me to grow into art direction: setting a vision, communicating it clearly, and refining the result together.</p></div>
+        </div>
+        <div class="l-end qb-rv">
+          <img src="assets/quizbingo/img/logo.webp" width="800" height="861" alt="" loading="lazy">
+          <a href="index.html#work">← Back to work</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap site-footer"><p>Jackie Messaggi / Quiz Bingo case study</p><span class="site-footer-legal"><a href="privacy.html">Privacy Policy</a><a href="impressum.html">Impressum</a><button type="button" class="privacy-settings-link" data-privacy-settings>Privacy settings</button></span><a href="#main">Back to top ↑</a></footer>
+</body>
+</html>
