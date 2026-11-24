@@ -2737,3 +2737,257 @@ body.qb .site-header { position: absolute; top: 0; left: 0; right: 0; z-index: 5
 body.qb { background: var(--ivory); color: var(--eggplant); }
 body.qb main { color: var(--ivory); background: var(--bg-top); }
 body.qb .skip-link, body.qb .case-nav, body.qb .site-footer { color: var(--eggplant); }
+
+/* ==========================================================================
+   Hola! Churros case (hola.html), Stage 1, local only: hero (approved hero study 02, ported as is),
+   01 / Hola! with the three-format photo strip, 02 / Building from Scratch with the guided kitchen
+   (production build of cinematic study 04). Project colors stay inside the page.
+   ========================================================================== */
+body.hola { --hc-chocolate: #2a1209; --hc-cream: #fff2df; --hl-line: rgba(64,8,73,.14); --hl-muted: rgba(64,8,73,.72); --hl-stage: #ece6dd; }
+body.hola .site-header { position: absolute; top: 0; left: 0; right: 0; z-index: 8; }
+
+/* ---------- Hero: tall track, sticky frame; --p (0 to 1) comes from hola.js ---------- */
+body.hola .hc-hero { position: relative; height: 190vh; background: var(--hc-chocolate); }
+body.hola .hc-frame { position: sticky; top: 0; height: 100vh; overflow: hidden; --p: 0; }
+body.hola .hc-board { position: absolute; left: 50%; top: 50%; width: 1536px; height: 1024px; transform-origin: 0 0; }
+body.hola .hc-board picture { display: contents; }
+body.hola .hc-photo { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+body.hola .hc-title { position: absolute; left: 96px; top: 150px; margin: 0; z-index: 2;
+  font-family: "Fraunces", serif; font-weight: 900; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; font-optical-sizing: none;
+  font-size: 112px; line-height: .94; letter-spacing: -.025em; color: var(--hc-cream); }
+body.hola .hc-copy { position: absolute; left: 100px; top: 395px; width: 400px; z-index: 2; color: var(--hc-cream); }
+body.hola .hc-copy .sub { margin: 0 0 18px; font-size: 22px; line-height: 1.35; font-weight: 500; }
+body.hola .hc-copy .role { margin: 0; font-size: 15px; line-height: 1.5; font-weight: 600; letter-spacing: .02em; color: rgba(255,242,223,.72); }
+body.hola .fx { position: absolute; display: block; height: auto; pointer-events: none; will-change: transform;
+  transform: translate(calc(var(--p) * var(--dx, 0px)), calc(var(--p) * var(--s, 0px) * -1)) rotate(calc(var(--r, 0deg) + var(--p) * var(--spin, 0deg)));
+  filter: blur(var(--b, 0px)); }
+body.hola .fx.back { z-index: 1; } body.hola .fx.front { z-index: 3; }
+/* the drip pours from the hero into section 01; drawn once across the full width */
+body.hola .hc-drip { position: absolute; left: 0; right: 0; bottom: 0; height: 24.86vw; z-index: 6; pointer-events: none;
+  background: url("assets/hola/hero/drip.webp") no-repeat center top / 100% 100%; transform: translateY(70%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 22%); mask-image: linear-gradient(to bottom, transparent 0, #000 22%); }
+body.hola .hc-mtext, body.hola .hc-board--m { display: none; }
+@media (max-width: 760px) {
+  body.hola .hc-drip { background-image: url("assets/hola/hero/drip-1086.webp"); }
+  body.hola .hc-hero { height: 170vh; }
+  body.hola #hc-board, body.hola .hc-copy { display: none; }
+  /* the h1 stays in the accessibility tree on phones; the visible phone title is the aria-hidden copy below */
+  body.hola .hc-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  body.hola .hc-board--m { display: block; width: 1024px; height: 1536px; }
+  body.hola .hc-board--over { z-index: 5; pointer-events: none; }
+  body.hola .hc-board--m .hc-photo { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%); mask-image: linear-gradient(to bottom, transparent 0, #000 14%); }
+  body.hola .hc-mtext { display: block; position: absolute; z-index: 4; left: 20px; right: 20px; top: 13vh; color: var(--hc-cream); }
+  body.hola .hc-mtitle { margin: 0 0 16px; font-family: "Fraunces", serif; font-weight: 900; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; font-optical-sizing: none;
+    font-size: 44px; line-height: .96; letter-spacing: -.025em; }
+  body.hola .hc-mtext .sub { margin: 0 0 12px; font-size: 17px; line-height: 1.4; font-weight: 500; }
+  body.hola .hc-mtext .role { margin: 0; font-size: 13px; line-height: 1.5; font-weight: 600; color: rgba(255,242,223,.72); }
+}
+.rm body.hola .hc-hero { height: auto; }
+.rm body.hola .hc-frame { position: relative; }
+.rm body.hola .fx { transform: rotate(var(--r, 0deg)); }
+
+/* ---------- Sections ---------- */
+body.hola .hl-sec { position: relative; padding-block: 6rem; }
+body.hola .hl-intro { padding-top: calc(10vh + 15vw); }   /* clears the drip hanging from the hero */
+body.hola .hl-build { padding-top: 2rem; }
+body.hola .hl-k { margin-top: 0; }
+body.hola .hl-copy p { margin: 0 0 1rem; }
+body.hola .hl-copy p:last-child { margin-bottom: 0; }
+
+/* three-format strip: one row, equal heights (each item grows by its aspect ratio) */
+body.hola .hl-strip { list-style: none; margin: 3rem 0 0; padding: 0; display: flex; gap: 1rem; }
+body.hola .hl-strip li { flex: var(--ar) 1 0; min-width: 0; margin: 0; }
+body.hola .hl-strip img { display: block; width: 100%; height: auto; border-radius: .75rem; background: var(--beige); }
+body.hola .hl-strip .cs-caption { margin: .6rem 0 0; }
+body.hola .hl-ai { margin-top: 2.5rem; }
+
+/* ---------- The guided kitchen ---------- */
+body.hola .hk { position: relative; display: grid; grid-template-columns: minmax(0, 4.4fr) minmax(0, 7.6fr); margin-top: 3rem; border: 1px solid var(--hl-line); border-radius: 1.25rem; overflow: hidden; background: #fff; }
+body.hola .hk-copy { padding: 1.875rem 1.75rem 1.5rem; display: flex; flex-direction: column; border-right: 1px solid var(--hl-line); }
+body.hola .hk-count { margin: 0 0 .625rem; font-size: .8125rem; font-weight: 600; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+body.hola .hk-count b { color: var(--orange-deep); }
+body.hola .hk-title { margin: 0 0 .875rem; font-size: 1.625rem; line-height: 1.15; font-weight: 700; letter-spacing: -.01em; }
+body.hola .hk-cap { margin: 0; min-height: 8em; font-size: 1.03rem; line-height: 1.6; }
+body.hola .hk-step { margin: 1.125rem 0 0; min-height: 1.5em; font-size: .875rem; font-weight: 700; color: var(--orange-deep); }
+body.hola .hk-step:empty { visibility: hidden; }
+body.hola .hk-roles { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .25rem .75rem; font-size: .8125rem; line-height: 1.45; }
+body.hola .hk-roles li { display: flex; gap: .45rem; }
+body.hola .hk-roles b { flex: none; display: inline-grid; place-items: center; width: 17px; height: 17px; border-radius: 50%; background: var(--eggplant); color: var(--ivory); font-size: 10px; transform: translateY(2px); }
+body.hola .hk-roles li.new b { background: var(--orange); }
+body.hola .hk-ctl { margin-top: auto; padding-top: 1.125rem; border-top: 1px solid var(--hl-line); }
+body.hola .hk-tl { display: grid; grid-template-columns: 14fr 16fr 36fr 30fr; gap: 4px; }
+body.hola .hk-tl button { all: unset; cursor: pointer; display: grid; gap: 6px; font-size: .6875rem; font-weight: 600; color: var(--hl-muted); }
+body.hola .hk-tl button[aria-current] { color: var(--eggplant); }
+body.hola .hk-tl button:focus-visible { outline: 2px solid var(--eggplant); outline-offset: 3px; }
+body.hola .hk-tl i { display: block; height: 4px; border-radius: 2px; background: var(--beige); overflow: hidden; }
+body.hola .hk-tl i b { display: block; height: 100%; width: 0; background: var(--orange); }
+body.hola .hk-btns { display: flex; gap: .5rem; align-items: center; margin-top: .875rem; }
+body.hola .hk-btns button { font: 700 .8125rem/1 "DM Sans", sans-serif; border-radius: 999px; padding: .7rem .95rem; min-height: 2.5rem; cursor: pointer; border: 1px solid var(--eggplant); background: transparent; color: var(--eggplant); }
+body.hola .hk-btns .hk-play { background: var(--eggplant); color: var(--ivory); min-width: 5.5rem; }
+body.hola .hk-btns button:focus-visible, body.hola .hk-link:focus-visible { outline: 2px solid var(--orange-deep); outline-offset: 3px; }
+body.hola .hk-note { margin: .75rem 0 0; font-size: .8125rem; line-height: 1.45; color: var(--hl-muted); }
+body.hola .hk-link { all: unset; cursor: pointer; font-weight: 700; color: var(--eggplant); text-decoration: underline; text-underline-offset: .2em; }
+body.hola .hk-stage { position: relative; min-height: 620px; overflow: hidden; background: var(--hl-stage); }
+body.hola .hk-stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; }
+body.hola .hk-still { position: absolute; inset: 0; z-index: 1; transition: opacity .3s ease; }
+body.hola .hk-still img { display: block; width: 100%; height: 100%; object-fit: cover; }
+body.hola .hk.is-ready[data-mode="live"] .hk-still { opacity: 0; pointer-events: none; }
+body.hola .hk[data-mode="still"] canvas, body.hola .hk[data-mode="still"] .hk-tags { visibility: hidden; }
+html:not(.js) body.hola .hk-ctl { display: none; }
+/* scene labels drawn by kitchen3d.js: one treatment for every label (pill, leader line, dot on the object) */
+body.hola .hk-tags { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+body.hola .hk-tag { position: absolute; left: 0; top: 0; opacity: 0; will-change: transform, opacity; }
+body.hola .hk-tag span { position: absolute; left: 0; bottom: 34px; transform: translateX(-50%); white-space: nowrap; font: 600 14px/1.2 "DM Sans", sans-serif; color: var(--eggplant); background: rgba(248,245,239,.97); border: 1px solid rgba(64,8,73,.22); border-radius: 999px; padding: 7px 13px; box-shadow: 0 3px 14px rgba(64,8,73,.14); }
+body.hola .hk-tag i { position: absolute; left: -.5px; bottom: 5px; width: 1.5px; height: 29px; background: var(--eggplant); }
+body.hola .hk-tag i::after { content: ""; position: absolute; left: -3.5px; bottom: -6px; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 2px var(--ivory); }
+body.hola .hk-tag.dim span { bottom: 10px; font-weight: 700; } body.hola .hk-tag.dim i { display: none; }
+body.hola .hk-tag.big span { font-size: 17px; padding: 8px 15px; }
+
+/* text version of the kitchen story */
+body.hola .hl-text { margin-top: 1.5rem; max-width: 44em; }
+body.hola .hl-text summary { cursor: pointer; width: fit-content; font-size: .9375rem; font-weight: 600; text-decoration: underline; text-underline-offset: .25em; }
+body.hola .hl-text summary:focus-visible { outline: 2px solid var(--eggplant); outline-offset: 4px; }
+body.hola .hl-text p { margin: 1rem 0 0; }
+
+@media (max-width: 860px) {
+  body.hola .hk { grid-template-columns: 1fr; }
+  body.hola .hk-stage { order: 1; min-height: 0; aspect-ratio: 4 / 5; }
+  body.hola .hk-copy { order: 2; border-right: 0; border-top: 1px solid var(--hl-line); padding: 1.25rem 1rem; }
+  body.hola .hk-title { font-size: 1.375rem; }
+  body.hola .hk-cap { min-height: 10em; font-size: 1rem; }
+  body.hola .hk-tag span { font-size: 13px; padding: 6px 11px; } body.hola .hk-tag.big span { font-size: 15px; }
+}
+@media (max-width: 760px) {
+  body.hola .hl-sec { padding-block: 4rem; }
+  body.hola .hl-intro { padding-top: calc(8vh + 18vw); }
+  body.hola .hl-build { padding-top: 1rem; }
+  body.hola .hl-strip { flex-wrap: wrap; gap: .75rem; }
+  body.hola .hl-strip li:nth-child(2) { order: -1; flex-basis: 100%; }
+  body.hola .hl-strip li:not(:nth-child(2)) { flex: var(--ar) 1 0; }
+  body.hola .hk { margin-inline: -.5rem; }
+}
+
+/* ---------- Hola! Stage 2: section headings and sections 03 to 08 (local review build) ---------- */
+body.hola { --hl-sand: #f1eadf; --hl-teal: #55c5cb; --hl-pink: #d53762; }
+body.hola .hl-head { margin-bottom: 2rem; }
+body.hola .hl-head .hl-k { margin-bottom: 1rem; }
+body.hola .hl-h { margin: 0; max-width: 17ch; font-family: "Fraunces", Georgia, serif; font-weight: 900; font-optical-sizing: none; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; font-size: clamp(2.4rem, 4.8vw, 4.25rem); line-height: .98; letter-spacing: -.025em; text-wrap: balance; }
+body.hola .hl-sub { margin: 3.5rem 0 0; font-family: "Fraunces", Georgia, serif; font-weight: 900; font-optical-sizing: none; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; font-size: clamp(1.6rem, 2.6vw, 2.25rem); line-height: 1.05; letter-spacing: -.02em; }
+body.hola .hl-sub + .hl-strip { margin-top: 1.5rem; }
+body.hola .hl-fig { margin: 0; }
+body.hola .hl-fig img { display: block; width: 100%; height: auto; border-radius: .75rem; background: var(--beige); }
+body.hola .hl-fig .cs-caption { margin: .6rem 0 0; }
+body.hola .hl-tag { display: inline-block; margin-right: .4rem; padding: .1rem .45rem; border: 1px solid currentColor; border-radius: 999px; font-size: .6875rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+body.hola .hl-copy strong { font-weight: 700; }
+
+/* 03 · service tools */
+body.hola .hl-wide { margin: 3rem 0 0; }
+body.hola .hl-lead { margin: 4rem 0 1.75rem; font-size: 1.375rem; font-weight: 600; line-height: 1.3; letter-spacing: -.01em; }
+body.hola .hl-tools { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem 2rem; }
+body.hola .hl-tool { display: flex; flex-direction: column; gap: 1rem; }
+body.hola .hl-tool h3 { margin: 0 0 .5rem; font-size: 1.25rem; font-weight: 700; line-height: 1.25; letter-spacing: -.01em; }
+body.hola .hl-tool p { margin: 0 0 .75rem; font-size: 1rem; line-height: 1.6; }
+body.hola .hl-tool-img { display: block; width: 100%; height: auto; border-radius: .75rem; }
+body.hola .hl-board { display: grid; grid-template-columns: 2fr 3fr; gap: 1.25rem; align-items: center; padding: 1.5rem; border-radius: .75rem; background: var(--hl-sand); }
+body.hola .hl-board-base { display: block; width: 100%; height: auto; border-radius: .25rem; box-shadow: 0 6px 18px rgba(42,18,9,.18); }
+body.hola .hl-magnets { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; align-items: center; }
+body.hola .hl-magnets img { display: block; width: 100%; height: auto; }
+body.hola .hl-tool--ticket { display: grid; grid-template-columns: minmax(0, 11rem) 1fr; gap: 1.5rem; align-items: start; }
+body.hola .hl-ticket { box-shadow: 0 6px 18px rgba(42,18,9,.14); border-radius: .25rem; }
+body.hola .hl-tool--text { padding: 1.75rem; border-radius: .75rem; background: var(--hl-sand); align-self: start; }
+body.hola .hl-outcome { margin-top: 3.5rem; }
+body.hola .hl-bleed { margin: 5rem 0 0; }
+body.hola .hl-bleed img { display: block; width: 100%; height: min(80vh, 56vw); object-fit: cover; }
+body.hola .hl-serve { padding-bottom: 0; }
+
+/* 04 · on the road (Appetite: chocolate) */
+body.hola .hl-road { background: var(--hc-chocolate); color: var(--hc-cream); }
+body.hola .hl-road .cs-eyebrow, body.hola .hl-road .cs-caption { color: var(--hc-cream); }
+body.hola .hl-road-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 3rem; align-items: end; }
+body.hola .hl-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 0; }
+body.hola .hl-stats div { display: flex; flex-direction: column-reverse; }
+body.hola .hl-stats dt { font-size: .875rem; font-weight: 600; }
+body.hola .hl-stats dd { margin: 0; font-family: "Fraunces", Georgia, serif; font-weight: 900; font-optical-sizing: none; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; font-size: clamp(2.5rem, 4vw, 3.5rem); line-height: 1; color: var(--hl-teal); }
+body.hola .hl-stats-src { grid-column: 2; margin: -2rem 0 0; opacity: .78; }
+body.hola .hl-reel { list-style: none; margin: 3.5rem 0 0; padding: 0 max(2rem, calc((100vw - 76rem) / 2)) .5rem; display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: max(2rem, calc((100vw - 76rem) / 2)); scrollbar-width: thin; }
+body.hola .hl-reel li { flex: none; height: 26rem; scroll-snap-align: start; }
+body.hola .hl-reel img { display: block; height: 100%; width: auto; border-radius: .75rem; }
+body.hola .hl-reel:focus-visible { outline: 2px solid var(--hc-cream); outline-offset: 4px; }
+
+/* 05 · mall */
+body.hola .hl-cols { max-width: none; column-count: 2; column-gap: 3rem; }
+body.hola .hl-cols p { break-inside: avoid; }
+body.hola .hl-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 3.5rem 0 2.5rem; }
+body.hola .hl-pair img { aspect-ratio: 3 / 2; object-fit: cover; }
+body.hola .hl-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+body.hola .hl-trio img { aspect-ratio: 4 / 3; object-fit: cover; }
+body.hola .hl-trio .hl-fig:nth-child(2) img { object-fit: contain; background: #fff; padding: .75rem; }
+
+/* 06 · brand experience (cream, image-led journey) */
+body.hola .hl-brand { background: var(--hc-cream); }
+body.hola .hl-step { margin-top: 5rem; }
+body.hola .hl-step-k { margin: 0 0 1.25rem; padding-top: 1rem; border-top: 1px solid var(--hl-line); font-family: "Fraunces", Georgia, serif; font-weight: 900; font-optical-sizing: none; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1; letter-spacing: -.02em; color: var(--hl-pink); }
+body.hola .hl-step-p { max-width: 40em; margin: 0 0 1.5rem; }
+body.hola .hl-find { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 2rem; align-items: start; }
+body.hola .hl-find-main img { aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 35%; }
+body.hola .hl-find-side { display: grid; gap: 1.25rem; }
+body.hola .hl-find-text { margin: 0; font-size: 1.25rem; line-height: 1.5; font-weight: 500; }
+body.hola .hl-find-side .hl-fig img { max-height: 26rem; object-fit: cover; }
+body.hola .hl-choose { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); gap: 1.5rem; align-items: end; }
+body.hola .hl-choose .hl-fig:first-child img { background: none; }
+body.hola .hl-hold { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 1.5rem; }
+body.hola .hl-hold-wide { grid-column: 1 / -1; }
+body.hola .hl-hold-wide img { background: #fff; padding: 1rem; }
+body.hola .hl-hold .hl-fig:not(.hl-hold-wide) img { height: 24rem; object-fit: cover; }
+body.hola .hl-team { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+body.hola .hl-team .hl-fig:first-child img { aspect-ratio: 4 / 5; object-fit: cover; }
+body.hola .hl-team .hl-fig:last-child img { background: #fff; }
+body.hola .hl-posts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+body.hola .hl-posts img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: top; border-radius: .5rem; }
+
+/* 07 · two operations (System) */
+body.hola .hl-ops { background: var(--hl-sand); }
+body.hola .hl-split { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, .9fr); gap: 1.5rem; align-items: end; margin: 3rem 0 4rem; }
+body.hola .hl-unit { padding-top: 1rem; border-top: 2px solid var(--eggplant); }
+body.hola .hl-unit-n { margin: 0 0 .5rem; font-family: "Fraunces", Georgia, serif; font-weight: 900; font-optical-sizing: none; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; font-size: clamp(3rem, 5vw, 4.5rem); line-height: 1; }
+body.hola .hl-unit-l { margin: 0; font-weight: 700; line-height: 1.35; }
+body.hola .hl-unit-l span { font-weight: 400; color: var(--hl-muted); }
+body.hola .hl-unit-photo img { aspect-ratio: 3 / 4; object-fit: cover; }
+body.hola .hl-ops-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 3rem; align-items: start; margin-bottom: 3rem; }
+body.hola .hl-list { margin: 0; padding-left: 1.2rem; }
+body.hola .hl-list li { margin-bottom: .35rem; }
+body.hola .hl-products { list-style: none; margin: 3rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+body.hola .hl-products img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: .75rem; }
+body.hola .hl-products .cs-caption { margin: .6rem 0 0; }
+
+/* 08 · lessons (quiet close) */
+body.hola .hl-lessons { padding-bottom: 7rem; }
+body.hola .hl-lessons-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 3rem; align-items: start; margin-top: 1rem; }
+body.hola .hl-principle { margin: 5rem 0 0; max-width: 15ch; font-family: "Fraunces", Georgia, serif; font-weight: 900; font-optical-sizing: none; font-variation-settings: "wght" 900, "opsz" 72, "SOFT" 100, "WONK" 1; font-size: clamp(2.75rem, 6.4vw, 5.75rem); line-height: .97; letter-spacing: -.025em; text-wrap: balance; }
+body.hola .hl-credits { margin: 4rem 0 0; opacity: .78; }
+
+@media (max-width: 860px) {
+  body.hola .hl-tools, body.hola .hl-road-grid, body.hola .hl-pair, body.hola .hl-find, body.hola .hl-ops-grid, body.hola .hl-lessons-grid { grid-template-columns: 1fr; }
+  body.hola .hl-stats-src { grid-column: auto; margin: 0; }
+  body.hola .hl-cols { column-count: 1; }
+  body.hola .hl-split { grid-template-columns: 1fr 1fr; }
+  body.hola .hl-posts { grid-template-columns: repeat(3, 1fr); }
+  body.hola .hl-products { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 760px) {
+  body.hola .hl-h { font-size: clamp(2.1rem, 9vw, 2.6rem); }
+  body.hola .hl-lead { margin-top: 3rem; font-size: 1.2rem; }
+  body.hola .hl-tool--ticket { grid-template-columns: 7rem 1fr; gap: 1rem; }
+  body.hola .hl-board { grid-template-columns: 1fr 1.4fr; padding: 1rem; }
+  body.hola .hl-trio, body.hola .hl-choose, body.hola .hl-team { grid-template-columns: 1fr; }
+  body.hola .hl-hold { grid-template-columns: 1fr 1fr; }
+  body.hola .hl-hold .hl-fig:not(.hl-hold-wide) img { height: 14rem; }
+  body.hola .hl-reel { padding-inline: 1.25rem; scroll-padding-inline: 1.25rem; margin-top: 2.5rem; }
+  body.hola .hl-reel li { height: 18rem; }
+  body.hola .hl-step { margin-top: 3.5rem; }
+  body.hola .hl-posts { grid-template-columns: 1fr 1fr; }
+  body.hola .hl-posts li:last-child { grid-column: 1 / -1; width: calc(50% - .5rem); }
+  body.hola .hl-unit-photo { grid-column: 1 / -1; max-width: 14rem; }
+  body.hola .hl-bleed { margin-top: 3.5rem; }
+  body.hola .hl-bleed img { height: 70vw; }
+}

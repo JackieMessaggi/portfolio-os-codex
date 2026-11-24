@@ -1,10 +1,10 @@
 # Project Status
 
-Updated: November 12, 2026, by Claude Code after the authorized TerraYou integration and publication.
+Updated: November24,2026, Codex. Hola! integrated case approved; selective commit authorized after completed PDF/security verification. No push/deploy.
 
 ## Where we are
 
-Live site: https://jackiemessaggi.com/ (custom domain since November 10, 2026, HTTPS enforced; the old github.io address redirects). Last published commit: `894d7ee` (Add CV link to About), successful manual run `42869627039`, November 10, 2026; the published files match the commit byte for byte. Earlier the same day: Hola! Churros as the fifth Selected Work card in `f5f3199`, and the privacy notice, Privacy Policy, and Impressum in `9d183aa`. `main` and `origin/main` are in sync. GitHub Pages remains manual. No active task or reserved files.
+Live site: https://jackiemessaggi.com/ (custom domain since November 10, 2026, HTTPS enforced; the old github.io address redirects). Last published commit: `894d7ee` (Add CV link to About), successful manual run `42869627039`, November 10, 2026; the published files match the commit byte for byte. Earlier the same day: Hola! Churros as the fifth Selected Work card in `f5f3199`, and the privacy notice, Privacy Policy, and Impressum in `9d183aa`. Remote synchronization was not reverified in this task; no push or deployment is authorized. GitHub Pages remains manual. No active task or reserved files.
 
 ## What is ready
 
@@ -32,6 +32,8 @@ Live site: https://jackiemessaggi.com/ (custom domain since November 10, 2026, H
 - Cross-browser and real-device testing.
 
 ## Next step
+
+Hola! Churros: approved07 integrated locally at `02 Site/hola.html`, with consolidated styles/scripts/assets, official links and existing homepage card connected. Private07 unchanged; shared globals and unrelated diff preserved. Reference comparison1440/390, BYC/lightbox keyboard/reduced motion, real-GPU3D controls and complete94s cycle passed. Reports/file list: `01 Projects/Hola Churros/Production Integration/README.md`. Subsequent owner-requested06 illustration alignment complete in official page: visible SVG art aligned with text edges, original scale retained;1440/390 checks passed. Physical-mobile feedback fixed: official nav hides during active BYC onmobile, soSend remains reachable;390/500 hit-test/keyboard full-order/reset and nav restoration passed, desktop unchanged. Integrated case approved by Jackie. Public-menu PDF local-path metadata sanitized and4 pages validated pixel-identical; private original unchanged. Selective production/docs commit authorized; unrelated changes and private studies excluded. Next: review remaining working-tree changes separately; push/deploy require separate authorization.
 
 TerraYou case study: **integrated into the site on November 12, 2026** (Claude Code), from the final private Study 10, as a secondary case. Jackie approved the 54 public assets and authorized one commit, a push, and publication through the existing manual Pages workflow.
 
