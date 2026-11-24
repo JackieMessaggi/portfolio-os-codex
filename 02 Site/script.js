@@ -744,7 +744,16 @@ void main(){
     const restC = document.createElement('canvas'); const revealC = document.createElement('canvas');
     let video = null; let g = 0; let target = 0; let from = 0; let t0 = 0; let raf = 0;
     const W = () => canvas.width; const H = () => canvas.height;
+    // If the browser refuses a texture upload (pages opened from file://, strict privacy settings), drop the
+    // effect and keep the lettering, instead of leaving a black canvas over the card.
+    let off = false;
+    const disable = () => { off = true; if (raf) cancelAnimationFrame(raf); raf = 0; if (video) video.pause(); canvas.remove(); };
+    const upload = (unit, tex, src) => {
+      try { gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, tex); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, src); return true; }
+      catch (e) { disable(); return false; }
+    };
     const size = () => {
+      if (off) return;
       const dpr = Math.min(2, window.devicePixelRatio || 1);
       const w = Math.max(2, Math.round(box.clientWidth * dpr)); const h = Math.max(2, Math.round(box.clientHeight * dpr));
       [canvas, restC, revealC].forEach((c) => { c.width = w; c.height = h; });
@@ -763,8 +772,8 @@ void main(){
           x.fillText(el.textContent, (r.left - br.left + r.width / 2) * k, (r.top - br.top + r.height / 2) * k);
         });
       }
-      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texA); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, restC);
-      drawReveal(); render();
+      if (!upload(0, texA, restC)) return;
+      drawReveal(); if (!off) render();
     };
     // Reveal state: the phone recording, full height with a little air, rounded, on the brand field.
     const drawReveal = () => {
@@ -781,19 +790,21 @@ void main(){
         x.save(); path(); x.clip(); x.drawImage(src, dx, dy, dw, dh); x.restore();
         x.save(); path(); x.lineWidth = Math.max(1, h * 0.003); x.strokeStyle = 'rgba(255, 255, 255, .55)'; x.stroke(); x.restore();
       }
-      gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, texB); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, revealC);
+      upload(1, texB, revealC);
     };
     const render = () => { gl.uniform1f(uG, g); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); if (typeset) canvas.style.opacity = (g > 0 || target > 0) ? '1' : '0'; };
     const loop = (now) => {
       if (g !== target) { const k = Math.min(1, (now - t0) / MS); g = from + (target - from) * k; if (k >= 1) g = target; }
+      if (off) return;
       if (g > 0) drawReveal();
+      if (off) return;
       render();
       const playing = video && !video.paused;
       if (g !== target || (g > 0 && playing)) raf = requestAnimationFrame(loop); else raf = 0;
       if (g === 0 && video && !video.paused) video.pause();
     };
     const go = (to) => {
-      if (to === target) return;
+      if (off || to === target) return;
       if (to === 1 && !video && box.dataset.revealVideo) {
         video = document.createElement('video'); video.muted = true; video.loop = true; video.playsInline = true; video.preload = 'auto';
         video.src = box.dataset.revealVideo;
