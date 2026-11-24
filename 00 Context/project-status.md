@@ -8,7 +8,7 @@ The portfolio uses manual GitHub Pages deployment at https://jackiemessaggi.com/
 
 ## What is ready
 
-- Homepage, seven-stage career hero, About, Contact, privacy controls and CV. Selected Work order: Snoof, Quiz Bingo, TerraYou, Hola! Churros, Damyller. Four cards link to completed cases, all with the glitch reveal on hover; the Hola! Churros card shows its one-color logo and reveals a Part 1 trailer loop. Damyller remains Coming soon.
+- Homepage, seven-stage career hero, About, Contact, privacy controls, CV and favicon (JM monogram on an eggplant square, all pages). Selected Work order: Snoof, Quiz Bingo, TerraYou, Hola! Churros, Damyller. Four cards link to completed cases, all with the glitch reveal on hover; the Hola! Churros card shows its one-color logo and reveals a Part 1 trailer loop. Damyller remains Coming soon.
 - Snoof: integrated case and prototype. Earlier validations remain in `decision-log.md` and `interaction-spec.md`.
 - TerraYou: integrated from approved Study 10. Historical Study 06 specification archived privately; production page: `02 Site/terrayou.html`.
 - Quiz Bingo: approved Study 04 integrated in `4badfb6`; homepage/card updated in `555ce36`. Previous records confirm Jackie's Safari/iPhone review. Old study-review blockers are closed.
@@ -19,7 +19,6 @@ The portfolio uses manual GitHub Pages deployment at https://jackiemessaggi.com/
 
 - 51 legacy assets remain untouched: 29 support old studies, 21 images have no execution references, and `magnets.json` has private duplicates. Archiving/removal requires separate approval.
 - Damyller case/card and further cover refinement remain backlog items.
-- No favicon: `/favicon.ico` returns 404 (pre-existing, harmless console error).
 - Broader device/browser/accessibility checks, the reported 1025 × 700 career-pill spacing and optional old About portrait cleanup require separate review. This documentation task did not change or test them.
 
 ## Next step
